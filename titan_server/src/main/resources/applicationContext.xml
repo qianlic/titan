@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--  加载工程中的配置文件  -->
+    <bean id="springPropertyConfigurerUtil" class="com.cjwx.titan.engine.util.file.PropertyUtils">
+        <property name="locations">
+            <list>
+                <value>classpath:config/*.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="com.cjwx.titan.server"/>
+    <context:component-scan base-package="com.cjwx.titan.monitor"/>
+
+    <import resource="classpath:spring-core.xml"/>
+    <import resource="classpath:spring-shiro.xml"/>
+    <import resource="classpath:spring-quartz.xml"/>
+    <import resource="classpath:spring-wxmp.xml"/>
+    <import resource="classpath:spring-crawler.xml"/>
+
+    <bean class="com.cjwx.titan.server.swagger.SwaggerConfigurerAdapter"/>
+</beans>
