@@ -6,4 +6,4 @@
 
 # 效果展示
 ##首页
-<img src="https://github.com/qianlic/titan/blob/master/snapshot/home.png" width="320" height="619"/>
+<img src="https://github.com/qianlic/titan/blob/master/snapshot/home.png" width="1000" height="480"/>
