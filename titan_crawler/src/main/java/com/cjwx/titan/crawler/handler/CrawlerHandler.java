@@ -5,10 +5,10 @@ import com.cjwx.titan.crawler.bean.ClrCrawlerBean;
 import com.cjwx.titan.crawler.service.CrawlerService;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
+import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestController
+@RestHandler
 @RequestMapping(value = "/system/crawler/", method = RequestMethod.POST)
 public class CrawlerHandler {
 

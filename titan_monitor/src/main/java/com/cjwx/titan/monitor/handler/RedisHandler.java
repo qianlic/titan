@@ -1,9 +1,9 @@
 package com.cjwx.titan.monitor.handler;
 
+import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.monitor.helper.RedisHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestController
+@RestHandler
 @RequestMapping(value = "/system/redis/", method = RequestMethod.POST)
 public class RedisHandler {
 

@@ -2,13 +2,13 @@ package com.cjwx.titan.quartz.handler;
 
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
+import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.quartz.entity.QtzJobEntity;
 import com.cjwx.titan.quartz.service.JobDetilService;
 import org.quartz.JobKey;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestController
+@RestHandler
 @RequestMapping(value = "/system/jobDetail/", method = RequestMethod.POST)
 public class JobDetailHandler {
 

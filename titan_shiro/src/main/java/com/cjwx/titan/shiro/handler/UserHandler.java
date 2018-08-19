@@ -3,6 +3,7 @@ package com.cjwx.titan.shiro.handler;
 import com.alibaba.fastjson.JSONArray;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
+import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.core.web.http.RequestHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
@@ -10,7 +11,10 @@ import com.cjwx.titan.engine.util.DateUtils;
 import com.cjwx.titan.engine.util.EndecryptUtils;
 import com.cjwx.titan.shiro.bean.SysUserBean;
 import com.cjwx.titan.shiro.service.UserService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -21,7 +25,7 @@ import java.util.Map;
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestController
+@RestHandler
 @RequestMapping(value = "/system/user/", method = RequestMethod.POST)
 public class UserHandler {
 

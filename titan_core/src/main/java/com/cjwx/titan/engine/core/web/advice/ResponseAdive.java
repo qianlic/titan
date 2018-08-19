@@ -1,5 +1,6 @@
 package com.cjwx.titan.engine.core.web.advice;
 
+import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.core.web.http.Result;
 import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import org.springframework.core.MethodParameter;
@@ -17,9 +18,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice
 public class ResponseAdive implements ResponseBodyAdvice {
 
+    /**
+     * 支持Handler接口实现类
+     */
     @Override
     public boolean supports(MethodParameter methodParameter, Class aClass) {
-        return true;
+        return methodParameter.getMethod().getDeclaringClass().isAnnotationPresent(RestHandler.class);
     }
 
     @Override

@@ -1,7 +1,9 @@
-package com.cjwx.titan.server.controller;
+package com.cjwx.titan.server.handler;
 
 import com.cjwx.titan.engine.core.model.Model;
+import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.util.StringUtils;
+import io.swagger.annotations.ApiOperation;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -15,7 +17,6 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestController
+@RestHandler
 @RequestMapping(value = "/system/weixin/", method = RequestMethod.POST)
 public class WeixinHandler {
 
@@ -37,6 +38,7 @@ public class WeixinHandler {
     @Resource
     protected WxMpMessageRouter wxMpMessageRouter;
 
+    @ApiOperation(value = "路由", notes = "路由", httpMethod = "POST")
     @RequestMapping("route")
     public String route(HttpServletRequest request, @RequestBody Model model) {
         WxMenu wxMenu = new WxMenu();

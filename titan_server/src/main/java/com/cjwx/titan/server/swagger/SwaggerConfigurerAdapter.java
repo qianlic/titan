@@ -21,11 +21,11 @@ public class SwaggerConfigurerAdapter extends WebMvcConfigurerAdapter {
     @Bean
     public Docket createAPI() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
+                .build();
     }
 
     private ApiInfo apiInfo() {
@@ -33,6 +33,7 @@ public class SwaggerConfigurerAdapter extends WebMvcConfigurerAdapter {
                 .title("接口文档")
                 .description("API")
                 .version("0.0.1")
+                .termsOfServiceUrl("http://localhost:8080")
                 .build();
     }
 
