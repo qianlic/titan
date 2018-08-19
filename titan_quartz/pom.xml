@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cjwx.titan</groupId>
+        <artifactId>titan</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>quartz</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cjwx.titan</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+    </dependencies>
+
+    <!-- 资源库地址 http://mvnrepository.com/ -->
+    <build>
+        <plugins>
+            <!-- 设置编译器版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
