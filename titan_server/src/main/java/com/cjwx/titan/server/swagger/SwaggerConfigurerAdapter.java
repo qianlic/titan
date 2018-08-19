@@ -1,6 +1,5 @@
 package com.cjwx.titan.server.swagger;
 
-import com.cjwx.titan.engine.core.constant.HttpConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -24,7 +23,7 @@ public class SwaggerConfigurerAdapter extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex(HttpConstant.DEFAULT_FIX))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
     }
