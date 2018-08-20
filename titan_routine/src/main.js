@@ -16,25 +16,8 @@ export default {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '我的小程序',
+      navigationBarTitleText: '',
       navigationBarTextStyle: 'black'
-    },
-    tabBar: {
-      backgroundColor: '#fafafa',
-      borderStyle: 'white',
-      selectedColor: '#b4282d',
-      color: '#666',
-      list: [{
-        pagePath: 'pages/index',
-        iconPath: 'static/images/ic_menu_choice_nor.png',
-        selectedIconPath: 'static/images/ic_menu_choice_pressed.png',
-        text: '首页'
-      }, {
-        pagePath: 'pages/home',
-        iconPath: 'static/images/ic_menu_topic_nor.png',
-        selectedIconPath: 'static/images/ic_menu_topic_pressed.png',
-        text: '我的'
-      }]
     }
   }
 }
