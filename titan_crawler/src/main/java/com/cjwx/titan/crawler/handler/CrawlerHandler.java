@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 
 /**
- * @Description: 网页爬虫-爬虫管理
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler
+@RestHandler("网页爬虫-爬虫管理")
 @RequestMapping(value = "/system/crawler/", method = RequestMethod.POST)
 public class CrawlerHandler {
 

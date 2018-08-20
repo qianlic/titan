@@ -21,11 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Description: 系统管理-用户管理
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler
+@RestHandler("系统管理-用户管理")
 @RequestMapping(value = "/system/user/", method = RequestMethod.POST)
 public class UserHandler {
 

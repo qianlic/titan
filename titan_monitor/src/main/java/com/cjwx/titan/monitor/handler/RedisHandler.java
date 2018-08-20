@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 
 /**
- * @Description: 系统监控-REDIS
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestHandler
+@RestHandler("系统监控-REDIS")
 @RequestMapping(value = "/system/redis/", method = RequestMethod.POST)
 public class RedisHandler {
 

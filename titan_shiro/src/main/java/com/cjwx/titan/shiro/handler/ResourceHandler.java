@@ -13,11 +13,10 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Description: 系统管理-资源管理
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler
+@RestHandler("系统管理-资源管理")
 @RequestMapping(value = "/system/resource/", method = RequestMethod.POST)
 public class ResourceHandler {
 

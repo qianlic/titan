@@ -17,3 +17,6 @@
 
 ##用户编辑
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/useredit.png"/>
+
+##接口文档
+<img src="https://github.com/qianlic/titan/blob/master/snapshot/api.png"/>

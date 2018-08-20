@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 
 /**
- * @Description: 网页爬虫-页面管理
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler
+@RestHandler("网页爬虫-页面管理")
 @RequestMapping(value = "/system/webUrl/", method = RequestMethod.POST)
 public class WebUrlHandler {
 

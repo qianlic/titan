@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * @Description: 系统监控-线程管理
  * @Author: qian li
  * @Date: 2018年08月18日 5:39
  */
-@RestHandler
+@RestHandler("系统监控-线程管理")
 @RequestMapping(value = "/system/thread/", method = RequestMethod.POST)
 public class ThreadHandler {
 

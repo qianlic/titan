@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 
 /**
- * @Description: 定时任务-触发器管理
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestHandler
+@RestHandler("定时任务-触发器管理")
 @RequestMapping(value = "/system/trigger/", method = RequestMethod.POST)
 public class TriggerHandler {
 

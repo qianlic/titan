@@ -23,11 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * @Description: 微信公众号接口
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestHandler
+@RestHandler("微信公众号接口")
 @RequestMapping(value = "/system/weixin/", method = RequestMethod.POST)
 public class WeixinHandler {
 

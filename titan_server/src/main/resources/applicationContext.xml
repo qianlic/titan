@@ -24,6 +24,4 @@
     <import resource="classpath:spring-quartz.xml"/>
     <import resource="classpath:spring-wxmp.xml"/>
     <import resource="classpath:spring-crawler.xml"/>
-
-    <bean class="com.cjwx.titan.server.swagger.SwaggerConfigurerAdapter"/>
 </beans>

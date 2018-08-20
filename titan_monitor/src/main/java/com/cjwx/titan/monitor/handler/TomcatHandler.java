@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 /**
- * @Description: 系统监控-TOMCAT
  * @Author: qian li
  * @Date: 2018年08月18日 5:39
  */
-@RestHandler
+@RestHandler("系统监控-TOMCAT")
 @RequestMapping(value = "/system/tomcat/", method = RequestMethod.POST)
 public class TomcatHandler {
 
