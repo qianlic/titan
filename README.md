@@ -4,7 +4,7 @@
 ## 后端
 > spring + springmvc + hibernate + mysql + redis
 
-- 项目结构
+## 项目结构
 ```
 ├── titan_core                  // 封装核心框架
 ├── titan_crawler               // 网页爬虫
@@ -18,17 +18,17 @@
 
 # 效果展示
 
-##用户管理
+- 用户管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/user.png"/>
 
-##资源管理
+- 资源管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/resource.png"/>
 
-##内存管理
+- 内存管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/memory.png"/>
 
-##用户编辑
+- 用户编辑
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/useredit.png"/>
 
-##接口文档
+- 接口文档
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/api.png"/>
