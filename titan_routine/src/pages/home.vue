@@ -10,17 +10,32 @@
         </navigator>
       </swiper-item>
     </swiper>
+    <i-grid>
+      <i-grid-item>
+        <i-grid-icon>
+          <image src="../images/icon-vip.png" />
+        </i-grid-icon>
+        <i-grid-label>Grid</i-grid-label>
+      </i-grid-item>
+      <i-grid-item>Grid</i-grid-item>
+    </i-grid>
     <i-cell-group>
-      <i-cell title="江苏省常熟市海虞镇金丝狐公交站旁" @click="openmap" is-link>
+      <i-cell :title="address" @click="openmap" is-link>
         <i-icon slot="icon" type="coordinates_fill" size="20"/>
       </i-cell>
-      <i-cell title="7:00-20:00">
+      <i-cell :title="workTime">
         <i-icon slot="icon" type="time_fill" size="18"/>
       </i-cell>
       <i-cell :title="phoneNumber" @click="openphone" is-link>
         <i-icon slot="icon" type="addressbook_fill" size="18"/>
       </i-cell>
     </i-cell-group>
+    <button  open-type="contact"/>
+    <i-divider content="--"></i-divider>
+    <i-tab-bar :current="current" @change="handleChange" fixed>
+      <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="主页"></i-tab-bar-item>
+      <i-tab-bar-item key="alipay" icon="group" current-icon="group_fill" title="我的"></i-tab-bar-item>
+    </i-tab-bar>
   </view>
 </template>
 
@@ -29,7 +44,11 @@
     name: 'home',
     data () {
       return {
+        current: 'homepage',
+        address: '江苏省常熟市海虞镇徐桥公交站旁',
+        workTime: '7:00-20:00',
         phoneNumber: '15250452118',
+        networkFlow: '1',
         'banner': [{
           'id': 1,
           'ad_position_id': 1,
@@ -69,6 +88,7 @@
           latitude: 31.756525,
           longitude: 120.753736,
           name: '海虞葡萄园',
+          address: '海虞葡萄园',
           scale: 14
         })
       },
@@ -76,6 +96,15 @@
         wx.makePhoneCall({
           phoneNumber: this.phoneNumber
         })
+      },
+      handleChange ({target}) {
+        this.$router.push(target.key)
+      }
+    },
+    onShareAppMessage () {
+      return {
+        title: '转发',
+        path: '/pages/home'
       }
     }
   }

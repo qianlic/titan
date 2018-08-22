@@ -5,7 +5,7 @@
          id="titan" version="3.0">
     <display-name>titan-server</display-name>
     <welcome-file-list>
-        <welcome-file>/swagger-ui.html</welcome-file>
+        <welcome-file>swagger-ui.html</welcome-file>
     </welcome-file-list>
 
     <!-- Spring 容器启动监听器 -->
