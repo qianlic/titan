@@ -18,6 +18,13 @@ module.exports = [{
     }
   }
 }, {
-  path: 'pages/alipay',
-  name: 'alipay'
+  path: 'pages/goods',
+  name: 'goods',
+  config: {
+    usingComponents: {
+      'i-tab-bar': '../../static/ivew/tab-bar/index',
+      'i-tab-bar-item': '../../static/ivew/tab-bar-item/index',
+      'i-divider': '../../static/ivew/divider/index'
+    }
+  }
 }]

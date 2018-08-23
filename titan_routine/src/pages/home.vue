@@ -5,20 +5,9 @@
     </i-notice-bar>
     <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
       <swiper-item v-for="item of banner" :key="item.id">
-        <navigator :url="item.link">
-          <img :src="item.image_url" background-size="cover" />
-        </navigator>
+        <img :src="item.image_url" background-size="cover" />
       </swiper-item>
     </swiper>
-    <i-grid>
-      <i-grid-item>
-        <i-grid-icon>
-          <image src="../images/icon-vip.png" />
-        </i-grid-icon>
-        <i-grid-label>Grid</i-grid-label>
-      </i-grid-item>
-      <i-grid-item>Grid</i-grid-item>
-    </i-grid>
     <i-cell-group>
       <i-cell :title="address" @click="openmap" is-link>
         <i-icon slot="icon" type="coordinates_fill" size="20"/>
@@ -31,30 +20,27 @@
       </i-cell>
     </i-cell-group>
     <button  open-type="contact"/>
-    <i-divider content="--"></i-divider>
-    <i-tab-bar :current="current" @change="handleChange" fixed>
-      <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="主页"></i-tab-bar-item>
-      <i-tab-bar-item key="alipay" icon="group" current-icon="group_fill" title="我的"></i-tab-bar-item>
-    </i-tab-bar>
+    <footbar :current="current"></footbar>
   </view>
 </template>
 
 <script>
+  import footbar from '@/components/footbar'
+
   export default {
     name: 'home',
     data () {
       return {
-        current: 'homepage',
+        current: 'home',
         address: '江苏省常熟市海虞镇徐桥公交站旁',
         workTime: '7:00-20:00',
         phoneNumber: '15250452118',
         networkFlow: '1',
-        'banner': [{
+        banner: [{
           'id': 1,
           'ad_position_id': 1,
           'media_type': 1,
           'name': '合作 谁是你的菜',
-          'link': '/pages/counter?id=1005002',
           'image_url': 'http://yanxuan.nosdn.127.net/65091eebc48899298171c2eb6696fe27.jpg',
           'content': '合作 谁是你的菜',
           'end_time': 0,
@@ -64,7 +50,6 @@
           'ad_position_id': 1,
           'media_type': 1,
           'name': '活动 美食节',
-          'link': '/pages/counter?id=1005001',
           'image_url': 'http://yanxuan.nosdn.127.net/bff2e49136fcef1fd829f5036e07f116.jpg',
           'content': '活动 美食节',
           'end_time': 0,
@@ -81,6 +66,9 @@
           'enabled': 1
         }]
       }
+    },
+    components: {
+      footbar
     },
     methods: {
       openmap () {
