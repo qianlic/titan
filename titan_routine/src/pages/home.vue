@@ -19,7 +19,9 @@
         <i-icon slot="icon" type="addressbook_fill" size="18"/>
       </i-cell>
     </i-cell-group>
-    <button  open-type="contact"/>
+    <i-divider>
+      <contact-button type="default-dark" size="18" session-from="weapp"/>
+    </i-divider>
     <footbar :current="current"></footbar>
   </view>
 </template>
@@ -102,6 +104,12 @@
   .banner {
     width: 750rpx;
     height: 417rpx;
+  }
+
+  .pos{
+    position: absolute;
+    top: 0px;
+    left: 150px;
   }
 
   .banner image {
