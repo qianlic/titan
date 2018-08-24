@@ -14,7 +14,7 @@
         </view>
       </view>
     </view>
-    <footbar :current="current"></footbar>
+    <footbar :current="current"/>
   </view>
 </template>
 

@@ -19,10 +19,7 @@
         <i-icon slot="icon" type="addressbook_fill" size="18"/>
       </i-cell>
     </i-cell-group>
-    <i-divider>
-      <contact-button type="default-dark" size="18" session-from="weapp"/>
-    </i-divider>
-    <footbar :current="current"></footbar>
+    <footbar :current="current"/>
   </view>
 </template>
 
@@ -40,32 +37,16 @@
         networkFlow: '1',
         banner: [{
           'id': 1,
-          'ad_position_id': 1,
-          'media_type': 1,
           'name': '合作 谁是你的菜',
-          'image_url': 'http://yanxuan.nosdn.127.net/65091eebc48899298171c2eb6696fe27.jpg',
-          'content': '合作 谁是你的菜',
-          'end_time': 0,
-          'enabled': 1
+          'image_url': 'http://yanxuan.nosdn.127.net/65091eebc48899298171c2eb6696fe27.jpg'
         }, {
           'id': 2,
-          'ad_position_id': 1,
-          'media_type': 1,
           'name': '活动 美食节',
-          'image_url': 'http://yanxuan.nosdn.127.net/bff2e49136fcef1fd829f5036e07f116.jpg',
-          'content': '活动 美食节',
-          'end_time': 0,
-          'enabled': 1
+          'image_url': 'http://yanxuan.nosdn.127.net/bff2e49136fcef1fd829f5036e07f116.jpg'
         }, {
           'id': 3,
-          'ad_position_id': 1,
-          'media_type': 1,
           'name': '活动 母亲节',
-          'link': '/pages/counter?id=1005000',
-          'image_url': 'http://yanxuan.nosdn.127.net/8e50c65fda145e6dd1bf4fb7ee0fcecc.jpg',
-          'content': '活动 母亲节',
-          'end_time': 0,
-          'enabled': 1
+          'image_url': 'http://yanxuan.nosdn.127.net/8e50c65fda145e6dd1bf4fb7ee0fcecc.jpg'
         }]
       }
     },
@@ -104,12 +85,6 @@
   .banner {
     width: 750rpx;
     height: 417rpx;
-  }
-
-  .pos{
-    position: absolute;
-    top: 0px;
-    left: 150px;
   }
 
   .banner image {
