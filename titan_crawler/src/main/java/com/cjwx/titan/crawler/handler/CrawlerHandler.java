@@ -47,7 +47,7 @@ public class CrawlerHandler {
     @RequestMapping("status")
     public int status(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
-        boolean status = model.getBoolean("state");
+        boolean status = model.getBoolean("status");
         return crawlerService.updateStatus(ids, status);
     }
 

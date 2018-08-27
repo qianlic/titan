@@ -68,7 +68,7 @@ public class UserHandler {
     @RequestMapping("status")
     public int status(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
-        boolean status = model.getBoolean("state");
+        boolean status = model.getBoolean("status");
         return userService.updateStatus(ids, status);
     }
 
