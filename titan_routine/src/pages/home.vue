@@ -33,7 +33,7 @@
         current: 'home',
         address: '江苏省常熟市海虞镇徐桥公交站旁',
         workTime: '7:00-20:00',
-        phoneNumber: '15250452118',
+        phoneNumber: '13962346987',
         networkFlow: '1',
         banner: [{
           'id': 1,

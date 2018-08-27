@@ -14,8 +14,9 @@ export default {
   props: ['current'],
   methods: {
     handleChange ({target}) {
-      if (target.key !== 'other') {
-        this.$router.push(target.key)
+      const key = target.key
+      if (key !== this.current && key !== 'other') {
+        this.$router.push(key)
       }
     }
   }
