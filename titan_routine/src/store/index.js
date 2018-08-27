@@ -1,24 +1,29 @@
-// https://vuex.vuejs.org/zh-cn/intro.html
-// make sure to call Vue.use(Vuex) if using a module system
 import Vue from 'vue'
 import Vuex from 'vuex'
+import home from './modules/home'
+import goods from './modules/goods'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    increment: (state) => {
-      const obj = state
-      obj.count += 1
-    },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
-    }
-  }
-})
+const state = {
+  address: '常熟市海虞镇福谢路徐桥公交站旁',
+  workTime: '7:00-20:00',
+  phoneNumber: '13962346987'
+}
 
-export default store
+const getters = {
+  address: state => state.address,
+  workTime: state => state.workTime,
+  phoneNumber: state => state.phoneNumber
+}
+
+const modules = {
+  home,
+  goods
+}
+
+export default new Vuex.Store({
+  state,
+  modules,
+  getters
+})

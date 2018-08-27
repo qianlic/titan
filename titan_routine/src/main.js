@@ -16,7 +16,7 @@ export default {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '海虞葡萄园',
+      navigationBarTitleText: '兰芝华葡萄',
       navigationBarTextStyle: 'black'
     }
   }

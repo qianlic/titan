@@ -14,45 +14,23 @@
         </view>
       </view>
     </view>
-    <footbar :current="current"/>
+    <footbar current="goods"/>
   </view>
 </template>
 
 <script>
-  import footbar from '@/components/footbar'
+import {mapGetters} from 'vuex'
+import footbar from '@/components/footbar'
 
-  export default {
-    name: 'goods',
-    data () {
-      return {
-        current: 'goods',
-        newGoods: [{
-          'id': 1134030,
-          'name': '商品一',
-          'list_pic_url': 'http://yanxuan.nosdn.127.net/aa49dfe878becf768eddc4c1636643a6.png',
-          'retail_price': 6
-        }, {
-          'id': 1134032,
-          'name': '商品二',
-          'list_pic_url': 'http://yanxuan.nosdn.127.net/8b30eeb17c831eba08b97bdcb4c46a8e.png',
-          'retail_price': 8
-        }, {
-          'id': 1135002,
-          'name': '商品三',
-          'list_pic_url': 'http://yanxuan.nosdn.127.net/45548f26cfd0c7c41e0afc3709d48286.png',
-          'retail_price': 10
-        }, {
-          'id': 1152161,
-          'name': '商品四',
-          'list_pic_url': 'http://yanxuan.nosdn.127.net/977401e75113f7c8334c4fb5b4bf6215.png',
-          'retail_price': 15
-        }]
-      }
-    },
-    components: {
-      footbar
-    }
-  }
+export default {
+  name: 'goods',
+  components: {
+    footbar
+  },
+  computed: mapGetters('goods', [
+    'newGoods'
+  ])
+}
 </script>
 
 <style scoped>
