@@ -1,14 +1,14 @@
 <template>
   <view>
-    <view class="a-section a-new" v-if="newGoods.length">
+    <view class="a-section a-new" v-if="goods.length">
       <view class="h">
         <view>
           <text class="txt">人气推荐</text>
         </view>
       </view>
       <view class="b">
-        <view class="item" v-for="item of newGoods" :key="item.id">
-          <img class="img" :src="item.list_pic_url" background-size="cover" />
+        <view class="item" v-for="item of goods" :key="item.objectId">
+          <img class="img" :src="item.pic_url" background-size="cover" />
           <text class="name">{{item.name}}</text>
           <text class="price">￥{{item.retail_price}}/斤</text>
         </view>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import footbar from '@/components/footbar'
 
 export default {
@@ -28,8 +28,14 @@ export default {
     footbar
   },
   computed: mapGetters('goods', [
-    'newGoods'
-  ])
+    'goods'
+  ]),
+  methods: mapActions('goods', [
+    'loadDatas'
+  ]),
+  mounted () {
+    this.loadDatas()
+  }
 }
 </script>
 

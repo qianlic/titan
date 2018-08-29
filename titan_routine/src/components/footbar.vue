@@ -3,6 +3,7 @@
     <i-tab-bar :current="current" @change="handleChange" fixed>
       <i-tab-bar-item key="home" icon="homepage" current-icon="homepage_fill" title="主页"/>
       <i-tab-bar-item key="goods" icon="barrage" current-icon="barrage_fill" title="商品"/>
+      <i-tab-bar-item key="shared" icon="share" current-icon="share_fill" title="分享"/>
       <i-tab-bar-item key="other" icon="interactive" title="留言"/>
     </i-tab-bar>
     <button class="kf_button" open-type="contact" session-from="weapp"/>

@@ -4,7 +4,7 @@
       即日起，夏黑10元3斤，欢迎品尝
     </i-notice-bar>
     <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
-      <swiper-item v-for="item of banner" :key="item.id">
+      <swiper-item v-for="item of banner" :key="item.objectId">
         <img :src="item.image_url" background-size="cover" />
       </swiper-item>
     </swiper>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import footbar from '@/components/footbar'
 
 export default {
@@ -43,6 +43,9 @@ export default {
     ])
   },
   methods: {
+    ...mapActions('home', [
+      'loadDatas'
+    ]),
     openmap () {
       wx.openLocation({
         latitude: 31.756525,
@@ -66,6 +69,9 @@ export default {
       title: '转发',
       path: '/pages/home'
     }
+  },
+  mounted () {
+    this.loadDatas()
   }
 }
 </script>

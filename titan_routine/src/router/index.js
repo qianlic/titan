@@ -20,4 +20,13 @@ module.exports = [{
       'i-tab-bar-item': '../../static/ivew/tab-bar-item/index'
     }
   }
+}, {
+  path: 'pages/shared',
+  name: 'shared',
+  config: {
+    usingComponents: {
+      'i-tab-bar': '../../static/ivew/tab-bar/index',
+      'i-tab-bar-item': '../../static/ivew/tab-bar-item/index'
+    }
+  }
 }]
