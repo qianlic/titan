@@ -25,6 +25,7 @@ module.exports = [{
   name: 'shared',
   config: {
     usingComponents: {
+      'i-button': '../../static/ivew/button/index',
       'i-tab-bar': '../../static/ivew/tab-bar/index',
       'i-tab-bar-item': '../../static/ivew/tab-bar-item/index'
     }
