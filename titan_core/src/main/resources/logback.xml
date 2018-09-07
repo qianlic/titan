@@ -9,9 +9,9 @@
     </appender>
 
     <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/bsdyun-ecom-oms/oms.log</file>
+        <file>${log.path}/log/titan.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/aip/core.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log.path}/titan/core.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>

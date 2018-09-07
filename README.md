@@ -1,4 +1,5 @@
 # 技术栈
+[预览](https://45.76.222.218:8000)
 ## 前端
 > mpvue + iview + vue-router + vuex + echarts
 ## 后端
@@ -17,7 +18,7 @@
 ```
 
 # 效果展示
-[预览](https://45.76.222.218:8000)
+
 - 用户管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/user.png"/>
 
