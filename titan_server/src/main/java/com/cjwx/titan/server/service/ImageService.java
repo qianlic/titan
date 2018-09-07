@@ -9,6 +9,6 @@ import java.io.File;
  */
 public interface ImageService {
 
-    void upload(File file);
+    void upload(String name, File file);
 
 }

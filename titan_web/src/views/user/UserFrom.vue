@@ -1,6 +1,12 @@
 <template>
   <div>
     <Form :model="formInline" label-position="left" :label-width="100" style="margin: 10px">
+      <Upload multiple type="drag" action="/api/system/image/upload" name="file" :headers="headers">
+        <div style="padding: 20px 0">
+          <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+          <p>Click or drag files here to upload</p>
+        </div>
+      </Upload>
       <FormItem label="用户编码">
         <Input v-model="formInline.usercode"/>
       </FormItem>
@@ -25,7 +31,8 @@
       <FormItem label="角色列表">
         <Card>
           <div style="border-bottom: 1px solid #f4f4f4;padding-bottom:6px;margin-bottom:6px">
-            <Checkbox :indeterminate="indeterminate" :value="checkAll" @click.prevent.native="handleCheckAll">系统角色</Checkbox>
+            <Checkbox :indeterminate="indeterminate" :value="checkAll" @click.prevent.native="handleCheckAll">系统角色
+            </Checkbox>
           </div>
           <CheckboxGroup v-model="roleids" @on-change="checkAllGroupChange">
             <Checkbox v-for="item in availablelist" :key="item.id" :label="item.id">
@@ -51,15 +58,20 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 import formatDate from '../../utils/date'
+import localStore from '../../store/localStore'
 
 export default {
   name: 'user-from',
   data () {
     const {id, usercode, username, sex, birthday, mobile, email, status} = this.$route.params
+    const AUTH_TOKEN = localStore.getAuthTokenItem('Authorization')
     return {
       indeterminate: false,
       checkAll: false,
       roleids: [],
+      headers: {
+        'Authorization': AUTH_TOKEN
+      },
       formInline: {
         id,
         usercode,
