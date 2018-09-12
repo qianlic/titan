@@ -3,6 +3,7 @@ package com.cjwx.titan.engine.core.model;
 import com.cjwx.titan.engine.util.ObjectUtils;
 import lombok.Data;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 @Data
 public final class Model extends AbstractBox<Object> {
 
+    private static final long serialVersionUID = 3308264241268232825L;
     private static String KEY_ID = "id";
     private static String KEY_START = "start";
     private static String KEY_SIZE = "size";
@@ -38,11 +40,19 @@ public final class Model extends AbstractBox<Object> {
     }
 
     public Map<String, Object> getParams() {
-        Object o = this.get(KEY_PARSMS);
-        if (o instanceof Map) {
-            return (HashMap<String, Object>) o;
-        }
-        return ObjectUtils.objectToHashMap(o);
+        return (HashMap<String, Object>) this.get(KEY_PARSMS);
+    }
+
+    public Map<String, Object> getParams(Class clz) {
+        Map<String, Object> params = getParams();
+        Arrays.asList(clz.getDeclaredFields()).forEach(field -> {
+            field.setAccessible(true);
+            Object value = params.get(field.getName());
+            if (ObjectUtils.isNotEmpty(value)) {
+                params.put(field.getName(), ObjectUtils.objectToFieldType(value, field.getType()));
+            }
+        });
+        return params;
     }
 
 }

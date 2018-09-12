@@ -1,5 +1,7 @@
 package com.cjwx.titan.server.service;
 
+import com.cjwx.titan.server.bean.SysImageBean;
+
 import java.io.File;
 
 /**
@@ -9,6 +11,8 @@ import java.io.File;
  */
 public interface ImageService {
 
-    void upload(String name, File file);
+    SysImageBean upload(String name, File file);
+
+    void delete(String hash);
 
 }

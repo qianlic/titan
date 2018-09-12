@@ -55,8 +55,8 @@ export default {
       indeterminate: false,
       checkAll: false,
       resourceids: [],
+      id,
       formInline: {
-        id,
         rolecode,
         rolename,
         description,
@@ -91,7 +91,10 @@ export default {
           }
         })
       } else {
-        this.editDatas(params).then(response => {
+        this.editDatas({
+          'id': this.id,
+          params
+        }).then(response => {
           if (response.status === 0) {
             this.$Message.success(response.message)
             this.handleCancel()

@@ -1,8 +1,10 @@
 <template>
   <div>
     <Form :model="formInline" label-position="left" :label-width="100" style="margin: 10px">
-      <Upload multiple type="drag" action="/api/system/image/upload" name="file" :headers="headers">
-        <div style="padding: 20px 0">
+      <Upload multiple type="drag" action="/api/system/image/upload" name="file"
+              :headers="headers" :on-success="hhsuccess" :on-remove="hhremove">
+        <img :src="formInline.imgurl" v-if="formInline.imgurl"/>
+        <div style="padding: 20px 0" v-if="!formInline.imgurl">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
           <p>Click or drag files here to upload</p>
         </div>
@@ -72,8 +74,9 @@ export default {
       headers: {
         'Authorization': AUTH_TOKEN
       },
+      id,
       formInline: {
-        id,
+        imgurl: 'https://i.loli.net/2018/09/07/5b923f842ecff.jpeg',
         usercode,
         username,
         sex,
@@ -96,6 +99,13 @@ export default {
       'editDatas',
       'createData'
     ]),
+    hhsuccess (resp, file, fileList) {
+      console.log(resp, file, fileList)
+      this.formInline.imgurl = 'https://i.loli.net/' + resp.data.path
+    },
+    hhremove () {
+      console.log('asdadadadada')
+    },
     handleSubmit () {
       const params = {
         'roleids': this.roleids.join(','),
@@ -111,7 +121,10 @@ export default {
           }
         })
       } else {
-        this.editDatas(params).then(response => {
+        this.editDatas({
+          'id': this.id,
+          params
+        }).then(response => {
           if (response.status === 0) {
             this.$Message.success(response.message)
             this.handleCancel()

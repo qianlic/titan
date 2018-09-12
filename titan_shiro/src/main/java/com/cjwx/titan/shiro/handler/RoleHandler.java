@@ -26,7 +26,7 @@ public class RoleHandler {
 
     @RequestMapping("list")
     public PageList<SysRoleBean> list(@RequestBody Model model) {
-        return roleService.getRoleList(model.getStart(), model.getSize(), model.getParams());
+        return roleService.getRoleList(model.getStart(), model.getSize(), model.getParams(SysRoleBean.class));
     }
 
     @RequestMapping("availableList")
@@ -41,7 +41,7 @@ public class RoleHandler {
 
     @RequestMapping("edit")
     public int edit(@RequestBody Model model) {
-        return roleService.updateRole(model.getId(), model.getParams());
+        return roleService.updateRole(model.getId(), model.getParams(SysRoleBean.class));
     }
 
     @RequestMapping("remove")

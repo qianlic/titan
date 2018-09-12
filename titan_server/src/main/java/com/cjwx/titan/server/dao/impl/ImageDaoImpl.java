@@ -5,15 +5,17 @@ import com.cjwx.titan.server.bean.SysImageBean;
 import com.cjwx.titan.server.dao.ImageDao;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by CJWX on 2016/4/10.
- */
 @Repository
 public class ImageDaoImpl extends BaseDao implements ImageDao {
 
     @Override
     public void createImage(SysImageBean image) {
         this.save(image);
+    }
+
+    @Override
+    public int deleteImage(String hash) {
+        return this.getExecute().table(SysImageBean.TABLE).eq("hash", hash).delete();
     }
 
 }

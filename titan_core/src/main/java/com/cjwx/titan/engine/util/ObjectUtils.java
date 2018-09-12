@@ -102,22 +102,18 @@ public class ObjectUtils {
      * 对象转类型转换
      */
     public static Object objectToFieldType(Object value, Class<?> fieldTypeClass) {
-        if (Long.class.getName().equals(fieldTypeClass.getName())
-                || long.class.getName().equals(fieldTypeClass.getName())) {
+        String type = fieldTypeClass.getSimpleName();
+        if ("long".equalsIgnoreCase(type)) {
             value = Long.parseLong(value.toString());
-        } else if (Integer.class.getName().equals(fieldTypeClass.getName())
-                || int.class.getName().equals(fieldTypeClass.getName())) {
+        } else if ("integer".equalsIgnoreCase(type) || "int".equalsIgnoreCase(type)) {
             value = Integer.parseInt(value.toString());
-        } else if (Float.class.getName().equals(fieldTypeClass.getName())
-                || float.class.getName().equals(fieldTypeClass.getName())) {
+        } else if ("float".equalsIgnoreCase(type)) {
             value = Float.parseFloat(value.toString());
-        } else if (Double.class.getName().equals(fieldTypeClass.getName())
-                || double.class.getName().equals(fieldTypeClass.getName())) {
+        } else if ("double".equalsIgnoreCase(type)) {
             value = Double.parseDouble(value.toString());
-        } else if (Date.class.getName().equals(fieldTypeClass.getName())) {
+        } else if ("date".equalsIgnoreCase(type)) {
             value = new Date(Long.parseLong(value.toString()));
-        } else if (Boolean.class.getName().equals(fieldTypeClass.getName())
-                || boolean.class.getName().equals(fieldTypeClass.getName())) {
+        } else if ("boolean".equalsIgnoreCase(type)) {
             value = ObjectUtils.objectToBoolean(value);
         }
         return value;

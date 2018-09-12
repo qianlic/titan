@@ -26,6 +26,8 @@ public class SysUserBean extends UserBean {
     private String mobile;
     @Column(name = "email")
     private String email;
+    @Column(name = "imgurl")
+    private String imgurl;
 
     @Transient
     private List<SysRoleBean> roles;

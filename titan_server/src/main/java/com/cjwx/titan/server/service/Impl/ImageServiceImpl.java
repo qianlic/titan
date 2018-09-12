@@ -24,28 +24,37 @@ import java.util.Map;
 @Transactional
 public class ImageServiceImpl implements ImageService {
 
-    String upload_url = "https://sm.ms/api/upload";
+    public static final String upload_url = "https://sm.ms/api/upload";
+    public static final String delete_url = "https://sm.ms/api/delete";
 
     @Resource
     private ImageDao imageDao;
 
-    /**
-     *  图片上传
-     */
     @Override
-    public void upload(String name, File file) {
+    public SysImageBean upload(String name, File file) {
+        SysImageBean imge = null;
         Map<String, Object> param = new HashMap<>();
         param.put("smfile", file);
         String result = HttpClientUtils.doFromRequest(upload_url, param);
         if (StringUtils.isNotEmpty(result)) {
             JSONObject josn = JSONObject.parseObject(result);
             if ("success".equalsIgnoreCase(josn.getString("code"))) {
-                SysImageBean imge = josn.getObject("data", SysImageBean.class);
+                imge = josn.getObject("data", SysImageBean.class);
                 imge.setFilename(name);
                 imageDao.createImage(imge);
             } else {
                 throw new ServiceException(josn.getString("msg"));
             }
+        }
+        return imge;
+    }
+
+    @Override
+    public void delete(String hash) {
+        String url = delete_url + "/" + hash;
+        String result = HttpClientUtils.dohttpRequest(url, "GET", null);
+        if (StringUtils.isNotEmpty(result)) {
+            imageDao.deleteImage(hash);
         }
     }
 

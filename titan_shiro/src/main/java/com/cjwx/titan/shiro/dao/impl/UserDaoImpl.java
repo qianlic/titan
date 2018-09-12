@@ -43,7 +43,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
     @Override
     public PageList<SysUserBean> findUserList(int start, int size, Map<String, Object> wheres) {
-        return this.getQuery().select("id,usercode,username,sex,birthday,mobile,email,lastlogintime,roleids,status")
+        return this.getQuery().select("id,usercode,username,sex,birthday,mobile,email,imgurl,lastlogintime,roleids,status")
                 .from(SysUserBean.TABLE).eq(wheres).page(start, size, SysUserBean.class);
     }
 

@@ -68,8 +68,8 @@ export default {
   data () {
     const {id, resourcecode, resourcename, description, status, ico, type, url, level, parentid} = this.$route.params
     return {
+      id,
       formInline: {
-        id,
         resourcecode,
         resourcename,
         description,
@@ -103,7 +103,10 @@ export default {
           }
         })
       } else {
-        this.editDatas(this.formInline).then(response => {
+        this.editDatas({
+          'id': this.id,
+          params: this.formInline
+        }).then(response => {
           if (response.status === 0) {
             this.$Message.success(response.message)
             this.handleCancel()

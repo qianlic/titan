@@ -31,7 +31,7 @@ public class JobDetailHandler {
 
     @RequestMapping("list")
     public PageList<QtzJobEntity> list(@RequestBody Model model) {
-        return jobDetilService.getJobDetailList(model.getStart(), model.getSize(), model.getParams());
+        return jobDetilService.getJobDetailList(model.getStart(), model.getSize(), model.getParams(QtzJobEntity.class));
     }
 
     @RequestMapping("create")

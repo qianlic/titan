@@ -40,7 +40,7 @@ public class ResourceHandler {
 
     @RequestMapping("edit")
     public int edit(@RequestBody Model model) {
-        return resourceService.updateResource(model.getId(), model.getParams());
+        return resourceService.updateResource(model.getId(), model.getParams(SysResourceBean.class));
     }
 
     @RequestMapping("remove")

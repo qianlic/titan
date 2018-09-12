@@ -20,7 +20,7 @@ public class ThreadHandler {
 
     @RequestMapping("list")
     public PageList<ThreadBean> list(@RequestBody Model model) {
-        return ThreadHelper.findThreadList(model.getStart(), model.getSize(), model.getParams());
+        return ThreadHelper.findThreadList(model.getStart(), model.getSize(), model.getParams(ThreadBean.class));
     }
 
     @RequestMapping("interrupt")

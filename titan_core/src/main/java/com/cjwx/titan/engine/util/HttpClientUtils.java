@@ -79,7 +79,7 @@ public class HttpClientUtils {
      * @param method 请求方法
      * @param param  提交参数
      */
-    private static String dohttpRequest(String url, String method, Map<String, Object> param) {
+    public static String dohttpRequest(String url, String method, Map<String, Object> param) {
         String result = StringUtils.NULL_STRING;
         HttpURLConnection conn = null;
         BufferedReader br = null;

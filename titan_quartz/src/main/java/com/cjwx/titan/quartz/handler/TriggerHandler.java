@@ -24,7 +24,7 @@ public class TriggerHandler {
 
     @RequestMapping("list")
     public PageList<QtzTriggerEntity> list(@RequestBody Model model) {
-        return triggerService.getTriggerList(model.getStart(), model.getSize(), model.getParams());
+        return triggerService.getTriggerList(model.getStart(), model.getSize(), model.getParams(QtzTriggerEntity.class));
     }
 
     @RequestMapping("create")

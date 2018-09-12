@@ -6,4 +6,6 @@ public interface ImageDao {
 
     void createImage(SysImageBean image);
 
+    int deleteImage(String hash);
+
 }

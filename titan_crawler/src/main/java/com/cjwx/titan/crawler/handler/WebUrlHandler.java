@@ -26,7 +26,7 @@ public class WebUrlHandler {
 
     @RequestMapping("list")
     public PageList<ClrWebUrlBean> list(@RequestBody Model model) {
-        return webUrlService.getWebUrlList(model.getStart(), model.getSize(), model.getParams());
+        return webUrlService.getWebUrlList(model.getStart(), model.getSize(), model.getParams(ClrWebUrlBean.class));
     }
 
     @RequestMapping("remove")

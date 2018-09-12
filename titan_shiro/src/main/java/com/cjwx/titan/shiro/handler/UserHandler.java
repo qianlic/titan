@@ -42,7 +42,7 @@ public class UserHandler {
 
     @RequestMapping("list")
     public PageList<SysUserBean> list(@RequestBody Model model) {
-        return userService.getUserList(model.getStart(), model.getSize(), model.getParams());
+        return userService.getUserList(model.getStart(), model.getSize(), model.getParams(SysUserBean.class));
     }
 
     @RequestMapping("create")
@@ -56,7 +56,7 @@ public class UserHandler {
 
     @RequestMapping("edit")
     public int edit(@RequestBody Model model) {
-        return userService.updateUser(model.getId(), model.getParams());
+        return userService.updateUser(model.getId(), model.getParams(SysUserBean.class));
     }
 
     @RequestMapping("remove")

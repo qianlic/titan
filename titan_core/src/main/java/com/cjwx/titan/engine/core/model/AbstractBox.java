@@ -30,11 +30,12 @@ public abstract class AbstractBox<T> extends HashMap<String, T> {
 
     public JSONArray getJSONArray(String key) {
         Object value = this.get(key);
-        if (value instanceof JSONArray) {
-            return (JSONArray) value;
-        } else {
-            return value instanceof String ? (JSONArray) JSON.parse((String) value) : (JSONArray) JSON.toJSON(value);
+        if (value instanceof String) {
+            value = JSON.parse((String) value);
+        } else if (!(value instanceof JSONArray)) {
+            value = JSON.toJSON(value);
         }
+        return (JSONArray) value;
     }
 
 }

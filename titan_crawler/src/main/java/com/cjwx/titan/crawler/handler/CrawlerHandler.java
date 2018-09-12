@@ -25,7 +25,7 @@ public class CrawlerHandler {
 
     @RequestMapping("list")
     public PageList<ClrCrawlerBean> list(@RequestBody Model model) {
-        return crawlerService.getCrawlerList(model.getStart(), model.getSize(), model.getParams());
+        return crawlerService.getCrawlerList(model.getStart(), model.getSize(), model.getParams(ClrCrawlerBean.class));
     }
 
     @RequestMapping("create")
@@ -35,7 +35,7 @@ public class CrawlerHandler {
 
     @RequestMapping("edit")
     public int edit(@RequestBody Model model) {
-        return crawlerService.updateCrawler(model.getId(), model.getParams());
+        return crawlerService.updateCrawler(model.getId(), model.getParams(ClrCrawlerBean.class));
     }
 
     @RequestMapping("remove")
