@@ -1,10 +1,13 @@
 package com.cjwx.titan.server.handler;
 
+import com.cjwx.titan.engine.core.model.Model;
+import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.util.StringUtils;
 import com.cjwx.titan.server.bean.SysImageBean;
 import com.cjwx.titan.server.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,8 +52,16 @@ public class ImageHandler {
      * 图片删除
      */
     @RequestMapping("remove")
-    public void remove(String hash) {
-        imageService.delete(hash);
+    public void remove(@RequestBody Model model) {
+        imageService.delete(model.getString("hash"));
+    }
+
+    /**
+     * 图片列表
+     */
+    @RequestMapping("list")
+    public PageList<SysImageBean> list(@RequestBody Model model) {
+        return imageService.getImageList(model.getStart(), model.getSize(), model.getParams(SysImageBean.class));
     }
 
 }

@@ -72,7 +72,8 @@ public class JobDetilServiceImpl implements JobDetilService {
                     .withDescription(job.getDescription())
                     .usingJobData("SERVICE", job.getService())
                     .usingJobData("METHOD", job.getMethod())
-                    .usingJobData("DATA", job.getData()).build();
+                    .usingJobData("DATA", job.getData())
+                    .build();
             scheduler.addJob(jobDetail, true);
         } catch (Exception e) {
             log.debug(e.getMessage(), e);

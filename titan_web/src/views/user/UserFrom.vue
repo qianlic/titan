@@ -1,8 +1,7 @@
 <template>
   <div>
     <Form :model="formInline" label-position="left" :label-width="100" style="margin: 10px">
-      <Upload multiple type="drag" action="/api/system/image/upload" name="file"
-              :headers="headers" :on-success="hhsuccess" :on-remove="hhremove">
+      <Upload type="drag" action="/api/system/image/upload" name="file" :headers="headers" :on-success="hhsuccess">
         <img :src="formInline.imgurl" v-if="formInline.imgurl"/>
         <div style="padding: 20px 0" v-if="!formInline.imgurl">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -65,7 +64,7 @@ import localStore from '../../store/localStore'
 export default {
   name: 'user-from',
   data () {
-    const {id, usercode, username, sex, birthday, mobile, email, status} = this.$route.params
+    const {id, usercode, username, sex, birthday, mobile, email, imgurl, status} = this.$route.params
     const AUTH_TOKEN = localStore.getAuthTokenItem('Authorization')
     return {
       indeterminate: false,
@@ -76,7 +75,7 @@ export default {
       },
       id,
       formInline: {
-        imgurl: 'https://i.loli.net/2018/09/07/5b923f842ecff.jpeg',
+        imgurl,
         usercode,
         username,
         sex,
@@ -99,12 +98,8 @@ export default {
       'editDatas',
       'createData'
     ]),
-    hhsuccess (resp, file, fileList) {
-      console.log(resp, file, fileList)
+    hhsuccess (resp) {
       this.formInline.imgurl = 'https://i.loli.net/' + resp.data.path
-    },
-    hhremove () {
-      console.log('asdadadadada')
     },
     handleSubmit () {
       const params = {

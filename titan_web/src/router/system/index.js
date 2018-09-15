@@ -34,11 +34,18 @@ const resourceFrom = {
   component: () => import('../../views/resource/ResourceFrom')
 }
 
+const image = {
+  path: 'image',
+  name: 'image',
+  component: () => import('../../views/image/Image')
+}
+
 export default [
   user,
   userFrom,
   role,
   roleFrom,
   resource,
-  resourceFrom
+  resourceFrom,
+  image
 ]

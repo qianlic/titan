@@ -14,6 +14,8 @@ public interface TriggerService {
 
     void createTrigger(QtzTriggerEntity trigger);
 
+    void updateTrigger(QtzTriggerEntity trigger);
+
     QtzTriggerEntity getTriggerEntity(QtzTriggerEntity trigger);
 
     Trigger getTrigger(QtzTriggerEntity trigger) throws SchedulerException;

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import role from './modules/role'
 import resource from './modules/resource'
+import image from './modules/image'
 import thread from './modules/thread'
 import memory from './modules/memory'
 import redis from './modules/redis'
@@ -98,6 +99,7 @@ const modules = {
   user,
   role,
   resource,
+  image,
   thread,
   memory,
   redis,

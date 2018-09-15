@@ -32,6 +32,11 @@ public class TriggerHandler {
         triggerService.createTrigger(tigger);
     }
 
+    @RequestMapping("edit")
+    public void edit(@RequestBody QtzTriggerEntity tigger) {
+        triggerService.updateTrigger(tigger);
+    }
+
     @RequestMapping("remove")
     public void remove(@RequestBody QtzTriggerEntity tigger) {
         triggerService.delete(tigger);

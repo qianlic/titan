@@ -2,6 +2,7 @@ package com.cjwx.titan.server.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.titan.engine.core.exception.ServiceException;
+import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.util.HttpClientUtils;
 import com.cjwx.titan.engine.util.StringUtils;
 import com.cjwx.titan.server.bean.SysImageBean;
@@ -53,9 +54,14 @@ public class ImageServiceImpl implements ImageService {
     public void delete(String hash) {
         String url = delete_url + "/" + hash;
         String result = HttpClientUtils.dohttpRequest(url, "GET", null);
-        if (StringUtils.isNotEmpty(result)) {
+        if (StringUtils.isNotEmpty(result) && result.contains("File delete success")) {
             imageDao.deleteImage(hash);
         }
+    }
+
+    @Override
+    public PageList<SysImageBean> getImageList(int start, int size, Map<String, Object> wheres) {
+        return imageDao.findImageList(start, size, wheres);
     }
 
 }

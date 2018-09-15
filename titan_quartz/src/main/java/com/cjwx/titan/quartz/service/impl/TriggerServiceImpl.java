@@ -41,13 +41,38 @@ public class TriggerServiceImpl implements TriggerService {
                 throw new IllegalArgumentException("cronExpression cannot be null");
             }
             ScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule(cronExpression);
-            TriggerBuilder t = TriggerBuilder.newTrigger()
+            Trigger t = TriggerBuilder.newTrigger()
                     .withIdentity(trigger.getName(), trigger.getGroup())
                     .withPriority(trigger.getPriority())
                     .withSchedule(cronSchedule)
                     .forJob(trigger.getJobKey())
-                    .withDescription(trigger.getDescription());
-            scheduler.scheduleJob(t.build());
+                    .withDescription(trigger.getDescription())
+                    .build();
+            scheduler.scheduleJob(t);
+        } catch (Exception e) {
+            log.debug(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 创建定时触发器
+     */
+    @Override
+    public void updateTrigger(QtzTriggerEntity trigger) {
+        try {
+            String cronExpression = trigger.getCronExpression();
+            if (!CronExpression.isValidExpression(cronExpression)) {
+                throw new IllegalArgumentException("cronExpression cannot be null");
+            }
+            ScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule(cronExpression);
+            Trigger t = getTrigger(trigger).getTriggerBuilder()
+                    .withIdentity(trigger.getName(), trigger.getGroup())
+                    .withPriority(trigger.getPriority())
+                    .withSchedule(cronSchedule)
+                    .forJob(trigger.getJobKey())
+                    .withDescription(trigger.getDescription())
+                    .build();
+            scheduler.scheduleJob(t);
         } catch (Exception e) {
             log.debug(e.getMessage(), e);
         }
