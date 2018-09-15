@@ -1,6 +1,6 @@
 <template>
   <!-- 目录菜单. -->
-  <Menu theme="light" width="auto" @on-select="loadPage">
+  <Menu theme="light" :style="menuStyle" @on-select="loadPage">
     <Submenu :name="menu.resourcecode" :key="menu.id" v-for="menu in resources" v-if="menu.parentid == 0">
       <template slot="title">
         <Icon :type="menu.ico"></Icon>
@@ -17,6 +17,14 @@
 <script>
 export default {
   name: 'sider-menu',
+  data: () => {
+    return {
+      menuStyle: {
+        width: 'auto',
+        height: document.documentElement.clientHeight - 66 + 'px'
+      }
+    }
+  },
   props: {
     'resources': {
       type: Array,
