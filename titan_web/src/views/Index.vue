@@ -10,7 +10,7 @@
         <Layout :style="{padding: '0 20px 20px'}">
           <!-- 导航条. -->
           <NavigationBar :cachepages="cachepages" @load_page="loadPage" @close_page="closePage"/>
-          <Content :style="{padding: '24px', minHeight: '500px', background: '#fff'}">
+          <Content :style="contentStyle">
             <keep-alive :include="cachepages.map(page=>page.code)">
               <!-- 路由出口 -->
               <!-- 路由匹配到的组件将渲染在这里 -->
@@ -33,12 +33,22 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'index',
-  computed: mapGetters([
-    'username',
-    'resources',
-    'cachepages',
-    'activepage'
-  ]),
+  computed: {
+    ...mapGetters([
+      'username',
+      'resources',
+      'cachepages',
+      'activepage'
+    ]),
+    contentStyle: function () {
+      const minHeight = document.documentElement.clientHeight - 132 + 'px'
+      return {
+        padding: '24px',
+        minHeight,
+        'background': '#fff'
+      }
+    }
+  },
   components: {
     HeaderMenu,
     ModleMenu,
@@ -68,6 +78,8 @@ export default {
     }
   },
   created: function () {
+    console.log(document.documentElement.clientHeight)
+
     request.token().then(response => {
       if (response.status === 0) {
         this.loadTokenInfo(response.data)
