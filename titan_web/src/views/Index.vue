@@ -3,14 +3,14 @@
     <Layout>
       <HeaderMenu :username="username" @log_out="logout"/>
       <Layout>
-        <Sider hide-trigger style="background:#fff">
+        <Sider hide-trigger style="background:#fff;">
           <!-- 目录菜单. -->
           <ModleMenu :resources="resources" @load_page="loadPage"/>
         </Sider>
         <Layout style="padding:0 20px 20px">
           <!-- 导航条. -->
           <NavigationBar :cachepages="cachepages" @load_page="loadPage" @close_page="closePage"/>
-          <Content style="padding: 24px;background:#fff">
+          <Content :style="contentStyle">
             <keep-alive :include="cachepages.map(page=>page.code)">
               <!-- 路由出口 -->
               <!-- 路由匹配到的组件将渲染在这里 -->
@@ -33,6 +33,16 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'index',
+  data: () => {
+    const h = document.documentElement.clientHeight
+    return {
+      contentStyle: {
+        padding: '24px',
+        background: '#fff',
+        minHeight: h - 132 + 'px'
+      }
+    }
+  },
   computed: mapGetters([
     'username',
     'resources',
@@ -68,8 +78,6 @@ export default {
     }
   },
   created: function () {
-    console.log(document.documentElement.clientHeight)
-
     request.token().then(response => {
       if (response.status === 0) {
         this.loadTokenInfo(response.data)
