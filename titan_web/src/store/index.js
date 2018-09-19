@@ -66,10 +66,7 @@ const mutations = {
 
 const getters = {
   first: state => state.first,
-  usercode: state => state.token.usercode,
-  username: state => state.token.username,
-  roles: state => state.token.roles,
-  resources: state => state.token.resources,
+  token: state => state.token,
   cachepages: state => state.cachepages,
   activepage: state => state.cachepages.find(page => page.color === 'green')
 }

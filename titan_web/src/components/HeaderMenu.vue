@@ -1,14 +1,26 @@
 <template>
-  <Header>
-    <Menu mode="horizontal" theme="dark" @on-select="logout">
-      <div class="layout-logo"></div>
+  <Header style="padding: 0 20px">
+    <div mode="horizontal" theme="dark">
+      <div class="layout-logo">后台管理系统</div>
       <div class="layout-nav">
-        <MenuItem name="logout">
-          <Avatar icon="person"/>
-          {{username}}
-        </MenuItem>
+        <Dropdown trigger="click" placement="bottom-end" @on-click="clickItem">
+          <div name="logout">
+            <Avatar icon="person" :src="token.imgurl"/>
+            {{token.username}}
+          </div>
+          <DropdownMenu slot="list">
+            <DropdownItem name="passwd">
+              <Icon type="key" style="width: 15px"/>
+              修改密码
+            </DropdownItem>
+            <DropdownItem name="logout">
+              <Icon type="log-out" style="width: 15px"/>
+              退出登录
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown >
       </div>
-    </Menu>
+    </div>
   </Header>
 </template>
 
@@ -16,14 +28,19 @@
 export default {
   name: 'header-menu',
   props: {
-    'username': {
-      type: String,
-      default: 'helloworld'
+    'token': {
+      type: Object,
+      default: {}
     }
   },
   methods: {
     logout: function () {
       this.$emit('log_out')
+    },
+    clickItem: function (name) {
+      if (name === 'logout') {
+        this.logout()
+      }
     }
   }
 }
@@ -31,19 +48,23 @@ export default {
 
 <style scoped>
   .layout-logo {
-    width: 100px;
+    width: 140px;
     height: 30px;
     background: #5b6270;
     border-radius: 3px;
     float: left;
     position: relative;
     top: 15px;
-    left: 20px;
+    color: white;
+    line-height: 30px;
+    text-align: center;
+    font-size: 18px;
   }
 
   .layout-nav {
-    width: 150px;
-    margin: 0 auto;
-    margin-right: 0px;
+    color: white;
+    float: right;
+    cursor:pointer;
+    font-size: 14px;
   }
 </style>

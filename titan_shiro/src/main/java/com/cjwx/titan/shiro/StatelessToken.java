@@ -56,6 +56,7 @@ public class StatelessToken extends JwtToken implements AuthenticationToken {
         this.put("username", user.getUsername());
         this.put("sex", user.getSex());
         this.put("email", user.getEmail());
+        this.put("imgurl", user.getImgurl());
         this.setRoles(user.getRoles());
         this.setResources(user.getResources());
     }

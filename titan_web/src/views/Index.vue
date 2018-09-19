@@ -1,11 +1,11 @@
 <template>
   <div class="layout">
     <Layout>
-      <HeaderMenu :username="username" @log_out="logout"/>
+      <HeaderMenu :token="token" @log_out="logout"/>
       <Layout>
         <Sider hide-trigger style="background:#fff;">
           <!-- 目录菜单. -->
-          <ModleMenu :resources="resources" @load_page="loadPage"/>
+          <ModleMenu :resources="token.resources" @load_page="loadPage"/>
         </Sider>
         <Layout style="padding:0 20px 20px">
           <!-- 导航条. -->
@@ -44,8 +44,7 @@ export default {
     }
   },
   computed: mapGetters([
-    'username',
-    'resources',
+    'token',
     'cachepages',
     'activepage'
   ]),

@@ -66,7 +66,7 @@ export default {
       buttons: [ {
         title: '图片上传',
         type: 'info',
-        icon: 'ios-cloud-upload',
+        icon: 'upload',
         on: this.showUploadModal
       }]
     }
