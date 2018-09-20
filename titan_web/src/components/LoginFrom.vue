@@ -101,7 +101,7 @@ export default {
     padding: 25px 35px 20px;
     width: 316px;
     border-radius: 2px;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     background-color: #fff
   }
   .login_frame h3 {
@@ -114,7 +114,7 @@ export default {
     margin-top: 5px
   }
   .login_input_panel {
-    margin-top: 5px
+    margin-top: 10px
   }
   .login_input {
     position: relative;

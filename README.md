@@ -19,6 +19,9 @@
 
 # 效果展示
 
+- 系统登录
+<img src="https://github.com/qianlic/titan/blob/master/snapshot/login.png"/>
+
 - 用户管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/user.png"/>
 
