@@ -7,6 +7,8 @@ import com.cjwx.titan.engine.core.web.http.Result;
 import com.cjwx.titan.engine.core.web.http.ResponseHelper;
 import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
+import com.cjwx.titan.engine.reids.util.RedisUtils;
+import com.cjwx.titan.engine.util.StringUtils;
 import com.cjwx.titan.shiro.StatelessToken;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -35,6 +37,11 @@ public class StatelessLoginFilter extends AdviceFilter {
         Result date;
         try {
             JSONObject jsonObject = RequestHelper.requestJson(request);
+            if (!checkVerifyCode(jsonObject.getString("loginid"), jsonObject.getString("verifycode"))) {
+                date = new Result(ResultStatus.STATUS_1, "验证码错误！");
+                ResponseHelper.responseJson(response, responseStatus, date);
+                return false;
+            }
             String username = jsonObject.getString(HttpConstant.PARAM_USERNAME);
             String clientDigest = jsonObject.getString(HttpConstant.PARAM_DIGEST);
             //4、生成无状态Token
@@ -56,6 +63,10 @@ public class StatelessLoginFilter extends AdviceFilter {
         }
         ResponseHelper.responseJson(response, responseStatus, date);
         return false;
+    }
+
+    private boolean checkVerifyCode(String key, String code) {
+        return StringUtils.isNotEmpty(code) && code.equalsIgnoreCase(RedisUtils.get(key).toString());
     }
 
 }

@@ -18,6 +18,7 @@
             <util:map>
                 <entry key="login" value-ref="loginFilter"/>
                 <entry key="logout" value-ref="logoutFilter"/>
+                <entry key="captcha" value-ref="captchaFilter"/>
                 <entry key="authc" value-ref="authcFilter"/>
             </util:map>
         </property>
@@ -26,6 +27,7 @@
                 * = anon
                 /system/user/login = login
                 /system/user/logout = logout
+                /system/captcha = captcha
                 /system/** = authc
             </value>
         </property>
@@ -33,6 +35,9 @@
 
     <bean id="loginFilter" class="com.cjwx.titan.shiro.filter.StatelessLoginFilter"/>
     <bean id="logoutFilter" class="com.cjwx.titan.shiro.filter.StatelessLogoutFilter"/>
+    <bean id="captchaFilter" class="com.cjwx.titan.shiro.capcha.CaptchaFilter">
+        <property name="captchaProducer" ref="captchaProducer"/>
+    </bean>
     <bean id="authcFilter" class="com.cjwx.titan.shiro.filter.StatelessAuthcFilter"/>
 
     <!-- 安全管理器 -->
@@ -79,4 +84,19 @@
     <!-- 生命周期处理器-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.cjwx.titan.shiro.capcha.CaptchaConfig">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">no</prop>
+                        <prop key="kaptcha.image.width">125</prop>
+                        <prop key="kaptcha.image.height">45</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
 </beans>

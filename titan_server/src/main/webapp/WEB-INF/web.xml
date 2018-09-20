@@ -42,6 +42,14 @@
         <servlet-name>DruidStatView</servlet-name>
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CaptchaFilter</servlet-name>
+        <servlet-class>com.cjwx.titan.shiro.capcha.CaptchaFilter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CaptchaFilter</servlet-name>
+        <url-pattern>/captcha</url-pattern>
+    </servlet-mapping>
 
     <!-- 设置shiro filter -->
     <filter>

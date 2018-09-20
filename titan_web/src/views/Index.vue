@@ -10,7 +10,7 @@
         <Layout style="padding:0 20px 20px">
           <!-- 导航条. -->
           <NavigationBar :cachepages="cachepages" @load_page="loadPage" @close_page="closePage"/>
-          <Content :style="contentStyle">
+          <Content :style="{padding: '24px',background: '#fff',minHeight: height}">
             <keep-alive :include="cachepages.map(page=>page.code)">
               <!-- 路由出口 -->
               <!-- 路由匹配到的组件将渲染在这里 -->
@@ -36,11 +36,7 @@ export default {
   data: () => {
     const h = document.documentElement.clientHeight
     return {
-      contentStyle: {
-        padding: '24px',
-        background: '#fff',
-        minHeight: h - 132 + 'px'
-      }
+      height: h - 132 + 'px'
     }
   },
   computed: mapGetters([
@@ -84,6 +80,13 @@ export default {
         this.$router.push('/login')
       }
     })
+  },
+  mounted: function () {
+    const that = this
+    window.onresize = () => {
+      const h = document.documentElement.clientHeight
+      that.height = h - 132 + 'px'
+    }
   }
 }
 </script>
