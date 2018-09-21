@@ -65,8 +65,16 @@ public class StatelessLoginFilter extends AdviceFilter {
         return false;
     }
 
+    /**
+     * 验证码校验
+     */
     private boolean checkVerifyCode(String key, String code) {
-        return StringUtils.isNotEmpty(code) && code.equalsIgnoreCase(RedisUtils.get(key).toString());
+        if (!RedisUtils.exists(key)) {
+            return false;
+        }
+        String value = RedisUtils.get(key).toString();
+        RedisUtils.remove(key);
+        return StringUtils.isNotEmpty(code) && code.equalsIgnoreCase(value);
     }
 
 }

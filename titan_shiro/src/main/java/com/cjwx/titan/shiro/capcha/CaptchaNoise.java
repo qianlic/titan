@@ -4,7 +4,6 @@ import com.google.code.kaptcha.NoiseProducer;
 import com.google.code.kaptcha.util.Configurable;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
@@ -56,20 +55,24 @@ public class CaptchaNoise extends Configurable implements NoiseProducer {
 
         // 添加干扰线
         for (i = 0; i < pts.length - 1; ++i) {
-            if (i < 3) {
+            if (i < 4) {
                 graph.setStroke(new BasicStroke(0.9F * (4 - i)));
             }
             graph.drawLine((int) pts[i].getX(), (int) pts[i].getY(), (int) pts[i + 1].getX(), (int) pts[i + 1].getY());
         }
 
         // 添加噪点
-        int s = rand.nextInt(20);
+        int s = 25 + rand.nextInt(25);
         for (i = 0; i < s; i++) {
             int x = rand.nextInt(width);
             int y = rand.nextInt(height);
             int w = 1 + rand.nextInt(2);
-            int h = 1 + rand.nextInt(2);
-            graph.drawOval(x, y, w, h);
+            int h = 1 + rand.nextInt(3);
+            if ((i & 1) != 1) {
+                graph.fillRect(x, y, w, h);
+            } else {
+                graph.fillOval(x, y, w, h);
+            }
         }
         graph.dispose();
     }

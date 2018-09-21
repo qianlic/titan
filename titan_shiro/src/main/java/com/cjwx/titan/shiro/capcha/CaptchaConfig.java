@@ -24,7 +24,7 @@ public class CaptchaConfig extends Config {
     }
 
     public Color getNoiseColor() {
-        return randomRGB(100);
+        return randomRGB(120);
     }
 
     public Color getBackgroundColorFrom() {
