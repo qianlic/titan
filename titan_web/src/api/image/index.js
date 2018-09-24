@@ -1,9 +1,13 @@
 import request from '../'
+import axios from 'axios'
 
 const baseUrl = '/system/image'
 
 function upload (params) {
-  return request(`${baseUrl}/upload`, params)
+  let config = {
+    headers: {'Content-Type': 'multipart/form-data'}
+  }
+  return axios.post(`/api/${baseUrl}/upload`, params, config)
 }
 
 function remove (params) {

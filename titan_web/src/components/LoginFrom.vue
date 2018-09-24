@@ -1,5 +1,5 @@
 <template>
-  <div class="login_frame">
+  <div class="login_frame" @keyup.enter="userLogin">
     <h3>登录</h3>
     <div class="login_err_panel" v-if="loginFailureMessage">
       {{loginFailureMessage}}
@@ -48,7 +48,7 @@ export default {
     return {
       rememberMe: false,
       loginform: {
-        loginid: s,
+        s,
         username: undefined,
         password: undefined,
         verifycode: undefined
@@ -68,6 +68,7 @@ export default {
       request.login(this.loginform).then(response => {
         if (response.status !== 0) {
           this.loginFailureMessage = response.data
+          this.refreshCode()
         } else {
           localStore.setAuthToken({
             'Authorization': response.data
@@ -81,7 +82,7 @@ export default {
     },
     refreshCode () {
       const s = uuid.v1()
-      this.loginform.loginid = s
+      this.loginform.s = s
       this.verifyCodeUrl = '/api/system/captcha?s=' + s
     }
   },

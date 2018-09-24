@@ -37,7 +37,7 @@ public class StatelessLoginFilter extends AdviceFilter {
         Result date;
         try {
             JSONObject jsonObject = RequestHelper.requestJson(request);
-            if (!checkVerifyCode(jsonObject.getString("loginid"), jsonObject.getString("verifycode"))) {
+            if (!checkVerifyCode(jsonObject.getString("s"), jsonObject.getString("verifycode"))) {
                 date = new Result(ResultStatus.STATUS_1, "验证码错误！");
                 ResponseHelper.responseJson(response, responseStatus, date);
                 return false;

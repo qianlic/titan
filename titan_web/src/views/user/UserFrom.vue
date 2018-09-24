@@ -1,13 +1,10 @@
 <template>
   <div>
+    <CropperModal v-model="isShowImageModle" :imgurl="formInline.imgurl" @on-submit="hhsuccess"/>
     <Form :model="formInline" label-position="left" :label-width="100" style="margin: 10px">
-      <Upload type="drag" action="/api/system/image/upload" name="file" :headers="headers" :on-success="hhsuccess">
-        <img :src="formInline.imgurl" v-if="formInline.imgurl"/>
-        <div style="padding: 20px 0" v-if="!formInline.imgurl">
-          <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-          <p>Click or drag files here to upload</p>
-        </div>
-      </Upload>
+      <FormItem label="用户头像">
+        <img :src="formInline.imgurl" style="width: 200px;height: 200px" @click="isShowImageModle = true"/>
+      </FormItem>
       <FormItem label="用户编码">
         <Input v-model="formInline.usercode"/>
       </FormItem>
@@ -58,21 +55,19 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import PageModal from '../../components/modal/PageModal'
+import CropperModal from '../../components/modal/CropperModal'
 import formatDate from '../../utils/date'
-import localStore from '../../store/localStore'
 
 export default {
   name: 'user-from',
   data () {
     const {id, usercode, username, sex, birthday, mobile, email, imgurl, status} = this.$route.params
-    const AUTH_TOKEN = localStore.getAuthTokenItem('Authorization')
     return {
       indeterminate: false,
       checkAll: false,
+      isShowImageModle: false,
       roleids: [],
-      headers: {
-        'Authorization': AUTH_TOKEN
-      },
       id,
       formInline: {
         imgurl,
@@ -85,6 +80,10 @@ export default {
         status
       }
     }
+  },
+  components: {
+    PageModal,
+    CropperModal
   },
   computed: {
     ...mapGetters('role', [

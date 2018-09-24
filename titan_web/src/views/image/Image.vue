@@ -31,7 +31,12 @@ export default {
         'Authorization': AUTH_TOKEN
       },
       columns: [{
-        title: '图片名',
+        title: '图片',
+        type: 'image',
+        domain: 'https://i.loli.net/',
+        key: 'path'
+      }, {
+        title: '名称',
         key: 'filename'
       }, {
         title: '路径',

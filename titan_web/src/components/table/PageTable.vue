@@ -74,6 +74,19 @@ export default {
               return h('div', date)
             }
           }
+        } else if (x.type === 'image') {
+          return {
+            title: x.title,
+            width: x.width ? x.width : 100,
+            render: (h, {row}) => {
+              return h('img', {
+                attrs: {
+                  width: '100%',
+                  src: x.domain + row[x.key]
+                }
+              }, '')
+            }
+          }
         } else if (x.type === 'operation') {
           return {
             title: x.title,
