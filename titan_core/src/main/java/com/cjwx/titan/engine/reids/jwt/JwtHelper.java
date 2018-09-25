@@ -26,7 +26,7 @@ public class JwtHelper {
     public static final String AUTHORIZATION_KEY = "Authorization";
     public static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
     public static final String SIGNING_TOKEN_KEY = EndecryptUtils.createSigningKey();
-    public static final long EXPIRE_TIME = 5 * 60 * 1000;
+    public static final long EXPIRE_TIME = 5 * 60 * 60;
 
     /**
      * 生成JWT TOKEN
@@ -48,7 +48,7 @@ public class JwtHelper {
                 .setId(tokenId)
                 .setIssuer(StringUtils.trim(host))
                 .setIssuedAt(new Date(time))
-                .setExpiration(new Date(time + EXPIRE_TIME))
+                .setExpiration(new Date(time + 1000 * EXPIRE_TIME))
                 .signWith(SIGNATURE_ALGORITHM, generalKey());
     }
 
