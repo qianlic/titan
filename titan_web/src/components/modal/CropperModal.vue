@@ -2,20 +2,17 @@
   <Modal @on-visible-change="visibleChange" :value="value">
     <p slot="header" class="head_div">图片编辑</p>
     <div class="cropper-content">
-        <vueCropper ref="cropper" :img="img" :outputType="option.outputType" :fixed="option.fixed"
-                    :autoCropWidth="option.cropWidth" :autoCropHeight="option.cropHeight"
-                    :autoCrop="option.autoCrop" :original="option.original"/>
-    </div>
-    <div class="footer-btn">
       <input ref="uploads" type="file" style="display:none" :accept="accept" @change="loadImg">
-      <Button size="small" type="info" @click="upload()">更换图片</Button>
-      <Button size="small" type="info" style="width:26px" @click="changeScale(1)">+</Button>
-      <Button size="small" type="info" style="width:26px" @click="changeScale(-1)">-</Button>
-      <Button size="small" type="info" style="width:26px" @click="rotateLeft">↺</Button>
-      <Button size="small" type="info" style="width:26px" @click="rotateRight">↻</Button>
+      <vueCropper :img="img" :outputType="option.outputType" :fixed="option.fixed" :autoCrop="option.autoCrop"
+                  :autoCropWidth="option.cropWidth" :autoCropHeight="option.cropHeight" ref="cropper"/>
     </div>
     <div slot="footer">
       <Button type="ghost" size="small" @click="onCancel">取 消</Button>
+      <Button type="warning" size="small" @click="upload()">上 传</Button>
+      <Button type="info" size="small" style="width:26px" @click="changeScale(1)">+</Button>
+      <Button type="info" size="small" style="width:26px" @click="changeScale(-1)">-</Button>
+      <Button type="info" size="small" style="width:26px" @click="rotateLeft">↺</Button>
+      <Button type="info" size="small" style="width:26px" @click="rotateRight">↻</Button>
       <Button type="primary" size="small" @click="onSubmit">确 认</Button>
     </div>
   </Modal>
@@ -34,7 +31,6 @@ export default {
       accept: 'image/png,image/jpeg,image/gif,image/jpg',
       option: {
         fixed: true,
-        original: true,
         outputType: 'png',
         autoCrop: true,
         cropWidth: 200,
@@ -103,16 +99,13 @@ export default {
 </script>
 
 <style scoped>
-  .head_div{
-    font-weight:normal;
-    font-size:14px;
-    line-height:24px
+  .head_div {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px
   }
   .cropper-content {
-    width: 350px;
+    width: 100%;
     height: 300px;
-  }
-  .footer-btn {
-    margin-top: 20px;
   }
 </style>

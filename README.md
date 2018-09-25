@@ -25,14 +25,17 @@
 - 用户管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/user.png"/>
 
+- 用户编辑
+<img src="https://github.com/qianlic/titan/blob/master/snapshot/useredit.png"/>
+
+- 头像编辑
+<img src="https://github.com/qianlic/titan/blob/master/snapshot/imgedit.png"/>
+
 - 资源管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/resource.png"/>
 
 - 内存管理
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/memory.png"/>
-
-- 用户编辑
-<img src="https://github.com/qianlic/titan/blob/master/snapshot/useredit.png"/>
 
 - 接口文档
 <img src="https://github.com/qianlic/titan/blob/master/snapshot/api.png"/>

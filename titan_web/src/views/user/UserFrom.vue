@@ -3,7 +3,12 @@
     <CropperModal v-model="isShowImageModle" :imgurl="formInline.imgurl" @on-submit="hhsuccess"/>
     <Form :model="formInline" label-position="left" :label-width="100" style="margin: 10px">
       <FormItem label="用户头像">
-        <img :src="formInline.imgurl" style="width: 200px;height: 200px" @click="isShowImageModle = true"/>
+        <div class="preview" @click="isShowImageModle = true">
+          <img :src="formInline.imgurl" width="200px"/>
+          <div class="mask">
+            <h3>编 辑 头 像</h3>
+          </div>
+        </div>
       </FormItem>
       <FormItem label="用户编码">
         <Input v-model="formInline.usercode"/>
@@ -97,8 +102,14 @@ export default {
       'editDatas',
       'createData'
     ]),
-    hhsuccess (resp) {
-      this.formInline.imgurl = 'https://i.loli.net/' + resp.data.path
+    hhsuccess (response) {
+      if (response.status === 0) {
+        this.formInline.imgurl = 'https://i.loli.net/' + response.data.path
+        this.isShowImageModle = false
+        this.$Message.success(response.message)
+      } else {
+        this.$Message.error(response.message)
+      }
     },
     handleSubmit () {
       const params = {
@@ -172,3 +183,34 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .preview{
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #cccccc;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    background: rgba(101, 101, 101, 0.6);
+    color: #ffffff;
+    opacity: 0;
+  }
+  .mask h3 {
+    line-height: 200px;
+    text-align: center;
+  }
+
+  .preview:hover .mask {
+    opacity: 1;
+  }
+</style>
