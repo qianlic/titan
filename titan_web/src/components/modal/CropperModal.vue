@@ -3,8 +3,8 @@
     <p slot="header" class="head_div">图片编辑</p>
     <div class="cropper-content">
       <input ref="uploads" type="file" style="display:none" :accept="accept" @change="loadImg">
-      <vueCropper :img="img" :outputType="option.outputType" :fixed="option.fixed" :autoCrop="option.autoCrop"
-                  :autoCropWidth="option.cropWidth" :autoCropHeight="option.cropHeight" ref="cropper"/>
+      <vueCropper ref="cropper" :img="img" :full="option.full" :outputType="option.outputType" :fixed="option.fixed"
+                  :autoCrop="option.autoCrop" :autoCropWidth="option.cropWidth" :autoCropHeight="option.cropHeight"/>
     </div>
     <div slot="footer">
       <Button type="ghost" size="small" @click="onCancel">取 消</Button>
@@ -30,6 +30,7 @@ export default {
       img: '',
       accept: 'image/png,image/jpeg,image/gif,image/jpg',
       option: {
+        full: true,
         fixed: true,
         outputType: 'png',
         autoCrop: true,
