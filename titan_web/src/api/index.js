@@ -10,14 +10,15 @@ const request = Axios.create({
   validateStatus: status => {
     return status >= 200 && status <= 500
   },
-  timeout: 5000
+  timeout: 10000
 })
 
-export default async function (url, params) {
+export default async function (url, params, heads) {
   const AUTH_TOKEN = localStore.getAuthTokenItem('Authorization')
   if (AUTH_TOKEN !== undefined) {
     request.defaults.headers.common['Authorization'] = AUTH_TOKEN
   }
+  Object.assign(request.defaults.headers.common, heads)
   const options = {
     method: 'POST',
     data: params

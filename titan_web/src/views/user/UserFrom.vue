@@ -104,7 +104,7 @@ export default {
     ]),
     hhsuccess (response) {
       if (response.status === 0) {
-        this.formInline.imgurl = 'https://i.loli.net/' + response.data.path
+        this.formInline.imgurl = response.data.url
         this.isShowImageModle = false
         this.$Message.success(response.message)
       } else {

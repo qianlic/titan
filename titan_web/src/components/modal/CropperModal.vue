@@ -54,7 +54,7 @@ export default {
         const form = new FormData()
         form.append('file', data, uuid.v1() + '.png')
         request.upload(form).then(response => {
-          this.$emit('on-submit', response.data)
+          this.$emit('on-submit', response)
         })
       })
     },

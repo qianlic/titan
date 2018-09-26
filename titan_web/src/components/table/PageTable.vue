@@ -82,7 +82,7 @@ export default {
               return h('img', {
                 attrs: {
                   width: '100%',
-                  src: x.domain + row[x.key]
+                  src: row[x.key]
                 }
               }, '')
             }

@@ -22,8 +22,8 @@ public class SysImageBean extends AbstractBean {
     private String storename;
     @Column(name = "hash")
     private String hash;
-    @Column(name = "path")
-    private String path;
+    @Column(name = "url")
+    private String url;
     @Column(name = "width")
     private String width;
     @Column(name = "height")

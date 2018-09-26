@@ -33,14 +33,13 @@ export default {
       columns: [{
         title: '图片',
         type: 'image',
-        domain: 'https://i.loli.net/',
-        key: 'path'
+        key: 'url'
       }, {
         title: '名称',
         key: 'filename'
       }, {
         title: '路径',
-        key: 'path'
+        key: 'url'
       }, {
         title: '高度',
         width: 80,
