@@ -9,6 +9,7 @@ import system from './system'
 import monitor from './monitor'
 import quartz from './quartz'
 import crawler from './crawler'
+import common from './common'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,8 @@ const RouterConfig = {
     ...system,
     ...monitor,
     ...quartz,
-    ...crawler]
+    ...crawler,
+    ...common]
   }, {
     path: '/login',
     name: 'login',

@@ -35,7 +35,7 @@ public class RoleHandler {
     }
 
     @RequestMapping("create")
-    public void create(SysRoleBean role) {
+    public void create(@RequestBody SysRoleBean role) {
         roleService.createRole(role);
     }
 

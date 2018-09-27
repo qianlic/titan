@@ -4,6 +4,7 @@ import user from './modules/user'
 import role from './modules/role'
 import resource from './modules/resource'
 import image from './modules/image'
+import article from './modules/article'
 import thread from './modules/thread'
 import memory from './modules/memory'
 import redis from './modules/redis'
@@ -97,6 +98,7 @@ const modules = {
   role,
   resource,
   image,
+  article,
   thread,
   memory,
   redis,

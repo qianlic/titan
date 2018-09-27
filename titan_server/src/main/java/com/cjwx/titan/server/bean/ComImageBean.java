@@ -10,11 +10,11 @@ import javax.persistence.Transient;
 
 @Data
 @Entity
-@Table(name = SysImageBean.TABLE)
-public class SysImageBean extends AbstractBean {
+@Table(name = ComImageBean.TABLE)
+public class ComImageBean extends AbstractBean {
 
     @Transient
-    public static final String TABLE = "sys_image";
+    public static final String TABLE = "com_image";
 
     @Column(name = "filename")
     private String filename;

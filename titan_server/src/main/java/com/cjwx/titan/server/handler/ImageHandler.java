@@ -4,7 +4,7 @@ import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.util.StringUtils;
-import com.cjwx.titan.server.bean.SysImageBean;
+import com.cjwx.titan.server.bean.ComImageBean;
 import com.cjwx.titan.server.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +31,8 @@ public class ImageHandler {
      * 图片上传
      */
     @RequestMapping("upload")
-    public SysImageBean upload(MultipartFile file) {
-        SysImageBean img = null;
+    public ComImageBean upload(MultipartFile file) {
+        ComImageBean img = null;
         try {
             String fullName = file.getOriginalFilename();
             int i = fullName.lastIndexOf(".");
@@ -60,8 +60,8 @@ public class ImageHandler {
      * 图片列表
      */
     @RequestMapping("list")
-    public PageList<SysImageBean> list(@RequestBody Model model) {
-        return imageService.getImageList(model.getStart(), model.getSize(), model.getParams(SysImageBean.class));
+    public PageList<ComImageBean> list(@RequestBody Model model) {
+        return imageService.getImageList(model.getStart(), model.getSize(), model.getParams(ComImageBean.class));
     }
 
 }

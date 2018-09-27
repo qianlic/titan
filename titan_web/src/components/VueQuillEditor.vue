@@ -9,7 +9,7 @@
 import CropperModal from './modal/CropperModal'
 import {quillEditor} from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
+import '../styles/quill.snow.css'
 
 export default {
   name: 'vue-quill-editor',
@@ -18,7 +18,7 @@ export default {
       ['bold', 'italic', 'underline', 'strike', { 'script': 'sub' }, { 'script': 'super' }],
       [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }, { 'indent': '-1' }, { 'indent': '+1' }],
       [{ 'size': ['small', false, 'large', 'huge'] }, { 'font': [] }, { 'color': [] }, { 'background': [] }],
-      ['blockquote', 'code-block','clean'],
+      ['code-block', 'blockquote', 'clean'],
       ['link', 'image']
     ]
     return {

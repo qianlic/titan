@@ -1,16 +1,16 @@
 package com.cjwx.titan.server.dao;
 
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.server.bean.SysImageBean;
+import com.cjwx.titan.server.bean.ComImageBean;
 
 import java.util.Map;
 
 public interface ImageDao {
 
-    void createImage(SysImageBean image);
+    void createImage(ComImageBean image);
 
     int deleteImage(String hash);
 
-    PageList<SysImageBean> findImageList(int start, int size, Map<String, Object> wheres);
+    PageList<ComImageBean> findImageList(int start, int size, Map<String, Object> wheres);
     
 }

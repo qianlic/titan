@@ -5,7 +5,7 @@ import com.cjwx.titan.engine.core.exception.ServiceException;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.util.HttpClientUtils;
 import com.cjwx.titan.engine.util.StringUtils;
-import com.cjwx.titan.server.bean.SysImageBean;
+import com.cjwx.titan.server.bean.ComImageBean;
 import com.cjwx.titan.server.dao.ImageDao;
 import com.cjwx.titan.server.service.ImageService;
 import org.springframework.stereotype.Service;
@@ -32,15 +32,15 @@ public class ImageServiceImpl implements ImageService {
     private ImageDao imageDao;
 
     @Override
-    public SysImageBean upload(String name, File file) {
-        SysImageBean imge = null;
+    public ComImageBean upload(String name, File file) {
+        ComImageBean imge = null;
         Map<String, Object> param = new HashMap<>();
         param.put("smfile", file);
         String result = HttpClientUtils.doFromRequest(upload_url, param);
         if (StringUtils.isNotEmpty(result)) {
             JSONObject josn = JSONObject.parseObject(result);
             if ("success".equalsIgnoreCase(josn.getString("code"))) {
-                imge = josn.getObject("data", SysImageBean.class);
+                imge = josn.getObject("data", ComImageBean.class);
                 imge.setFilename(name);
                 imageDao.createImage(imge);
             } else {
@@ -60,7 +60,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public PageList<SysImageBean> getImageList(int start, int size, Map<String, Object> wheres) {
+    public PageList<ComImageBean> getImageList(int start, int size, Map<String, Object> wheres) {
         return imageDao.findImageList(start, size, wheres);
     }
 
