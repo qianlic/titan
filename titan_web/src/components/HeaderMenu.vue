@@ -1,7 +1,10 @@
 <template>
   <Header style="padding: 0 20px">
     <div mode="horizontal" theme="dark">
-      <div class="layout-logo">后台管理系统</div>
+      <div class="layout-logo">
+        <Icon type="cube"></Icon>
+        后台管理系统
+      </div>
       <div class="layout-nav">
         <Dropdown trigger="click" placement="bottom-end" @on-click="clickItem">
           <div name="logout">

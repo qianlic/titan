@@ -1,7 +1,7 @@
 import request from '../../api/image'
 
 const state = {
-  datas: [],
+  datas: {},
   selectRows: []
 }
 
@@ -30,9 +30,6 @@ const actions = {
   },
   removeDatas (context, params) {
     return request.remove(params)
-  },
-  uploadData (context, params) {
-    return request.upload(params)
   },
   setSelectRows ({commit}, selectRows) {
     commit('setSelectRows', selectRows)

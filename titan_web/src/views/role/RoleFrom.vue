@@ -8,7 +8,7 @@
         <Input v-model="formInline.rolename"/>
       </FormItem>
       <FormItem label="描述">
-        <Input v-model="formInline.description" type="textarea" :rows="4"/>
+        <QuillEditor v-model="formInline.description"/>
       </FormItem>
       <FormItem label="资源列表">
         <Card v-for="item1 in availablelist.filter(x => x.type === '1')" :key="item1.id">
@@ -46,6 +46,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import QuillEditor from '../../components/VueQuillEditor'
 
 export default {
   name: 'role-from',
@@ -63,6 +64,9 @@ export default {
         status
       }
     }
+  },
+  components: {
+    QuillEditor
   },
   computed: {
     ...mapGetters('resource', [

@@ -3,12 +3,12 @@
     <p slot="header" class="head_div">图片编辑</p>
     <div class="cropper-content">
       <input ref="uploads" type="file" style="display:none" :accept="accept" @change="loadImg">
-      <vueCropper ref="cropper" :img="img" :full="option.full" :outputType="option.outputType" :fixed="option.fixed"
-                  :autoCrop="option.autoCrop" :autoCropWidth="option.cropWidth" :autoCropHeight="option.cropHeight"/>
+      <vueCropper :img="img" :full="full" :fixed="fixed" :outputType="outputType" :autoCrop="option.autoCrop"
+                  :autoCropWidth="option.cropWidth" :autoCropHeight="option.cropHeight" ref="cropper"/>
     </div>
     <div slot="footer">
       <Button type="ghost" size="small" @click="onCancel">取 消</Button>
-      <Button type="warning" size="small" @click="upload()">上 传</Button>
+      <Button type="success" size="small" @click="upload()">打 开</Button>
       <Button type="info" size="small" style="width:26px" @click="changeScale(1)">+</Button>
       <Button type="info" size="small" style="width:26px" @click="changeScale(-1)">-</Button>
       <Button type="info" size="small" style="width:26px" @click="rotateLeft">↺</Button>
@@ -30,9 +30,6 @@ export default {
       img: '',
       accept: 'image/png,image/jpeg,image/gif,image/jpg',
       option: {
-        full: true,
-        fixed: true,
-        outputType: 'png',
         autoCrop: true,
         cropWidth: 200,
         cropHeight: 200
@@ -42,6 +39,18 @@ export default {
   props: {
     'imgurl': {
       type: String
+    },
+    'outputType': {
+      type: String,
+      default: 'png'
+    },
+    'full': {
+      type: Boolean,
+      default: false
+    },
+    'fixed': {
+      type: Boolean,
+      default: true
     },
     'value': {
       type: Boolean,
@@ -69,7 +78,8 @@ export default {
     },
     loadImg (e) {
       const file = e.target.files[0]
-      if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
+      const regex = /\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/
+      if (!regex.test(e.target.value)) {
         this.$Message.error('图片类型必须是.gif,jpeg,jpg,png,bmp中的一种')
         return
       }
@@ -105,6 +115,7 @@ export default {
     font-size: 14px;
     line-height: 24px
   }
+
   .cropper-content {
     width: 100%;
     height: 300px;
