@@ -1,28 +1,31 @@
 <template>
-  <PageTable ref="table" :columns="columns" :searchs="searchs" :buttons="buttons" :data="datas"
-             @select-row="setSelectRows" @load-data="loadDatas" selection/>
+  <div>
+    <PageTable ref="table" :columns="columns" :searchs="searchs" :buttons="buttons" :data="datas"
+               @select-row="setSelectRows" @load-data="loadDatas" selection/>
+    <PageModal title="内容预览" v-model="show" @on-submit="show = false" :width="width">
+      <div v-html="content"/>
+    </PageModal>
+  </div>
 </template>
 
 <script>
 import PageTable from '../../components/table/PageTable'
+import PageModal from '../../components/modal/PageModal'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'article',
   data () {
     return {
+      show: false,
+      width: 1000,
+      content: null,
       columns: [{
         title: '标题',
-        width: 120,
         key: 'title'
       }, {
         title: '作者',
-        width: 80,
         key: 'author'
-      }, {
-        title: '内容',
-        type: 'html',
-        key: 'content'
       }, {
         title: '状态',
         width: 80,
@@ -41,7 +44,12 @@ export default {
       }, {
         title: '操作',
         type: 'operation',
+        width: 200,
         buttons: [{
+          title: '预览',
+          type: 'warning',
+          click: ({content}) => this.showModle(content)
+        }, {
           title: '编辑',
           type: 'primary',
           click: this.editData
@@ -85,7 +93,8 @@ export default {
     }
   },
   components: {
-    PageTable
+    PageTable,
+    PageModal
   },
   computed: {
     ...mapGetters('article', [
@@ -122,6 +131,10 @@ export default {
           }
         })
       }
+    },
+    showModle (content) {
+      this.content = content
+      this.show = true
     }
   }
 }

@@ -1,4 +1,5 @@
 import request from '../../api/resource'
+import {formatTree} from '../../utils'
 
 const state = {
   availablelist: [],
@@ -22,15 +23,18 @@ const mutations = {
     state.datas = datas
   },
   expandData (state, id) {
-    state.datas.map(x => {
+    state.datas.forEach(x => {
       if (x.id === id) {
-        x['expand'] = x['expand'] !== true
-        state.datas.filter(y => y.parentid === id).map(y => {
-          y['expand'] = x['expand']
-          y['display'] = x['expand']
-          state.datas.filter(z => z.parentid === y.id).map(z => {
-            z['display'] = x['expand']
-          })
+        const s = !x['expand']
+        x['expand'] = s
+        state.datas.filter(y => y.parentid === id).forEach(y => {
+          y['display'] = s
+          if (!s) {
+            y['expand'] = s
+            state.datas.filter(z => z.parentid === y.id).forEach(z => {
+              z['display'] = s
+            })
+          }
         })
       }
     })
@@ -50,20 +54,13 @@ const actions = {
     return request.list(params).then(response => {
       if (response.status === 0) {
         const list = response.data
-        const datas = []
-        list.filter(x => x.parentid === 0).forEach(x => {
-          x['expand'] = true
-          x['display'] = true
-          datas.push(x)
-          list.filter(y => y.parentid === x.id).forEach(y => {
-            y['expand'] = false
-            y['display'] = true
-            datas.push(y)
-            datas.push(...list.filter(z => z.parentid === y.id).map(x => {
-              x['display'] = false
-              return x
-            }))
-          })
+        const datas = formatTree(list)
+        datas.forEach(x => {
+          x['expand'] = false
+          x['display'] = false
+          if (x.level === 1) {
+            x['display'] = true
+          }
         })
         commit('setDatas', datas)
       }

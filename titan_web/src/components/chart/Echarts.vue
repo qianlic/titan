@@ -14,7 +14,7 @@ export default {
   },
   props: {
     'title': {
-      type: Object
+      type: String
     },
     'data': {
       type: Array,

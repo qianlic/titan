@@ -17,7 +17,7 @@
 <script>
 import SearchBar from './SearchBar'
 import ToolBar from './ToolBar'
-import formatDate from '../../utils/date'
+import {formatDate} from '../../utils'
 
 export default {
   name: 'page-table',

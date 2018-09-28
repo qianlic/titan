@@ -23,7 +23,6 @@ export default {
     ]
     return {
       isShowUploadModle: false,
-      quill: undefined,
       full: true,
       fixed: false,
       options: {
@@ -48,6 +47,11 @@ export default {
     quillEditor,
     CropperModal
   },
+  computed: {
+    editor () {
+      return this.$refs.editor.quill
+    }
+  },
   methods: {
     onChange ({html}) {
       this.$emit('input', html)
@@ -56,14 +60,13 @@ export default {
       this.isShowUploadModle = true
     },
     uploadHandler (response) {
-      const range = this.quill.getSelection()
-      this.quill.insertEmbed(range != null ? range.index : 0, 'image', response.data.url, 'Quill.sources.USER')
+      const range = this.editor.getSelection()
+      this.editor.insertEmbed(range != null ? range.index : 0, 'image', response.data.url, 'Quill.sources.USER')
       this.isShowUploadModle = false
     }
   },
   mounted () {
-    this.quill = this.$refs.editor.quill
-    this.quill.getModule('toolbar').addHandler('image', this.imgHandler)
+    this.editor.getModule('toolbar').addHandler('image', this.imgHandler)
   }
 }
 </script>

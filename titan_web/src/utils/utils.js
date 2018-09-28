@@ -72,3 +72,20 @@ export function isPromise (val) {
 export function assert (condition, msg) {
   if (!condition) throw new Error(`[vuex] ${msg}`)
 }
+
+function createNode (node, list, level = 1) {
+  node['level'] = level
+  const nodes = [node]
+  list.filter(x => x.parentid === node.id).forEach(x => {
+    nodes.push(...createNode(x, list, level + 1))
+  })
+  return nodes
+}
+
+export function formatTree (list) {
+  const tree = []
+  list.filter(x => x.parentid === 0).forEach(x => {
+    tree.push(...createNode(x, list))
+  })
+  return tree
+}

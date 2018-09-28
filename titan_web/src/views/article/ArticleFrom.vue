@@ -5,7 +5,7 @@
         <Input v-model="formInline.title"/>
       </FormItem>
       <FormItem label="内容">
-        <QuillEditor v-model="formInline.content"/>
+        <QuillEditor v-model="formInline.content" :height="height"/>
       </FormItem>
       <FormItem label="状态">
         <i-switch v-model="formInline.status" size="large">
@@ -31,6 +31,7 @@ export default {
     const {id, title, content, status} = this.$route.params
     return {
       id,
+      height: 500,
       formInline: {
         title,
         content,

@@ -1,5 +1,5 @@
 <template>
-  <Modal @on-visible-change="visibleChange" :value="value">
+  <Modal @on-visible-change="visibleChange" :value="value" :width="width">
     <p slot="header" class="head_div">{{title}}</p>
     <div style="margin: 20px 10px">
       <slot/>
@@ -22,6 +22,10 @@ export default {
     'value': {
       type: Boolean,
       default: false
+    },
+    'width': {
+      type: Number,
+      default: 520
     }
   },
   methods: {

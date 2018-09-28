@@ -62,7 +62,7 @@
 import {mapGetters, mapActions} from 'vuex'
 import PageModal from '../../components/modal/PageModal'
 import CropperModal from '../../components/modal/CropperModal'
-import formatDate from '../../utils/date'
+import {formatDate} from '../../utils'
 
 export default {
   name: 'user-from',
