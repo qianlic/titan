@@ -7,18 +7,18 @@ import java.util.Map;
 
 public interface ResourceDao {
 
-    void createResource(SysResourceBean resource);
+    long insert(Object bean);
 
-    int deleteResource(List ids);
+    int delete(List ids);
 
-    int updateResource(int id, Map<String, Object> set);
+    int update(int id, Map<String, Object> set);
 
-    int updateStatus(List ids, boolean status);
+    int update(List ids, boolean status);
 
-    List<SysResourceBean> findResourceList();
+    List<SysResourceBean> select();
 
-    List<SysResourceBean> findResourceList(boolean available);
+    List<SysResourceBean> select(boolean status);
 
-    List<SysResourceBean> findResourceByIds(List<String> ids);
+    List<SysResourceBean> select(List<String> ids);
 
 }

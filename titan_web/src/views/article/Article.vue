@@ -13,13 +13,19 @@ export default {
     return {
       columns: [{
         title: '标题',
+        width: 120,
         key: 'title'
       }, {
         title: '作者',
+        width: 80,
         key: 'author'
       }, {
+        title: '内容',
+        type: 'html',
+        key: 'content'
+      }, {
         title: '状态',
-        width: 120,
+        width: 80,
         align: 'center',
         render: (h, {row}) => h('Icon', {
           props: {
@@ -75,16 +81,6 @@ export default {
         type: 'error',
         icon: 'close',
         on: () => this.deleteData(this.selectIds)
-      }, {
-        title: '启 用',
-        type: 'info',
-        icon: 'unlocked',
-        on: () => this.changeStatus(true)
-      }, {
-        title: '禁 用',
-        type: 'info',
-        icon: 'locked',
-        on: () => this.changeStatus(false)
       }]
     }
   },

@@ -38,8 +38,8 @@ public abstract class BaseDao {
         return this.sqlQuery(sql, args).setResultTransformer(Transformers.aliasToBean(bean));
     }
 
-    public void save(Object bean) {
-        this.getSession().save(bean);
+    public long insert(Object bean) {
+        return (long) this.getSession().save(bean);
     }
 
     public void delete(Object bean) {

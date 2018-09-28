@@ -69,9 +69,21 @@ export default {
         if (x.type === 'datetime') {
           return {
             title: x.title,
+            width: 160,
             render: (h, {row}) => {
               const date = formatDate(new Date(row[x.key]), 'yyyy-MM-dd hh:mm:ss')
               return h('div', date)
+            }
+          }
+        } else if (x.type === 'html') {
+          return {
+            title: x.title,
+            render: (h, {row}) => {
+              return h('div', {
+                domProps: {
+                  innerHTML: row[x.key]
+                }
+              })
             }
           }
         } else if (x.type === 'image') {
@@ -84,7 +96,7 @@ export default {
                   width: '100%',
                   src: row[x.key]
                 }
-              }, '')
+              })
             }
           }
         } else if (x.type === 'operation') {

@@ -8,16 +8,16 @@ import java.util.Map;
 
 public interface CrawlerDao {
 
-    void createCrawler(ClrCrawlerBean crawler);
+    long insert(Object bean);
 
-    int deleteCrawler(List ids);
+    int delete(List ids);
 
-    int updateCrawler(int id, Map<String, Object> set);
+    int update(int id, Map<String, Object> set);
 
-    int updateStatus(List ids, boolean status);
+    int update(List ids, boolean status);
 
-    List<ClrCrawlerBean> findCrawlerByIds(List<String> ids);
+    List<ClrCrawlerBean> select(List<String> ids);
 
-    PageList<ClrCrawlerBean> findCrawlerList(int start, int size, Map<String, Object> whereCondition);
+    PageList<ClrCrawlerBean> select(int start, int size, Map<String, Object> where);
 
 }

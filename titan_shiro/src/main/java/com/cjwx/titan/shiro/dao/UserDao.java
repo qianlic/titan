@@ -6,25 +6,22 @@ import com.cjwx.titan.shiro.bean.SysUserBean;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by CJWX on 2016/4/10.
- */
 public interface UserDao {
 
-    void createUser(SysUserBean user);
+    long insert(Object bean);
 
-    int deleteUser(List ids);
+    int delete(List ids);
 
-    int updateUser(int id, Map<String, Object> set);
+    int update(int id, Map<String, Object> set);
 
-    int updateStatus(List ids, boolean status);
+    int update(List ids, boolean status);
 
-    int updatePassword(List ids, String password, String salt);
+    int update(List ids, String password, String salt);
 
-    PageList<SysUserBean> findUserList(int start, int size, Map<String, Object> wheres);
+    PageList<SysUserBean> select(int start, int size, Map<String, Object> where);
 
-    List<SysUserBean> findUserByIds(List ids);
+    List<SysUserBean> select(List ids);
 
-    SysUserBean findUserByCode(String usercode);
+    SysUserBean select(String usercode);
 
 }

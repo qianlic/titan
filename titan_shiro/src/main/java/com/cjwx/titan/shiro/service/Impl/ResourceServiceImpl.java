@@ -20,32 +20,32 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void createResource(SysResourceBean resource) {
-        resourceDao.createResource(resource);
+        resourceDao.insert(resource);
     }
 
     @Override
     public int deleteResource(List ids) {
-        return resourceDao.deleteResource(ids);
+        return resourceDao.delete(ids);
     }
 
     @Override
     public int updateResource(int id, Map<String, Object> set) {
-        return resourceDao.updateResource(id, set);
+        return resourceDao.update(id, set);
     }
 
     @Override
     public int updateStatus(List ids, boolean status) {
-        return resourceDao.updateStatus(ids, status);
+        return resourceDao.update(ids, status);
     }
 
     @Override
     public List<SysResourceBean> getResourceList() {
-        return resourceDao.findResourceList();
+        return resourceDao.select();
     }
 
     @Override
     public List<SysResourceBean> getResourceList(Boolean available) {
-        return resourceDao.findResourceList(available);
+        return resourceDao.select(available);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<SysResourceBean> findResourceByIds(List<String> resourceids) {
-        return resourceDao.findResourceByIds(resourceids);
+        return resourceDao.select(resourceids);
     }
 
 }

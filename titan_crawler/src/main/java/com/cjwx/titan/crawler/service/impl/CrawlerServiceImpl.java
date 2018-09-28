@@ -31,7 +31,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void execute(List ids) {
-        List<ClrCrawlerBean> crawlers = crawlerDao.findCrawlerByIds(ids);
+        List<ClrCrawlerBean> crawlers = crawlerDao.select(ids);
         crawlers.forEach(c -> {
             if (CrawlConstant.contains(c.getName())) {
                 CrawlController controller = CrawlConstant.get(c.getName());
@@ -50,32 +50,32 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void createCrawler(ClrCrawlerBean crawler) {
-        crawlerDao.createCrawler(crawler);
+        crawlerDao.insert(crawler);
     }
 
     @Override
     public int deleteCrawler(List ids) {
-        return crawlerDao.deleteCrawler(ids);
+        return crawlerDao.delete(ids);
     }
 
     @Override
     public int updateCrawler(int id, Map<String, Object> set) {
-        return crawlerDao.updateCrawler(id, set);
+        return crawlerDao.update(id, set);
     }
 
     @Override
     public int updateStatus(List ids, boolean status) {
-        return crawlerDao.updateStatus(ids, status);
+        return crawlerDao.update(ids, status);
     }
 
     @Override
     public PageList<ClrCrawlerBean> getCrawlerList(int start, int size, Map<String, Object> whereCondition) {
-        return crawlerDao.findCrawlerList(start, size, whereCondition);
+        return crawlerDao.select(start, size, whereCondition);
     }
 
     @Override
     public List<ClrCrawlerBean> findCrawlerByIds(String ids) {
-        return crawlerDao.findCrawlerByIds(StringUtils.stringToList(ids));
+        return crawlerDao.select(StringUtils.stringToList(ids));
     }
 
 }

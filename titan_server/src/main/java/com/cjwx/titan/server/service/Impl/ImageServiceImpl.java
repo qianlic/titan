@@ -42,7 +42,7 @@ public class ImageServiceImpl implements ImageService {
             if ("success".equalsIgnoreCase(josn.getString("code"))) {
                 imge = josn.getObject("data", ComImageBean.class);
                 imge.setFilename(name);
-                imageDao.createImage(imge);
+                imageDao.insert(imge);
             } else {
                 throw new ServiceException(josn.getString("msg"));
             }
@@ -55,13 +55,13 @@ public class ImageServiceImpl implements ImageService {
         String url = delete_url + "/" + hash;
         String result = HttpClientUtils.dohttpRequest(url, "GET", null);
         if (StringUtils.isNotEmpty(result) && result.contains("File delete success")) {
-            imageDao.deleteImage(hash);
+            imageDao.delete(hash);
         }
     }
 
     @Override
     public PageList<ComImageBean> getImageList(int start, int size, Map<String, Object> wheres) {
-        return imageDao.findImageList(start, size, wheres);
+        return imageDao.select(start, size, wheres);
     }
 
 }

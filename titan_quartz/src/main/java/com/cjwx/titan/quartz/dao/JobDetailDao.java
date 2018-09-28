@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public interface JobDetailDao {
 
-    List<QtzJobEntity> findJobDetailList();
+    List<QtzJobEntity> select();
 
-    PageList<QtzJobEntity> findJobDetailList(int start, int size, Map<String, Object> wheres);
+    PageList<QtzJobEntity> select(int start, int size, Map<String, Object> where);
 
 }

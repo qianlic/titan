@@ -12,18 +12,13 @@ import java.util.Map;
 public class ImageDaoImpl extends BaseDao implements ImageDao {
 
     @Override
-    public void createImage(ComImageBean image) {
-        this.save(image);
-    }
-
-    @Override
-    public int deleteImage(String hash) {
+    public int delete(String hash) {
         return this.getExecute().table(ComImageBean.TABLE).eq("hash", hash).delete();
     }
 
     @Override
-    public PageList<ComImageBean> findImageList(int start, int size, Map<String, Object> wheres) {
-        return this.getQuery().from(ComImageBean.TABLE).eq(wheres).page(start, size, ComImageBean.class);
+    public PageList<ComImageBean> select(int start, int size, Map<String, Object> where) {
+        return this.getQuery().from(ComImageBean.TABLE).eq(where).page(start, size, ComImageBean.class);
     }
 
 }

@@ -8,12 +8,12 @@ import java.util.Map;
 
 public interface ArticleDao {
 
-    void createArticle(ComArticleBean article);
+    long insert(Object bean);
 
-    int deleteArticle(List ids);
+    int delete(List ids);
 
-    int updateArticle(int id, Map<String, Object> set);
+    int update(int id, Map<String, Object> set);
 
-    PageList<ComArticleBean> findArticleList(int start, int size, Map<String, Object> wheres);
+    PageList<ComArticleBean> select(int start, int size, Map<String, Object> where);
 
 }

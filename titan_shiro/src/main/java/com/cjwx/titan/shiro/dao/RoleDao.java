@@ -8,20 +8,18 @@ import java.util.Map;
 
 public interface RoleDao {
 
-    void createRole(SysRoleBean role);
+    long insert(Object bean);
 
-    int deleteRole(List ids);
+    int delete(List ids);
 
-    int updateRole(int id, Map<String, Object> set);
+    int update(int id, Map<String, Object> set);
 
-    int updateStatus(List ids, boolean status);
+    int update(List ids, boolean status);
 
-    SysRoleBean findRoleByCode(String rolecode);
+    List<SysRoleBean> select();
 
-    List<SysRoleBean> findRoleList();
+    List<SysRoleBean> select(List<String> ids);
 
-    List<SysRoleBean> findRolesByIds(List<String> ids);
-
-    PageList<SysRoleBean> findRoleList(int start, int size, Map<String, Object> wheres);
+    PageList<SysRoleBean> select(int start, int size, Map<String, Object> where);
 
 }

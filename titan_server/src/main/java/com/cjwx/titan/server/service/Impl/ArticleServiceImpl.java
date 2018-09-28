@@ -26,21 +26,21 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void createArticle(ComArticleBean article) {
-        articleDao.createArticle(article);
+        articleDao.insert(article);
     }
 
     @Override
     public int deleteArticle(List ids) {
-        return articleDao.deleteArticle(ids);
+        return articleDao.delete(ids);
     }
 
     @Override
     public int updateArticle(int id, Map<String, Object> set) {
-        return articleDao.updateArticle(id, set);
+        return articleDao.update(id, set);
     }
 
     @Override
     public PageList<ComArticleBean> getArticleList(int start, int size, Map<String, Object> wheres) {
-        return articleDao.findArticleList(start, size, wheres);
+        return articleDao.select(start, size, wheres);
     }
 }

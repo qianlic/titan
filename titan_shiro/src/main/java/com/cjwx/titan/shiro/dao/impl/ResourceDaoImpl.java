@@ -13,39 +13,34 @@ import java.util.Map;
 public class ResourceDaoImpl extends BaseDao implements ResourceDao {
 
     @Override
-    public void createResource(SysResourceBean resource) {
-        this.save(resource);
-    }
-
-    @Override
-    public int deleteResource(List ids) {
+    public int delete(List ids) {
         return this.getExecute().table(SysResourceBean.TABLE).in("id", ids).delete();
     }
 
     @Override
-    public int updateResource(int id, Map<String, Object> set) {
+    public int update(int id, Map<String, Object> set) {
         return this.getExecute().table(SysResourceBean.TABLE).set(set).eq("id", id).update();
     }
 
     @Override
-    public int updateStatus(List ids, boolean status) {
+    public int update(List ids, boolean status) {
         return this.getExecute().table(SysResourceBean.TABLE).set("status", status).in("id", ids).update();
     }
 
     @Override
-    public List<SysResourceBean> findResourceList() {
+    public List<SysResourceBean> select() {
         return this.getQuery().from(SysResourceBean.TABLE).list(SysResourceBean.class);
     }
 
     @Override
-    public List<SysResourceBean> findResourceList(boolean available) {
+    public List<SysResourceBean> select(boolean status) {
         return this.getQuery().from(SysResourceBean.TABLE)
-                .eq("status", available)
+                .eq("status", status)
                 .list(SysResourceBean.class);
     }
 
     @Override
-    public List<SysResourceBean> findResourceByIds(List<String> ids) {
+    public List<SysResourceBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
             return this.getQuery().from(SysResourceBean.TABLE)
                     .eq("status", true)

@@ -18,15 +18,15 @@ import java.util.Map;
 public class JobDetailDaoImpl extends BaseDao implements JobDetailDao {
 
     @Override
-    public List<QtzJobEntity> findJobDetailList() {
+    public List<QtzJobEntity> select() {
         return this.getQuery().select("JOB_NAME 'name',JOB_GROUP 'group'")
                 .from("qtz_job_details").list(QtzJobEntity.class);
     }
 
     @Override
-    public PageList<QtzJobEntity> findJobDetailList(int start, int size, Map<String, Object> wheres) {
+    public PageList<QtzJobEntity> select(int start, int size, Map<String, Object> where) {
         return this.getQuery().select("JOB_NAME 'name',JOB_GROUP 'group'")
-                .from("qtz_job_details").eq(wheres).page(start, size, QtzJobEntity.class);
+                .from("qtz_job_details").eq(where).page(start, size, QtzJobEntity.class);
     }
 
 }

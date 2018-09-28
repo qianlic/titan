@@ -14,27 +14,22 @@ import java.util.Map;
 public class CrawlerDaoImpl extends BaseDao implements CrawlerDao {
 
     @Override
-    public void createCrawler(ClrCrawlerBean crawler) {
-        this.save(crawler);
-    }
-
-    @Override
-    public int deleteCrawler(List ids) {
+    public int delete(List ids) {
         return this.getExecute().table(ClrCrawlerBean.TABLE).in("id", ids).delete();
     }
 
     @Override
-    public int updateCrawler(int id, Map<String, Object> set) {
+    public int update(int id, Map<String, Object> set) {
         return this.getExecute().table(ClrCrawlerBean.TABLE).set(set).eq("id", id).update();
     }
 
     @Override
-    public int updateStatus(List ids, boolean status) {
+    public int update(List ids, boolean status) {
         return this.getExecute().table(ClrCrawlerBean.TABLE).set("status", status).in("id", ids).update();
     }
 
     @Override
-    public List<ClrCrawlerBean> findCrawlerByIds(List<String> ids) {
+    public List<ClrCrawlerBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
             return this.getQuery().from(ClrCrawlerBean.TABLE)
                     .eq("status", true)
@@ -45,8 +40,8 @@ public class CrawlerDaoImpl extends BaseDao implements CrawlerDao {
     }
 
     @Override
-    public PageList<ClrCrawlerBean> findCrawlerList(int start, int size, Map<String, Object> whereCondition) {
-        return this.getQuery().from(ClrCrawlerBean.TABLE).eq(whereCondition).page(start, size, ClrCrawlerBean.class);
+    public PageList<ClrCrawlerBean> select(int start, int size, Map<String, Object> where) {
+        return this.getQuery().from(ClrCrawlerBean.TABLE).eq(where).page(start, size, ClrCrawlerBean.class);
     }
 
 }

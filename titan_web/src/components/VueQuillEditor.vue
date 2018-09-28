@@ -30,6 +30,7 @@ export default {
         modules: {
           toolbar
         },
+        placeholder: null,
         theme: 'snow'
       }
     }

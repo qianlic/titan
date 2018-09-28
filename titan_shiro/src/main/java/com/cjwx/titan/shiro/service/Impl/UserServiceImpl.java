@@ -25,46 +25,46 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(SysUserBean user) {
-        userDao.createUser(user);
+        userDao.insert(user);
     }
 
     @Override
     public int updateUser(int id, Map<String, Object> set) {
         this.clearCache(Arrays.asList(id));
-        return userDao.updateUser(id, set);
+        return userDao.update(id, set);
     }
 
     @Override
     public int deleteUser(List ids) {
         this.clearCache(ids);
-        return userDao.deleteUser(ids);
+        return userDao.delete(ids);
     }
 
     @Override
     public int updateStatus(List ids, boolean status) {
         this.clearCache(ids);
-        return userDao.updateStatus(ids, status);
+        return userDao.update(ids, status);
     }
 
     @Override
     public int updatePassword(List ids, String password,String salt){
         this.clearCache(ids);
-        return userDao.updatePassword(ids, password,salt);
+        return userDao.update(ids, password,salt);
     }
 
     @Override
     public PageList<SysUserBean> getUserList(int start, int size, Map<String, Object> wheres) {
-        return userDao.findUserList(start, size, wheres);
+        return userDao.select(start, size, wheres);
     }
 
     @Override
     public List<SysUserBean> findUserByIds(List ids) {
-        return userDao.findUserByIds(ids);
+        return userDao.select(ids);
     }
 
     @Override
     public SysUserBean findUserByCode(String usercode) {
-        return userDao.findUserByCode(usercode);
+        return userDao.select(usercode);
     }
 
     private void clearCache(List ids) {

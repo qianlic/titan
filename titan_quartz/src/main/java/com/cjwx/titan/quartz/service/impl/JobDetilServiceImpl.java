@@ -32,12 +32,12 @@ public class JobDetilServiceImpl implements JobDetilService {
 
     @Override
     public List<JobKey> getJobKeyList() {
-        return jobDetailDao.findJobDetailList().stream().map(QtzJobEntity::getJobKey).collect(Collectors.toList());
+        return jobDetailDao.select().stream().map(QtzJobEntity::getJobKey).collect(Collectors.toList());
     }
 
     @Override
     public PageList<QtzJobEntity> getJobDetailList(int start, int size, Map<String, Object> wheres) {
-        PageList<QtzJobEntity> page = jobDetailDao.findJobDetailList(start, size, wheres);
+        PageList<QtzJobEntity> page = jobDetailDao.select(start, size, wheres);
         page.setList(page.getList().stream().map(this::getJobEntity).collect(Collectors.toList()));
         return page;
     }

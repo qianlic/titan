@@ -20,37 +20,37 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void createRole(SysRoleBean role) {
-        roleDao.createRole(role);
+        roleDao.insert(role);
     }
 
     @Override
     public int deleteRole(List ids) {
-        return roleDao.deleteRole(ids);
+        return roleDao.delete(ids);
     }
 
     @Override
     public int updateRole(int id, Map<String, Object> set) {
-        return roleDao.updateRole(id, set);
+        return roleDao.update(id, set);
     }
 
     @Override
     public int updateStatus(List ids, boolean status) {
-        return roleDao.updateStatus(ids, status);
+        return roleDao.update(ids, status);
     }
 
     @Override
     public List<SysRoleBean> getRoleList() {
-        return roleDao.findRoleList();
+        return roleDao.select();
     }
 
     @Override
     public PageList<SysRoleBean> getRoleList(int start, int size, Map<String, Object> wheres) {
-        return roleDao.findRoleList(start, size, wheres);
+        return roleDao.select(start, size, wheres);
     }
 
     @Override
     public List<SysRoleBean> findRolesByIds(String roleids) {
-        return roleDao.findRolesByIds(StringUtils.stringToList(roleids));
+        return roleDao.select(StringUtils.stringToList(roleids));
     }
 
 }

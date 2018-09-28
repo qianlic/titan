@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface TriggerDao {
 
-    PageList<QtzTriggerEntity> findTrigerList(int start, int size, Map<String, Object> wheres);
+    PageList<QtzTriggerEntity> select(int start, int size, Map<String, Object> where);
 
 }

@@ -13,18 +13,13 @@ import java.util.Map;
 public class WebUrlDaoImpl extends BaseDao implements WebUrlDao {
 
     @Override
-    public long createWebUrl(ClrWebUrlBean page) {
-        return (long) this.getSession().save(page);
-    }
-
-    @Override
-    public int deleteWebUrl(List ids) {
+    public int delete(List ids) {
         return this.getExecute().table(ClrWebUrlBean.TABLE).in("id", ids).delete();
     }
 
     @Override
-    public PageList<ClrWebUrlBean> findWebUrlList(int start, int size, Map<String, Object> whereCondition) {
-        return this.getQuery().from(ClrWebUrlBean.TABLE).eq(whereCondition).page(start, size, ClrWebUrlBean.class);
+    public PageList<ClrWebUrlBean> select(int start, int size, Map<String, Object> where) {
+        return this.getQuery().from(ClrWebUrlBean.TABLE).eq(where).page(start, size, ClrWebUrlBean.class);
     }
 
 }

@@ -24,28 +24,28 @@ public class WebUrlServiceImpl implements WebUrlService {
 
     @Override
     public void createPage(ClrPageBean page) {
-        page.setUrlId(webUrlDao.createWebUrl(page.getWebURL()));
-        pageDao.createPage(page);
+        page.setUrlId(webUrlDao.insert(page.getWebURL()));
+        pageDao.insert(page);
     }
 
     @Override
     public int deletePage(List ids) {
-        return pageDao.deletePage(ids);
+        return pageDao.delete(ids);
     }
 
     @Override
     public int deleteWebUrl(List ids) {
-        return webUrlDao.deleteWebUrl(ids);
+        return webUrlDao.delete(ids);
     }
 
     @Override
     public ClrPageBean getPage(int id) {
-        return pageDao.findPage(id);
+        return pageDao.select(id);
     }
 
     @Override
     public PageList<ClrWebUrlBean> getWebUrlList(int start, int size, Map<String, Object> whereCondition) {
-        return webUrlDao.findWebUrlList(start, size, whereCondition);
+        return webUrlDao.select(start, size, whereCondition);
     }
 
 }

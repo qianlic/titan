@@ -25,7 +25,7 @@ public class TriggerServiceImpl implements TriggerService {
 
     @Override
     public PageList<QtzTriggerEntity> getTriggerList(int start, int size, Map<String, Object> wheres) {
-        PageList<QtzTriggerEntity> page = triggerDao.findTrigerList(start, size, wheres);
+        PageList<QtzTriggerEntity> page = triggerDao.select(start, size, wheres);
         page.setList(page.getList().stream().map(this::getTriggerEntity).collect(Collectors.toList()));
         return page;
     }

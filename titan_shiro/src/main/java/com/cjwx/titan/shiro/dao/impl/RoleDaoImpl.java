@@ -14,37 +14,27 @@ import java.util.Map;
 public class RoleDaoImpl extends BaseDao implements RoleDao {
 
     @Override
-    public void createRole(SysRoleBean role) {
-        this.save(role);
-    }
-
-    @Override
-    public int deleteRole(List ids) {
+    public int delete(List ids) {
         return this.getExecute().table(SysRoleBean.TABLE).in("id", ids).delete();
     }
 
     @Override
-    public int updateRole(int id, Map<String, Object> set) {
+    public int update(int id, Map<String, Object> set) {
         return this.getExecute().table(SysRoleBean.TABLE).set(set).eq("id", id).update();
     }
 
     @Override
-    public int updateStatus(List ids, boolean status) {
+    public int update(List ids, boolean status) {
         return this.getExecute().table(SysRoleBean.TABLE).set("status", status).in("id", ids).update();
     }
 
     @Override
-    public SysRoleBean findRoleByCode(String rolencode) {
-        return this.getQuery().from(SysRoleBean.TABLE).eq("rolencode", rolencode).uniqueResult(SysRoleBean.class);
-    }
-
-    @Override
-    public List<SysRoleBean> findRoleList() {
+    public List<SysRoleBean> select() {
         return this.getQuery().from(SysRoleBean.TABLE).eq("status", true).list(SysRoleBean.class);
     }
 
     @Override
-    public List<SysRoleBean> findRolesByIds(List<String> ids) {
+    public List<SysRoleBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
             return this.getQuery().from(SysRoleBean.TABLE)
                     .eq("status", true)
@@ -55,8 +45,8 @@ public class RoleDaoImpl extends BaseDao implements RoleDao {
     }
 
     @Override
-    public PageList<SysRoleBean> findRoleList(int start, int size, Map<String, Object> wheres) {
-        return this.getQuery().from(SysRoleBean.TABLE).eq(wheres).page(start, size, SysRoleBean.class);
+    public PageList<SysRoleBean> select(int start, int size, Map<String, Object> where) {
+        return this.getQuery().from(SysRoleBean.TABLE).eq(where).page(start, size, SysRoleBean.class);
     }
 
 }

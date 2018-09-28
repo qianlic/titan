@@ -8,10 +8,10 @@ import java.util.Map;
 
 public interface WebUrlDao {
 
-    long createWebUrl(ClrWebUrlBean page);
+    long insert(Object bean);
 
-    int deleteWebUrl(List ids);
+    int delete(List ids);
 
-    PageList<ClrWebUrlBean> findWebUrlList(int start, int size, Map<String, Object> whereCondition);
+    PageList<ClrWebUrlBean> select(int start, int size, Map<String, Object> where);
 
 }

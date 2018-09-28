@@ -13,22 +13,17 @@ import java.util.Map;
 public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 
     @Override
-    public void createArticle(ComArticleBean article) {
-        this.save(article);
-    }
-
-    @Override
-    public int deleteArticle(List ids) {
+    public int delete(List ids) {
         return this.getExecute().table(ComArticleBean.TABLE).in("id", ids).delete();
     }
 
     @Override
-    public int updateArticle(int id, Map<String, Object> set) {
+    public int update(int id, Map<String, Object> set) {
         return this.getExecute().table(ComArticleBean.TABLE).set(set).eq("id", id).update();
     }
 
     @Override
-    public PageList<ComArticleBean> findArticleList(int start, int size, Map<String, Object> wheres) {
-        return this.getQuery().from(ComArticleBean.TABLE).eq(wheres).page(start, size, ComArticleBean.class);
+    public PageList<ComArticleBean> select(int start, int size, Map<String, Object> where) {
+        return this.getQuery().from(ComArticleBean.TABLE).eq(where).page(start, size, ComArticleBean.class);
     }
 }
