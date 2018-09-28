@@ -43,7 +43,7 @@ export default {
           return {
             title: x.title,
             render: (h, {row}) => {
-              if (row.type === '1') {
+              if (row.level === 1) {
                 return h('div', [
                   h('span', {
                     'class': 'table-row-expand',
@@ -52,7 +52,7 @@ export default {
                   row['expand'] ? '-' : '+'),
                   row[x.key]
                 ])
-              } else if (row.type === '2') {
+              } else if (row.level === 2) {
                 return h('div', {
                   'style': 'margin-left:20px'
                 }, [

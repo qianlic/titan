@@ -7,28 +7,33 @@
       <FormItem label="角色名称">
         <Input v-model="formInline.rolename"/>
       </FormItem>
+      <FormItem label="资源列表">
+        <CheckboxGroup v-model="resourceids" style="border-top:1px solid #dddee1;">
+          <div v-for="item1 in chirdlist(0)" :key="item1.id" style="border:1px solid #dddee1;border-top:0px;padding:5px 15px">
+            <div style="border-bottom:1px solid #f4f4f4;padding-bottom:3px;margin-bottom:3px">
+                <Checkbox :label="item1.id">{{ item1.resourcename }}</Checkbox>
+            </div>
+            <Dropdown trigger="click" placement="bottom-start" v-for="item2 in chirdlist(item1.id)" :key="item2.id">
+              <div style="width: 120px">
+                <Checkbox :label="item2.id">
+                  {{ item2.resourcename }}
+                </Checkbox>
+                <Icon type="android-arrow-dropdown-circle" style="cursor:pointer"/>
+              </div>
+              <DropdownMenu slot="list" style="width:150px;padding-left:15px">
+                <div style="border-bottom:1px solid #f4f4f4;margin-bottom:6px">
+                  功能列表
+                </div>
+                <div v-for="item3 in chirdlist(item2.id)" :key="item3.id">
+                  <Checkbox :label="item3.id">{{ item3.resourcename }}</Checkbox>
+                </div>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        </CheckboxGroup>
+      </FormItem>
       <FormItem label="描述">
         <QuillEditor v-model="formInline.description"/>
-      </FormItem>
-      <FormItem label="资源列表">
-        <Card v-for="item1 in availablelist.filter(x => x.type === '1')" :key="item1.id">
-          <div style="border-bottom: 1px solid #f4f4f4;padding-bottom:6px;margin-bottom:6px">
-            <CheckboxGroup v-model="resourceids">
-              <Checkbox :label="item1.id">{{ item1.resourcename }}</Checkbox>
-            </CheckboxGroup>
-          </div>
-          <CheckboxGroup v-model="resourceids">
-            <span v-for="item2 in availablelist" v-if="item2.parentid === item1.id" :key="item2.id">
-              <Checkbox :label="item2.id">
-                {{ item2.resourcename }}
-              </Checkbox>[
-              <Checkbox v-for="item3 in availablelist" v-if="item3.parentid === item2.id" :key="item3.id" :label="item3.id">
-                {{ item3.resourcename }}
-              </Checkbox>]
-              <br/>
-            </span>
-          </CheckboxGroup>
-        </Card>
       </FormItem>
       <FormItem label="状态">
         <i-switch v-model="formInline.status" size="large">
@@ -53,7 +58,7 @@ export default {
   data () {
     const {id, rolecode, rolename, description, status} = this.$route.params
     return {
-      indeterminate: false,
+      visible: false,
       checkAll: false,
       resourceids: [],
       id,
@@ -110,11 +115,16 @@ export default {
     },
     handleCancel () {
       this.$router.go(-1)
+    },
+    chirdlist (id) {
+      return this.availablelist.filter(x => x.parentid === id)
     }
   },
   created () {
-    this.resourceids = this.$route.params.resourceids
-      .split(',').map(resourceid => Number.parseInt(resourceid))
+    if (!this.$route.params.iscreate) {
+      this.resourceids = this.$route.params.resourceids
+        .split(',').map(resourceid => Number.parseInt(resourceid))
+    }
   }
 }
 </script>
