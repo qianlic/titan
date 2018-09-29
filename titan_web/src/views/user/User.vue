@@ -117,12 +117,10 @@ export default {
     PageTable,
     PageModal
   },
-  computed: {
-    ...mapGetters('user', [
-      'datas',
-      'selectIds'
-    ])
-  },
+  computed: mapGetters('user', [
+    'datas',
+    'selectIds'
+  ]),
   methods: {
     ...mapActions('user', [
       'loadDatas',

@@ -96,12 +96,10 @@ export default {
     PageTable,
     PageModal
   },
-  computed: {
-    ...mapGetters('article', [
-      'datas',
-      'selectIds'
-    ])
-  },
+  computed: mapGetters('article', [
+    'datas',
+    'selectIds'
+  ]),
   methods: {
     ...mapActions('article', [
       'loadDatas',

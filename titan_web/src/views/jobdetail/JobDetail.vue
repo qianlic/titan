@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <PageTable ref="table" :columns="columns" :searchs="searchs" :buttons="buttons" :data="datas"
-               @select-row="setSelectRows" @load-data="loadDatas" selection/>
-  </div>
+  <PageTable ref="table" :columns="columns" :searchs="searchs" :buttons="buttons" :data="datas"
+             @select-row="setSelectRows" @load-data="loadDatas" selection/>
 </template>
 
 <script>
@@ -69,12 +67,10 @@ export default {
   components: {
     PageTable
   },
-  computed: {
-    ...mapGetters('jobdetail', [
-      'datas',
-      'selectRows'
-    ])
-  },
+  computed: mapGetters('jobdetail', [
+    'datas',
+    'selectRows'
+  ]),
   methods: {
     ...mapActions('jobdetail', [
       'loadDatas',

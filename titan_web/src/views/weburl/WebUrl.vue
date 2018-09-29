@@ -54,12 +54,10 @@ export default {
   components: {
     PageTable
   },
-  computed: {
-    ...mapGetters('weburl', [
-      'datas',
-      'selectRows'
-    ])
-  },
+  computed: mapGetters('weburl', [
+    'datas',
+    'selectRows'
+  ]),
   methods: {
     ...mapActions('weburl', [
       'loadDatas',

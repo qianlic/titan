@@ -24,7 +24,7 @@ public class JobDetailHandler {
     @Resource
     private JobDetilService jobDetilService;
 
-    @RequestMapping("info")
+    @RequestMapping("all")
     public List<JobKey> all() {
         return jobDetilService.getJobKeyList();
     }

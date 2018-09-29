@@ -20,16 +20,12 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'redis',
-  computed: {
-    ...mapGetters('redis', [
-      'datas'
-    ])
-  },
-  methods: {
-    ...mapActions('redis', [
-      'loadDatas'
-    ])
-  },
+  computed: mapGetters('redis', [
+    'datas'
+  ]),
+  methods: mapActions('redis', [
+    'loadDatas'
+  ]),
   created () {
     this.loadDatas()
   }

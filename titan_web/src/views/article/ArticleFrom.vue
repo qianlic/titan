@@ -28,19 +28,19 @@ import QuillEditor from '../../components/VueQuillEditor'
 export default {
   name: 'article-from',
   data () {
-    const {id, title, content, status} = this.$route.params
     return {
-      id,
       height: 500,
-      formInline: {
-        title,
-        content,
-        status
-      }
+      id: null,
+      formInline: {}
     }
   },
   components: {
     QuillEditor
+  },
+  computed: {
+    requsetParams () {
+      return this.$route.params
+    }
   },
   methods: {
     ...mapActions('article', [
@@ -48,31 +48,37 @@ export default {
       'createData'
     ]),
     handleSubmit () {
-      if (this.$route.params.iscreate) {
-        this.createData(this.formInline).then(response => {
-          if (response.status === 0) {
-            this.$Message.success(response.message)
-            this.handleCancel()
-          } else {
-            this.$Message.error(response.message)
-          }
-        })
-      } else {
-        this.editDatas({
+      let method = this.createData
+      let params = this.formInline
+      if (!this.requsetParams.iscreate) {
+        method = this.editDatas
+        params = {
           'id': this.id,
-          'params': this.formInline
-        }).then(response => {
-          if (response.status === 0) {
-            this.$Message.success(response.message)
-            this.handleCancel()
-          } else {
-            this.$Message.error(response.message)
-          }
-        })
+          params
+        }
       }
+      method(params).then(response => {
+        if (response.status === 0) {
+          this.$Message.success(response.message)
+          this.handleCancel()
+        } else {
+          this.$Message.error(response.message)
+        }
+      })
     },
     handleCancel () {
       this.$router.go(-1)
+    }
+  },
+  created () {
+    if (!this.requsetParams.iscreate) {
+      const {id, title, content, status} = this.requsetParams
+      this.id = id
+      this.formInline = {
+        title,
+        content,
+        status
+      }
     }
   }
 }

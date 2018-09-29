@@ -128,12 +128,10 @@ export default {
     PageTable,
     PageModal
   },
-  computed: {
-    ...mapGetters('thread', [
-      'datas',
-      'selectIds'
-    ])
-  },
+  computed: mapGetters('thread', [
+    'datas',
+    'selectIds'
+  ]),
   methods: {
     ...mapActions('thread', [
       'loadDatas',

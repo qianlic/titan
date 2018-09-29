@@ -26,19 +26,15 @@ export default {
   components: {
     Echarts
   },
-  computed: {
-    ...mapGetters('memory', [
-      'memoryUsed',
-      'fhysicalUsed',
-      'swapUsed',
-      'memoryDetails'
-    ])
-  },
-  methods: {
-    ...mapActions('memory', [
-      'loadDatas'
-    ])
-  },
+  computed: mapGetters('memory', [
+    'memoryUsed',
+    'fhysicalUsed',
+    'swapUsed',
+    'memoryDetails'
+  ]),
+  methods: mapActions('memory', [
+    'loadDatas'
+  ]),
   created () {
     this.loadDatas()
   }

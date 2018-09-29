@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <TreeTable ref="table" :columns="columns" :buttons="buttons" :data="datas"
-               @select-row="setSelectRows" @load-data="loadDatas" selection/>
-  </div>
+  <TreeTable ref="table" :columns="columns" :buttons="buttons" :data="datas"
+             @select-row="setSelectRows" @load-data="loadDatas" selection/>
 </template>
 
 <script>
@@ -17,9 +15,7 @@ export default {
         title: '资源编码',
         key: 'resourcecode',
         type: 'expand',
-        click: ({id}) => {
-          this.expandData(id)
-        }
+        click: ({id}) => this.expandData(id)
       }, {
         title: '资源名',
         key: 'resourcename'

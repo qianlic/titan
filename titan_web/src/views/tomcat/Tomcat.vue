@@ -45,16 +45,12 @@ export default {
       }]
     }
   },
-  computed: {
-    ...mapGetters('tomcat', [
-      'datas'
-    ])
-  },
-  methods: {
-    ...mapActions('tomcat', [
-      'loadDatas'
-    ])
-  },
+  computed: mapGetters('tomcat', [
+    'datas'
+  ]),
+  methods: mapActions('tomcat', [
+    'loadDatas'
+  ]),
   created () {
     this.loadDatas()
   }

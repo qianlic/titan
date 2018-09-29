@@ -87,12 +87,10 @@ export default {
   components: {
     PageTable
   },
-  computed: {
-    ...mapGetters('role', [
-      'datas',
-      'selectIds'
-    ])
-  },
+  computed: mapGetters('role', [
+    'datas',
+    'selectIds'
+  ]),
   methods: {
     ...mapActions('role', [
       'loadDatas',
