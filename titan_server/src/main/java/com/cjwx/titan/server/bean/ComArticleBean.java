@@ -18,6 +18,8 @@ public class ComArticleBean extends AbstractBean {
 
     @Column(name = "title")
     private String title;
+    @Column(name = "tags")
+    private String tags;
     @Column(name = "content")
     private String content;
     @Column(name = "author")

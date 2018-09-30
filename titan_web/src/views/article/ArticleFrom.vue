@@ -4,6 +4,9 @@
       <FormItem label="标题">
         <Input v-model="formInline.title"/>
       </FormItem>
+      <FormItem label="标签">
+        <TagGroup v-model="formInline.tags"/>
+      </FormItem>
       <FormItem label="内容">
         <QuillEditor v-model="formInline.content" :height="height"/>
       </FormItem>
@@ -24,6 +27,7 @@
 <script>
 import {mapActions} from 'vuex'
 import QuillEditor from '../../components/VueQuillEditor'
+import TagGroup from '../../components/TagGroup'
 
 export default {
   name: 'article-from',
@@ -35,7 +39,8 @@ export default {
     }
   },
   components: {
-    QuillEditor
+    QuillEditor,
+    TagGroup
   },
   computed: {
     requsetParams () {
@@ -72,9 +77,10 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {id, title, content, status} = this.requsetParams
+      const {id, tags, title, content, status} = this.requsetParams
       this.id = id
       this.formInline = {
+        tags,
         title,
         content,
         status
