@@ -12,12 +12,16 @@
             {{token.username}}
           </div>
           <DropdownMenu slot="list">
+            <DropdownItem name="github">
+              <Icon class="dropdown-icon" type="social-github"/>
+              GitHub
+            </DropdownItem>
             <DropdownItem name="passwd">
-              <Icon type="key" style="width: 15px"/>
+              <Icon class="dropdown-icon" type="key"/>
               修改密码
             </DropdownItem>
             <DropdownItem name="logout">
-              <Icon type="log-out" style="width: 15px"/>
+              <Icon class="dropdown-icon" type="log-out"/>
               退出登录
             </DropdownItem>
           </DropdownMenu>
@@ -43,6 +47,8 @@ export default {
     clickItem: function (name) {
       if (name === 'logout') {
         this.logout()
+      } else if (name === 'github') {
+        window.open('https://github.com/qianlic/titan')
       }
     }
   }
@@ -69,5 +75,10 @@ export default {
     float: right;
     cursor:pointer;
     font-size: 14px;
+  }
+
+  .dropdown-icon {
+    width: 15px;
+    text-align: center
   }
 </style>

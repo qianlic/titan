@@ -7,11 +7,11 @@
       <Button icon="ios-plus-empty" type="dashed" size="small" @click="newTag.show=true">添加标签</Button>
       <DropdownMenu slot="list" style="padding: 5px 10px">
         <Input v-model="newTag.title">
-          <ColorPicker class="picker_div" slot="prepend" v-model="newTag.color"/>
+          <ColorPicker class="picker_div" slot="prepend" v-model="newTag.color" recommend/>
         </Input>
-        <div style="margin: 0 -2px">
-          <Button type="ghost" size="small" @click="handleCal">取消</Button>
+        <div class="picker_btn">
           <Button type="primary" size="small" @click="handleNew">新增</Button>
+          <Button type="ghost" size="small" @click="handleCal">取消</Button>
         </div>
       </DropdownMenu>
     </Dropdown>
@@ -56,7 +56,11 @@ export default {
     },
     handleNew () {
       let tagStr = ''
-      if (this.value) {
+      if (!this.newTag.title || this.newTag.title.length === 0) {
+        this.$Message.error('标签内容不能为空！')
+        this.newTag.show = false
+        return
+      } else if (this.value) {
         tagStr = this.value + ','
       }
       this.$emit('input', tagStr + this.newTag.title + ':' + this.newTag.color)
@@ -71,9 +75,10 @@ export default {
 
 <style scoped>
   .picker_div {
-    margin: -5px -10px
+    margin:-5px -10px;
   }
-  .ivu-icon {
-    display: none;
+  .picker_btn {
+    margin:0 -2px;
+    text-align:right;
   }
 </style>
