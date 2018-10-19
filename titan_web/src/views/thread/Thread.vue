@@ -143,7 +143,7 @@ export default {
         this.$Message.success('请选择操作数据！')
       } else {
         this.interruptDatas({ids}).then(response => {
-          if (response.status === 0) {
+          if (response.success) {
             this.$refs.table.pageChange()
             this.$Message.success(response.message)
           } else {

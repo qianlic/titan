@@ -29,7 +29,7 @@ import ModleMenu from '../components/ModleMenu'
 import NavigationBar from '../components/NavigationBar'
 import localStore from '../store/localStore'
 import request from '../api/user'
-import {mapGetters, mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'index',
@@ -65,7 +65,7 @@ export default {
     },
     logout: function () {
       request.logout().then(response => {
-        if (response.status === 0) {
+        if (response.success) {
           localStore.removeStoreItem('AUTH_TOKEN')
           this.$router.push('/login')
         }
@@ -74,10 +74,8 @@ export default {
   },
   created: function () {
     request.token().then(response => {
-      if (response.data) {
+      if (response.success) {
         this.loadTokenInfo(response.data)
-      } else {
-        this.$router.push('/login')
       }
     })
   },

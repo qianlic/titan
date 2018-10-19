@@ -26,7 +26,7 @@ public class ExceptionAdive {
             message = "系统错误: " + e.getMessage();
             log.error("请求发生异常", e);
         }
-        return new Result(1, message);
+        return new Result(false, message);
     }
 
 }

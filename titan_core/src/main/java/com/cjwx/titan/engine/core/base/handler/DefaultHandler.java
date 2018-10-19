@@ -2,7 +2,6 @@ package com.cjwx.titan.engine.core.base.handler;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.web.http.Result;
-import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +15,7 @@ public class DefaultHandler {
 
     @RequestMapping(value = HttpConstant.DEFAULT_FIX)
     public Result error() {
-        return new Result(ResultStatus.STATUS_1, "远程服务未被发现！");
+        return new Result(false, "远程服务未被发现！");
     }
 
 }

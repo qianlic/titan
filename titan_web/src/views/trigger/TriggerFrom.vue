@@ -72,7 +72,7 @@ export default {
         method = this.editDatas
       }
       method(params).then(response => {
-        if (response.status === 0) {
+        if (response.success) {
           this.$Message.success(response.message)
           this.handleCancel()
         } else {

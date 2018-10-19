@@ -55,7 +55,7 @@ const mutations = {
 const actions = {
   loadDatas ({state, commit}, params) {
     return request.list(params).then(response => {
-      if (response.status === 0) {
+      if (response.success) {
         const list = response.data
         const datas = formatTree(list)
         datas.forEach(x => {
@@ -74,7 +74,7 @@ const actions = {
   },
   loadAvailablelist ({commit}) {
     return request.availableList().then(response => {
-      if (response.status === 0) {
+      if (response.success) {
         commit('setAvailablelist', response.data)
       }
     })

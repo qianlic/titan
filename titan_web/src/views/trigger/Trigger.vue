@@ -94,7 +94,7 @@ export default {
     },
     deleteData (key) {
       this.removeDatas(key).then(response => {
-        if (response.status === 0) {
+        if (response.success) {
           this.$refs.table.pageChange()
           this.$Message.success(response.message)
         }
@@ -105,7 +105,7 @@ export default {
         this.$Message.success('请选择操作数据！')
       } else {
         this.pauseTigger(keys[0]).then(response => {
-          if (response.status === 0) {
+          if (response.success) {
             this.$refs.table.pageChange()
             this.$Message.success(response.message)
           }
@@ -117,7 +117,7 @@ export default {
         this.$Message.success('请选择操作数据！')
       } else {
         this.resumeTigger(keys[0]).then(response => {
-          if (response.status === 0) {
+          if (response.success) {
             this.$refs.table.pageChange()
             this.$Message.success(response.message)
           }

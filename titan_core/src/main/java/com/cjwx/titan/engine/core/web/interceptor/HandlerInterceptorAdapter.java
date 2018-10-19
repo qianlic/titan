@@ -4,7 +4,6 @@ import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.web.http.RequestHelper;
 import com.cjwx.titan.engine.core.web.http.ResponseHelper;
 import com.cjwx.titan.engine.core.web.http.Result;
-import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
 import com.cjwx.titan.engine.util.StringUtils;
@@ -42,13 +41,13 @@ public class HandlerInterceptorAdapter implements HandlerInterceptor {
     }
 
     private boolean response401() {
-        Result result = new Result(ResultStatus.STATUS_1, "登录认证失败，请重新登录！");
+        Result result = new Result(false, "登录认证失败，请重新登录！");
         ResponseHelper.responseJson(HttpServletResponse.SC_UNAUTHORIZED, result);
         return false;
     }
 
     private boolean response403() {
-        Result result = new Result(ResultStatus.STATUS_1, "无法访问资源，权限不足！");
+        Result result = new Result(false, "无法访问资源，权限不足！");
         ResponseHelper.responseJson(HttpServletResponse.SC_FORBIDDEN, result);
         return false;
     }

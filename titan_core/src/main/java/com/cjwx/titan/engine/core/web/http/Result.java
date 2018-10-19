@@ -10,24 +10,17 @@ import lombok.Data;
 @Data
 public class Result<T> {
 
-    private int status;
-
-    private String message;
-
+    private boolean success = true;
+    private String message = "操作成功！";
     private T data;
 
-    public Result(int status, String message) {
-        this.status = status;
-        this.message = message;
-    }
-
-    public Result(ResultStatus resultStatus) {
-        this(resultStatus.getStatus(), resultStatus.getMessage());
-    }
-
-    public Result(ResultStatus resultStatus, T data) {
-        this(resultStatus);
+    public Result(T data) {
         this.data = data;
+    }
+
+    public Result(boolean success, String message) {
+        this.success = success;
+        this.message = message;
     }
 
 }

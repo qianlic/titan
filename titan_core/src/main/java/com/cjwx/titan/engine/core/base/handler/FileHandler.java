@@ -2,7 +2,6 @@ package com.cjwx.titan.engine.core.base.handler;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.web.http.Result;
-import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import com.cjwx.titan.engine.util.file.FileTool;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +23,7 @@ public class FileHandler {
 
     @RequestMapping(value = HttpConstant.FTP_UPLOAD)
     public Result uploadToFtpServer(MultipartFile file) throws Exception {
-        Result result = new Result(ResultStatus.STATUS_0);
-        result.setData(fileTool.uploadFileToFtpServer(file));
-        return result;
+        return new Result(fileTool.uploadFileToFtpServer(file));
     }
 
     @RequestMapping(value = HttpConstant.FTP_DOWNLOAD)

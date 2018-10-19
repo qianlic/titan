@@ -1,5 +1,5 @@
 <template>
-  <div class="login_frame" @keyup.enter="userLogin">
+  <div class="login_frame">
     <h3>登录</h3>
     <div class="login_err_panel" v-if="loginFailureMessage">
       {{loginFailureMessage}}
@@ -66,10 +66,7 @@ export default {
         localStore.removeStoreItem('REMEMBER_ME')
       }
       request.login(this.loginform).then(response => {
-        if (response.status !== 0) {
-          this.loginFailureMessage = response.data
-          this.refreshCode()
-        } else {
+        if (response.success) {
           localStore.setAuthToken({
             'Authorization': response.data
           })
@@ -77,6 +74,9 @@ export default {
             localStore.setStoreItem('REMEMBER_ME', this.loginform)
           }
           this.$router.push('/')
+        } else {
+          this.loginFailureMessage = response.message
+          this.refreshCode()
         }
       })
     },

@@ -108,7 +108,7 @@ export default {
         }
       }
       method(params).then(response => {
-        if (response.status === 0) {
+        if (response.success) {
           this.$Message.success(response.message)
           this.handleCancel()
         } else {
@@ -117,7 +117,7 @@ export default {
       })
     },
     hhsuccess (response) {
-      if (response.status === 0) {
+      if (response.success) {
         this.formInline.imgurl = response.data.url
         this.$Message.success(response.message)
         this.show = false

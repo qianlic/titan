@@ -67,7 +67,7 @@ export default {
     ]),
     deleteData (key) {
       this.removeDatas(key).then(response => {
-        if (response.status === 0) {
+        if (response.success) {
           this.$refs.table.pageChange()
           this.$Message.success(response.message)
         }

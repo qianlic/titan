@@ -3,7 +3,6 @@ package com.cjwx.titan.engine.core.web.advice;
 import com.alibaba.fastjson.JSON;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.core.web.http.Result;
-import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
@@ -31,7 +30,7 @@ public class ResponseAdive implements ResponseBodyAdvice {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         boolean flag = o instanceof String;
         if (!(o instanceof Result)) {
-            o = new Result(ResultStatus.STATUS_0, o);
+            o = new Result(o);
         }
         if (flag) {
             o = JSON.toJSONString(o);

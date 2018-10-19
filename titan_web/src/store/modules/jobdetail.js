@@ -27,14 +27,14 @@ const mutations = {
 const actions = {
   loadDatas ({commit}, params) {
     return request.list(params).then(response => {
-      if (response.status === 0) {
+      if (response.success) {
         commit('setDatas', response.data)
       }
     })
   },
   loadAvailablelist ({commit}) {
     return request.availableList().then(response => {
-      if (response.status === 0) {
+      if (response.success) {
         commit('setAvailablelist', response.data)
       }
     })

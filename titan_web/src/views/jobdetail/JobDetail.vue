@@ -94,7 +94,7 @@ export default {
     },
     deleteData (key) {
       this.removeDatas(key).then(response => {
-        if (response.status === 0) {
+        if (response.success) {
           this.$refs.table.pageChange()
           this.$Message.success(response.message)
         }
@@ -105,7 +105,7 @@ export default {
         this.$Message.success('请选择操作数据！')
       } else {
         this.runJob(keys[0]).then(response => {
-          if (response.status === 0) {
+          if (response.success) {
             this.$refs.table.pageChange()
             this.$Message.success(response.message)
           }
@@ -117,7 +117,7 @@ export default {
         this.$Message.success('请选择操作数据！')
       } else {
         this.pauseJob(keys[0]).then(response => {
-          if (response.status === 0) {
+          if (response.success) {
             this.$refs.table.pageChange()
             this.$Message.success(response.message)
           }
@@ -129,7 +129,7 @@ export default {
         this.$Message.success('请选择操作数据！')
       } else {
         this.resumeJob(keys[0]).then(response => {
-          if (response.status === 0) {
+          if (response.success) {
             this.$refs.table.pageChange()
             this.$Message.success(response.message)
           }
