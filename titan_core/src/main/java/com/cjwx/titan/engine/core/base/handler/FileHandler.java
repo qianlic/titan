@@ -1,7 +1,6 @@
 package com.cjwx.titan.engine.core.base.handler;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.core.web.http.Result;
 import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import com.cjwx.titan.engine.util.file.FileTool;

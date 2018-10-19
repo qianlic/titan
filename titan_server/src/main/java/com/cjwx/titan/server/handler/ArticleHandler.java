@@ -5,9 +5,9 @@ import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.server.bean.ComArticleBean;
+import com.cjwx.titan.server.bean.SysUserBean;
 import com.cjwx.titan.server.service.ArticleService;
-import com.cjwx.titan.shiro.StatelessToken;
-import com.cjwx.titan.shiro.util.TokenUtils;
+import com.cjwx.titan.server.util.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +34,8 @@ public class ArticleHandler {
 
     @RequestMapping("create")
     public void create(@RequestBody ComArticleBean article) {
-        StatelessToken token = TokenUtils.getCurrentToken();
-        article.setAuthor(token.getString("usercode"));
+        SysUserBean user = TokenUtils.getCurrentUser();
+        article.setAuthor(user.getUsercode());
         articleService.createArticle(article);
     }
 

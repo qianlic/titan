@@ -19,11 +19,6 @@
         </dependency>
         <dependency>
             <groupId>com.cjwx.titan</groupId>
-            <artifactId>shiro</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cjwx.titan</groupId>
             <artifactId>quartz</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -56,6 +51,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.38</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
         </dependency>
     </dependencies>
 

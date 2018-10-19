@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /**
@@ -40,6 +41,19 @@ public abstract class BaseDao {
 
     public long insert(Object bean) {
         return (long) this.getSession().save(bean);
+    }
+
+    public long batchInsert(List beans) {
+        Session session = this.getSession();
+        long count = 0;
+        for (int i = 0; i < beans.size(); i++) {
+            count = count + (long) session.save(beans.get(i));
+            if (i % 100 == 0) {
+                session.flush();
+                session.clear();
+            }
+        }
+        return count;
     }
 
     public void delete(Object bean) {

@@ -24,7 +24,7 @@ public class ResponseHelper {
         responseJson(response, date);
     }
 
-    public static void responseJson(HttpServletResponse response, Result date) throws IOException {
+    public static void responseJson(ServletResponse response, Result date) throws IOException {
         response.setContentType(CONTENT_TYPE);
         String rspString = JSON.toJSONString(date);
         response.getWriter().write(rspString);

@@ -53,6 +53,14 @@ public class JwtHelper {
     }
 
     /**
+     * 更新Token
+     */
+    public static void updateToken(JwtToken token){
+        String tokenId = token.getTokenId();
+        RedisUtils.set(AUTHORIZATION_KEY + "." + tokenId, token, EXPIRE_TIME);
+    }
+
+    /**
      * 删除Token
      */
     public static void removeToken(String authorization, String host) {

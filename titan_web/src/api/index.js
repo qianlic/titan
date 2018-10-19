@@ -1,4 +1,5 @@
 import localStore from '../store/localStore'
+import router from '../router'
 import Axios from 'axios'
 
 const request = Axios.create({
@@ -7,25 +8,38 @@ const request = Axios.create({
     'Accept': 'application/json',
     'Content-Type': 'application/json; charset=utf-8'
   },
-  validateStatus: status => {
-    return status >= 200 && status <= 500
-  },
   timeout: 10000
 })
 
-export default async function (url, params, heads) {
+request.interceptors.request.use(config => {
   const AUTH_TOKEN = localStore.getAuthTokenItem('Authorization')
   if (AUTH_TOKEN !== undefined) {
-    request.defaults.headers.common['Authorization'] = AUTH_TOKEN
+    config.headers.Authorization = AUTH_TOKEN
   }
+  return config
+})
+
+request.interceptors.response.use(response => {
+  return response.data
+}, error => {
+  const status = error.response.status
+  switch (status) {
+    case 401:router.push('/login')
+  }
+  return Promise.reject(error)
+})
+
+export default async function (url, params, heads) {
   Object.assign(request.defaults.headers.common, heads)
   const options = {
     method: 'POST',
     data: params
   }
-  return request(url, options)
-    .then(response => response.data)
-    .catch(error => {
-      console.log('请求[' + url + ']异常', error)
-    })
+  return new Promise((resolve) => {
+    request(url, options)
+      .then(response => resolve(response))
+      .catch(error => {
+        console.log('请求[' + url + ']异常', error)
+      })
+  })
 }

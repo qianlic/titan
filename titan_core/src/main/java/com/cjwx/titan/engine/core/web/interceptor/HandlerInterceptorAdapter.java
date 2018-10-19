@@ -1,6 +1,9 @@
 package com.cjwx.titan.engine.core.web.interceptor;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
+import com.cjwx.titan.engine.core.web.http.RequestHelper;
+import com.cjwx.titan.engine.reids.jwt.JwtHelper;
+import com.cjwx.titan.engine.reids.jwt.JwtToken;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,10 +20,16 @@ public class HandlerInterceptorAdapter implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handlerMethod) {
-        if (handlerMethod instanceof HandlerMethod) {
-            return true;
+        String url = request.getRequestURI();
+        if ((url.startsWith("/system") || "/secure/token".equals(url)) && handlerMethod instanceof HandlerMethod) {
+            String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
+            JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
+            if (token == null) {
+                return false;
+            }
+            HttpConstant.threadLocalModel.set(token);
         }
-        return false;
+        return true;
     }
 
     @Override

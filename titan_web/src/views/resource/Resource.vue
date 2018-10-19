@@ -106,7 +106,6 @@ export default {
       } else {
         this.removeDatas({ids}).then(response => {
           if (response.status === 0) {
-            this.$refs.table.loadData()
             this.$Message.success(response.message)
           }
         })

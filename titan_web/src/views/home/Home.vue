@@ -1,27 +1,39 @@
 <template>
-  <div class="hello">
-    <QuillEditor v-model="msg"/>
-  </div>
+  <Carousel v-model="value" loop>
+    <CarouselItem>
+      <div class="demo-carousel">1</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div class="demo-carousel">2</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div class="demo-carousel">3</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div class="demo-carousel">4</div>
+    </CarouselItem>
+  </Carousel>
 </template>
 
 <script>
-import QuillEditor from '../../components/VueQuillEditor'
-
 export default {
   name: 'Home',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App2'
+      value: 0
     }
-  },
-  components: {
-    QuillEditor
   }
 }
 </script>
 
 <style scoped>
-h1 {
-  font-weight: normal;
-}
+  .demo-carousel{
+    width: 100%;
+    height: 400px;
+    line-height: 400px;
+    text-align: center;
+    background: #506b9e;
+    font-size: 20px;
+    color: #fff;
+  }
 </style>

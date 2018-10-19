@@ -1,6 +1,7 @@
 package com.cjwx.titan.engine.core.base.bean;
 
 import com.cjwx.titan.engine.core.base.dao.AbstractBean;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -20,8 +21,10 @@ public class UserBean extends AbstractBean {
     private String usercode;
     @Column(name = "username")
     private String username;
+    @JsonIgnore
     @Column(name = "password")
     private String password;
+    @JsonIgnore
     @Column(name = "salt")
     private String salt;
     @Column(name = "roleids")

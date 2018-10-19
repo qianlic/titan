@@ -3,15 +3,15 @@ import request from '../'
 const baseUrl = '/system/user'
 
 function token (params) {
-  return request(`${baseUrl}/token`, params)
+  return request(`/secure/token`, params)
 }
 
 function login (params) {
-  return request(`${baseUrl}/login`, params)
+  return request(`/secure/login`, params)
 }
 
 function logout (params) {
-  return request(`${baseUrl}/logout`, params)
+  return request(`/secure/logout`, params)
 }
 
 function list (params) {

@@ -46,6 +46,9 @@ const mutations = {
   },
   setSelectRows (state, selectRows) {
     state.selectRows = selectRows
+  },
+  removeDatas (state, {ids}) {
+    state.datas = state.datas.filter(x => !ids.includes(x.id))
   }
 }
 
@@ -76,7 +79,8 @@ const actions = {
       }
     })
   },
-  removeDatas (context, params) {
+  removeDatas ({commit}, params) {
+    commit('removeDatas', params)
     return request.remove(params)
   },
   createData (context, params) {

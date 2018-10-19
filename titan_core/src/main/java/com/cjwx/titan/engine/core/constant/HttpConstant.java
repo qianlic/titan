@@ -1,6 +1,6 @@
 package com.cjwx.titan.engine.core.constant;
 
-import com.cjwx.titan.engine.core.model.Model;
+import com.cjwx.titan.engine.reids.jwt.JwtToken;
 
 /**
  * @Description: 常量类
@@ -9,7 +9,7 @@ import com.cjwx.titan.engine.core.model.Model;
  */
 public class HttpConstant {
 
-    public static final ThreadLocal<Model> threadLocalModel = new ThreadLocal<>();
+    public static final ThreadLocal<JwtToken> threadLocalModel = new ThreadLocal<>();
     public static final String VERSION = "0.0.1";
     public static final String SIGNING_KEY = "9af4d563dbc8cf2b08bd3391cd00c5f2";
 
@@ -20,5 +20,6 @@ public class HttpConstant {
 
     public static final String PARAM_USERNAME = "username";
     public static final String PARAM_DIGEST = "password";
+    public static final String PARAM_VERIFYCODE = "verifycode";
 
 }

@@ -57,7 +57,7 @@ export default {
     padding:5px 15px
   }
   .dropdown-menu {
-    width:150px;
+    width:200px;
     padding-left:15px
   }
   .dropdown-head {

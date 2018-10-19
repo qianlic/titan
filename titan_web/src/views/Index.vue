@@ -66,7 +66,7 @@ export default {
     logout: function () {
       request.logout().then(response => {
         if (response.status === 0) {
-          localStore.removeStoreItem('Authorization')
+          localStore.removeStoreItem('AUTH_TOKEN')
           this.$router.push('/login')
         }
       })
@@ -74,7 +74,7 @@ export default {
   },
   created: function () {
     request.token().then(response => {
-      if (response.status === 0) {
+      if (response.data) {
         this.loadTokenInfo(response.data)
       } else {
         this.$router.push('/login')

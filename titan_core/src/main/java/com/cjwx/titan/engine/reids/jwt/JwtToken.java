@@ -1,5 +1,6 @@
 package com.cjwx.titan.engine.reids.jwt;
 
+import com.cjwx.titan.engine.core.base.bean.UserBean;
 import com.cjwx.titan.engine.core.model.AbstractBox;
 import lombok.Data;
 
@@ -12,7 +13,8 @@ import lombok.Data;
 public class JwtToken extends AbstractBox {
 
     private String tokenId;
-    private String subject;
     private String host;
+
+    private UserBean user;
 
 }

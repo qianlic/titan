@@ -53,7 +53,7 @@ export default {
         password: undefined,
         verifycode: undefined
       },
-      verifyCodeUrl: '/api/system/captcha?s=' + s,
+      verifyCodeUrl: '/api/secure/captcha?s=' + s,
       loginFailureMessage: undefined
     }
   },
@@ -83,7 +83,7 @@ export default {
     refreshCode () {
       const s = uuid.v1()
       this.loginform.s = s
-      this.verifyCodeUrl = '/api/system/captcha?s=' + s
+      this.verifyCodeUrl = '/api/secure/captcha?s=' + s
     }
   },
   created: function () {

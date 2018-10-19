@@ -23,7 +23,7 @@ public class ExceptionAdive {
         if (e instanceof ServiceException) {
             message = e.getMessage();
         } else {
-            message = "系统错误:" + e.getMessage();
+            message = "系统错误: " + e.getMessage();
             log.error("请求发生异常", e);
         }
         return new Result(1, message);

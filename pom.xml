@@ -50,7 +50,6 @@
         <module>titan_monitor</module>
         <module>titan_crawler</module>
         <module>titan_quartz</module>
-        <module>titan_shiro</module>
         <module>titan_server</module>
         <module>titan_core</module>
     </modules>
