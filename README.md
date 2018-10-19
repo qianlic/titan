@@ -13,7 +13,6 @@
 ├── titan_quartz                // 定时任务
 ├── titan_routine               // 微信小程序
 ├── titan_server                // 接口服务
-├── titan_shiro                 // 权限管理
 └── titan_web                   // 后台页面
 ```
 

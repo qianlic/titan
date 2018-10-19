@@ -2,7 +2,11 @@ package com.cjwx.titan.engine.reids.jwt;
 
 import com.cjwx.titan.engine.core.base.bean.UserBean;
 import com.cjwx.titan.engine.core.model.AbstractBox;
+import com.cjwx.titan.engine.util.StringUtils;
 import lombok.Data;
+
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @Description: JWT TOKEN
@@ -12,9 +16,22 @@ import lombok.Data;
 @Data
 public class JwtToken extends AbstractBox {
 
+    public static final String TOKEN_URL = "/system/user/token";
+
     private String tokenId;
     private String host;
 
     private UserBean user;
+    private List<Pattern> promise;
+
+    public boolean checkPromise(String url) {
+        if (TOKEN_URL.equalsIgnoreCase(url)) {
+            return true;
+        }
+        if (this.promise == null || StringUtils.isEmpty(url)) {
+            return false;
+        }
+        return this.getPromise().stream().anyMatch(s -> s.matcher(url).matches());
+    }
 
 }

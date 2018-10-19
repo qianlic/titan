@@ -2,8 +2,12 @@ package com.cjwx.titan.engine.core.web.interceptor;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.web.http.RequestHelper;
+import com.cjwx.titan.engine.core.web.http.ResponseHelper;
+import com.cjwx.titan.engine.core.web.http.Result;
+import com.cjwx.titan.engine.core.web.http.ResultStatus;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
+import com.cjwx.titan.engine.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,15 +25,32 @@ public class HandlerInterceptorAdapter implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handlerMethod) {
         String url = request.getRequestURI();
-        if ((url.startsWith("/system") || "/secure/token".equals(url)) && handlerMethod instanceof HandlerMethod) {
+        if (url.startsWith("/system") && handlerMethod instanceof HandlerMethod) {
             String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
+            if (StringUtils.isEmpty(authHeader)) {
+                return this.response401();
+            }
             JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
             if (token == null) {
-                return false;
+                return this.response401();
+            } else if (!token.checkPromise(url)) {
+                return this.response403();
             }
             HttpConstant.threadLocalModel.set(token);
         }
         return true;
+    }
+
+    private boolean response401() {
+        Result result = new Result(ResultStatus.STATUS_1, "登录认证失败，请重新登录！");
+        ResponseHelper.responseJson(HttpServletResponse.SC_UNAUTHORIZED, result);
+        return false;
+    }
+
+    private boolean response403() {
+        Result result = new Result(ResultStatus.STATUS_1, "无法访问资源，权限不足！");
+        ResponseHelper.responseJson(HttpServletResponse.SC_FORBIDDEN, result);
+        return false;
     }
 
     @Override

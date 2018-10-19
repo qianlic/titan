@@ -1,5 +1,6 @@
 package com.cjwx.titan.engine.core.web.advice;
 
+import com.alibaba.fastjson.JSON;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.core.web.http.Result;
 import com.cjwx.titan.engine.core.web.http.ResultStatus;
@@ -28,10 +29,14 @@ public class ResponseAdive implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if (o instanceof Result) {
-            return o;
+        boolean flag = o instanceof String;
+        if (!(o instanceof Result)) {
+            o = new Result(ResultStatus.STATUS_0, o);
         }
-        return new Result(ResultStatus.STATUS_0, o);
+        if (flag) {
+            o = JSON.toJSONString(o);
+        }
+        return o;
     }
 
 }

@@ -3,7 +3,7 @@ import request from '../'
 const baseUrl = '/system/user'
 
 function token (params) {
-  return request(`/secure/token`, params)
+  return request(`${baseUrl}/token`, params)
 }
 
 function login (params) {

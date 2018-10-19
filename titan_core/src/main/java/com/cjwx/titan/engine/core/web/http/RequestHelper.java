@@ -2,11 +2,11 @@ package com.cjwx.titan.engine.core.web.http;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.titan.engine.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,12 +17,17 @@ import java.io.InputStreamReader;
  * @Author: qian li
  * @Date: 2018年03月29日 13:18
  */
+@Slf4j
 public class RequestHelper {
+
+    private static HttpServletRequest getRequest() {
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        return ((ServletRequestAttributes) attributes).getRequest();
+    }
 
     public static String getClientIp() {
         try {
-            RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
+            HttpServletRequest request = getRequest();
             String ip = request.getHeader("x-forwarded-for");
             if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("Proxy-Client-IP");
@@ -42,24 +47,29 @@ public class RequestHelper {
         }
     }
 
-    public static JSONObject requestJson(ServletRequest request) throws IOException {
-        String jsonString = requestString(request);
+    public static JSONObject requestJson() throws IOException {
+        String jsonString = requestString();
         if (StringUtils.isEmpty(jsonString)) {
             return null;
         }
         return JSONObject.parseObject(jsonString);
     }
 
-    public static String requestString(ServletRequest request) throws IOException {
-        InputStreamReader ir = new InputStreamReader(request.getInputStream(), StringUtils.DEFAULT_CHARSET);
-        BufferedReader br = new BufferedReader(ir);
-        StringBuffer sb = new StringBuffer();
-        String temp;
-        while ((temp = br.readLine()) != null) {
-            sb.append(temp);
+    public static String requestString() {
+        try {
+            InputStreamReader ir = new InputStreamReader(getRequest().getInputStream(), StringUtils.DEFAULT_CHARSET);
+            BufferedReader br = new BufferedReader(ir);
+            StringBuffer sb = new StringBuffer();
+            String temp;
+            while ((temp = br.readLine()) != null) {
+                sb.append(temp);
+            }
+            br.close();
+            return sb.toString();
+        } catch (IOException e) {
+            log.error("请求信息异常", e);
         }
-        br.close();
-        return sb.toString();
+        return null;
     }
 
 }

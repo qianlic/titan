@@ -50,7 +50,7 @@ public class HttpFilter implements Filter {
         response.setHeader("content-type", "application/json;charset=UTF-8"); // 设置请求编码
 
         if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {        //前端第一次参数访问直接过滤放回200
-            ResponseHelper.initRequest200(response);
+            ResponseHelper.initRequest200();
             return;
         }
 
