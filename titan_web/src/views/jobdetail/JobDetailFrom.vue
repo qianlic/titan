@@ -67,12 +67,8 @@ export default {
         method = this.editDatas
       }
       method(params).then(response => {
-        if (response.success) {
-          this.$Message.success(response.message)
-          this.handleCancel()
-        } else {
-          this.$Message.error(response.message)
-        }
+        this.$Message.success(response.message)
+        this.handleCancel()
       })
     },
     handleCancel () {
@@ -81,7 +77,9 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {name, group, service, method, data, triggerKeys, description} = this.requsetParams
+      const {
+        name, group, service, method, data, triggerKeys, description
+      } = this.requsetParams
       this.triggerKeys = triggerKeys
       this.formInline = {
         name,

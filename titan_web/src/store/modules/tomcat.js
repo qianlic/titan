@@ -16,11 +16,7 @@ const mutations = {
 
 const actions = {
   loadDatas ({commit}) {
-    return request.list().then(response => {
-      if (response.success) {
-        commit('setDatas', response.data)
-      }
-    })
+    return request.list().then(response => commit('setDatas', response.data))
   }
 }
 

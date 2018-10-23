@@ -22,11 +22,7 @@ const mutations = {
 
 const actions = {
   loadDatas ({commit}, params) {
-    return request.list(params).then(response => {
-      if (response.success) {
-        commit('setDatas', response.data)
-      }
-    })
+    return request.list(params).then(response => commit('setDatas', response.data))
   },
   interruptDatas (context, params) {
     return request.interrupt(params)

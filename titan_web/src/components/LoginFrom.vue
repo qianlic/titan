@@ -66,18 +66,16 @@ export default {
         localStore.removeStoreItem('REMEMBER_ME')
       }
       request.login(this.loginform).then(response => {
-        if (response.success) {
-          localStore.setAuthToken({
-            'Authorization': response.data
-          })
-          if (this.rememberMe) {
-            localStore.setStoreItem('REMEMBER_ME', this.loginform)
-          }
-          this.$router.push('/')
-        } else {
-          this.loginFailureMessage = response.message
-          this.refreshCode()
+        localStore.setAuthToken({
+          'Authorization': response.data
+        })
+        if (this.rememberMe) {
+          localStore.setStoreItem('REMEMBER_ME', this.loginform)
         }
+        this.$router.push('/')
+      }).catch(error => {
+        this.loginFailureMessage = error.message
+        this.refreshCode()
       })
     },
     refreshCode () {

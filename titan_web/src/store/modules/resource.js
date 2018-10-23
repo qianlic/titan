@@ -55,29 +55,23 @@ const mutations = {
 const actions = {
   loadDatas ({state, commit}, params) {
     return request.list(params).then(response => {
-      if (response.success) {
-        const list = response.data
-        const datas = formatTree(list)
-        datas.forEach(x => {
-          x['expand'] = false
-          x['display'] = false
-          if (x.level === 1) {
-            x['display'] = true
-          }
-        })
-        commit('setDatas', datas)
-      }
+      const list = response.data
+      const datas = formatTree(list)
+      datas.forEach(x => {
+        x['expand'] = false
+        x['display'] = false
+        if (x.level === 1) {
+          x['display'] = true
+        }
+      })
+      commit('setDatas', datas)
     })
   },
   expandData ({state, commit}, id) {
     commit('expandData', id)
   },
   loadAvailablelist ({commit}) {
-    return request.availableList().then(response => {
-      if (response.success) {
-        commit('setAvailablelist', response.data)
-      }
-    })
+    return request.availableList().then(response => commit('setAvailablelist', response.data))
   },
   removeDatas ({commit}, params) {
     commit('removeDatas', params)

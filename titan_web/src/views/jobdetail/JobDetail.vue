@@ -94,47 +94,39 @@ export default {
     },
     deleteData (key) {
       this.removeDatas(key).then(response => {
-        if (response.success) {
-          this.$refs.table.pageChange()
-          this.$Message.success(response.message)
-        }
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
       })
     },
     runJobs (keys) {
       if (keys.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.runJob(keys[0]).then(response => {
-          if (response.success) {
-            this.$refs.table.pageChange()
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.runJob(keys[0]).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
     },
     pauseJobs (keys) {
       if (keys.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.pauseJob(keys[0]).then(response => {
-          if (response.success) {
-            this.$refs.table.pageChange()
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.pauseJob(keys[0]).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
     },
     resumeJobs (keys) {
       if (keys.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.resumeJob(keys[0]).then(response => {
-          if (response.success) {
-            this.$refs.table.pageChange()
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.resumeJob(keys[0]).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
     }
   }
 }

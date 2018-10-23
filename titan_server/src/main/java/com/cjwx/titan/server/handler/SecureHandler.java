@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/secure/")
 public class SecureHandler {
 
-    public static final String SYS_ACCOUNT = "admin";
+    public static final String SYS_ACCOUNT = "0";
 
     @Resource
     private UserService userService;
@@ -72,7 +72,7 @@ public class SecureHandler {
             throw new ServiceException("用户名密码错误！");
         }
         List<SysResourceBean> resources;
-        if (SYS_ACCOUNT.equalsIgnoreCase(user.getUsername())) {
+        if (SYS_ACCOUNT.equals(user.getType())) {
             user.setRoles(roleService.getRoleList());
             resources = resourceService.getResourceList(true);
         } else {

@@ -21,6 +21,8 @@ public class UserBean extends AbstractBean {
     private String usercode;
     @Column(name = "username")
     private String username;
+    @Column(name = "type")
+    private String type;
     @JsonIgnore
     @Column(name = "password")
     private String password;

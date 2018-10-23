@@ -35,18 +35,10 @@ const mutations = {
 
 const actions = {
   loadDatas ({state, commit}, params) {
-    return request.list(params).then(response => {
-      if (response.success) {
-        commit('setDatas', response.data)
-      }
-    })
+    return request.list(params).then(response => commit('setDatas', response.data))
   },
   loadAvailablelist ({commit}) {
-    return request.availableList().then(response => {
-      if (response.success) {
-        commit('setAvailablelist', response.data)
-      }
-    })
+    return request.availableList().then(response => commit('setAvailablelist', response.data))
   },
   removeDatas (context, params) {
     return request.remove(params)

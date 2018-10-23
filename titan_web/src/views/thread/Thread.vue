@@ -140,17 +140,13 @@ export default {
     ]),
     interrupt (ids) {
       if (ids.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.interruptDatas({ids}).then(response => {
-          if (response.success) {
-            this.$refs.table.pageChange()
-            this.$Message.success(response.message)
-          } else {
-            this.$Message.error(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.interruptDatas({ids}).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
     },
     showStackTraceModle (row) {
       this.stackTrace = row.stackTrace

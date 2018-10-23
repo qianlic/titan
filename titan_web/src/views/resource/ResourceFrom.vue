@@ -93,12 +93,8 @@ export default {
         }
       }
       method(params).then(response => {
-        if (response.success) {
-          this.$Message.success(response.message)
-          this.handleCancel()
-        } else {
-          this.$Message.error(response.message)
-        }
+        this.$Message.success(response.message)
+        this.handleCancel()
       })
     },
     handleCancel () {
@@ -107,7 +103,9 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {id, resourcecode, resourcename, description, status, ico, type, url, level, parentid} = this.requsetParams
+      const {
+        id, resourcecode, resourcename, description, status, ico, type, url, level, parentid
+      } = this.requsetParams
       this.id = id
       this.formInline = {
         resourcecode,

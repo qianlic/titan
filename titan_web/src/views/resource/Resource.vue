@@ -78,7 +78,8 @@ export default {
     TreeTable
   },
   computed: mapGetters('resource', [
-    'datas'
+    'datas',
+    'selectIds'
   ]),
   methods: {
     ...mapActions('resource', [
@@ -102,29 +103,20 @@ export default {
     },
     deleteData (ids) {
       if (ids.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.removeDatas({ids}).then(response => {
-          if (response.success) {
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.removeDatas({ids}).then(response => this.$Message.success(response.message))
     },
     changeStatus (status) {
       if (this.selectIds.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.editStatus({
-          'ids': this.selectIds,
-          status
-        }).then(response => {
-          if (response.success) {
-            this.$refs.table.loadData()
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.editStatus({
+        'ids': this.selectIds,
+        status
+      }).then(response => this.$Message.success(response.message))
     }
   }
 }

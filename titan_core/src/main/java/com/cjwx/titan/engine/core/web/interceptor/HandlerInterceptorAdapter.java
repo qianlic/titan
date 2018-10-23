@@ -7,6 +7,7 @@ import com.cjwx.titan.engine.core.web.http.Result;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
 import com.cjwx.titan.engine.util.StringUtils;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,27 +28,31 @@ public class HandlerInterceptorAdapter implements HandlerInterceptor {
         if (url.startsWith("/system") && handlerMethod instanceof HandlerMethod) {
             String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
             if (StringUtils.isEmpty(authHeader)) {
-                return this.response401();
+                return this.response401("登录未认证，请重新登录！");
             }
-            JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
-            if (token == null) {
-                return this.response401();
-            } else if (!token.checkPromise(url)) {
-                return this.response403();
+            try {
+                JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
+                if (token == null) {
+                    return this.response401("登录认证失败，请重新登录！");
+                } else if (!token.checkPromise(url)) {
+                    return this.response403("无法访问资源，权限不足！");
+                }
+                HttpConstant.threadLocalModel.set(token);
+            } catch (ExpiredJwtException e) {
+                return this.response401("凭据已过期，请重新认证！");
             }
-            HttpConstant.threadLocalModel.set(token);
         }
         return true;
     }
 
-    private boolean response401() {
-        Result result = new Result(false, "登录认证失败，请重新登录！");
+    private boolean response401(String message) {
+        Result result = new Result(false, message);
         ResponseHelper.responseJson(HttpServletResponse.SC_UNAUTHORIZED, result);
         return false;
     }
 
-    private boolean response403() {
-        Result result = new Result(false, "无法访问资源，权限不足！");
+    private boolean response403(String message) {
+        Result result = new Result(false, message);
         ResponseHelper.responseJson(HttpServletResponse.SC_FORBIDDEN, result);
         return false;
     }

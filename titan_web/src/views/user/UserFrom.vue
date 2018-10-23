@@ -108,22 +108,14 @@ export default {
         }
       }
       method(params).then(response => {
-        if (response.success) {
-          this.$Message.success(response.message)
-          this.handleCancel()
-        } else {
-          this.$Message.error(response.message)
-        }
+        this.$Message.success(response.message)
+        this.handleCancel()
       })
     },
     hhsuccess (response) {
-      if (response.success) {
-        this.formInline.imgurl = response.data.url
-        this.$Message.success(response.message)
-        this.show = false
-      } else {
-        this.$Message.error(response.message)
-      }
+      this.formInline.imgurl = response.data.url
+      this.$Message.success(response.message)
+      this.show = false
     },
     handleCancel () {
       this.$router.go(-1)
@@ -161,7 +153,9 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {id, usercode, username, sex, birthday, mobile, email, imgurl, roleids, status} = this.requsetParams
+      const {
+        id, usercode, username, sex, birthday, mobile, email, imgurl, roleids, status
+      } = this.requsetParams
       this.id = id
       this.roleids = roleids.split(',').map(s => Number.parseInt(s))
       this.formInline = {

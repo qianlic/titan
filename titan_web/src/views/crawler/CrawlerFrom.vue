@@ -60,12 +60,8 @@ export default {
         }
       }
       method(params).then(response => {
-        if (response.success) {
-          this.$Message.success(response.message)
-          this.handleCancel()
-        } else {
-          this.$Message.error(response.message)
-        }
+        this.$Message.success(response.message)
+        this.handleCancel()
       })
     },
     handleCancel () {
@@ -74,7 +70,9 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {id, name, resumable, seed, number, status} = this.requsetParams
+      const {
+        id, name, resumable, seed, number, status
+      } = this.requsetParams
       this.id = id
       this.formInline = {
         id,

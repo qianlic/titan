@@ -42,6 +42,7 @@ public class UserHandler {
         String password = EndecryptUtils.md5Password("123456", salt);
         user.setSalt(salt);
         user.setPassword(password);
+        user.setType("1");
         userService.createUser(user);
     }
 

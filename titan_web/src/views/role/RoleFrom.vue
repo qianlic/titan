@@ -74,12 +74,8 @@ export default {
         }
       }
       method(params).then(response => {
-        if (response.success) {
-          this.$Message.success(response.message)
-          this.handleCancel()
-        } else {
-          this.$Message.error(response.message)
-        }
+        this.$Message.success(response.message)
+        this.handleCancel()
       })
     },
     handleCancel () {
@@ -88,7 +84,9 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {id, rolecode, rolename, description, resourceids, status} = this.requsetParams
+      const {
+        id, rolecode, rolename, description, resourceids, status
+      } = this.requsetParams
       this.id = id
       this.resourceids = resourceids.split(',').map(s => Number.parseInt(s))
       this.formInline = {

@@ -94,35 +94,29 @@ export default {
     },
     deleteData (key) {
       this.removeDatas(key).then(response => {
-        if (response.success) {
-          this.$refs.table.pageChange()
-          this.$Message.success(response.message)
-        }
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
       })
     },
     pauseTiggers (keys) {
       if (keys.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.pauseTigger(keys[0]).then(response => {
-          if (response.success) {
-            this.$refs.table.pageChange()
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.pauseTigger(keys[0]).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
     },
     resumeTiggers (keys) {
       if (keys.length === 0) {
-        this.$Message.success('请选择操作数据！')
-      } else {
-        this.resumeTigger(keys[0]).then(response => {
-          if (response.success) {
-            this.$refs.table.pageChange()
-            this.$Message.success(response.message)
-          }
-        })
+        this.$Message.info('请选择操作数据！')
+        return
       }
+      this.resumeTigger(keys[0]).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
     }
   },
   created () {

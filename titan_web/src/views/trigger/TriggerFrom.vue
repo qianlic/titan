@@ -72,12 +72,8 @@ export default {
         method = this.editDatas
       }
       method(params).then(response => {
-        if (response.success) {
-          this.$Message.success(response.message)
-          this.handleCancel()
-        } else {
-          this.$Message.error(response.message)
-        }
+        this.$Message.success(response.message)
+        this.handleCancel()
       })
     },
     handleCancel () {
@@ -86,7 +82,9 @@ export default {
   },
   created () {
     if (!this.requsetParams.iscreate) {
-      const {name, group, priority, type, repeatInterval, repeatCount, cronExpression, jobKey, description} = this.requsetParams
+      const {
+        name, group, priority, type, repeatInterval, repeatCount, cronExpression, jobKey, description
+      } = this.requsetParams
       this.jobKey = JSON.stringify(jobKey)
       this.formInline = {
         name,

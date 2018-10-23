@@ -83,10 +83,8 @@ export default {
     },
     deleteData (id) {
       this.removeDatas({ids: [id]}).then(response => {
-        if (response.success) {
-          this.$refs.table.pageChange()
-          this.$Message.success(response.message)
-        }
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
       })
     }
   }

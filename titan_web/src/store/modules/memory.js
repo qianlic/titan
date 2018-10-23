@@ -49,11 +49,7 @@ const mutations = {
 
 const actions = {
   loadDatas ({commit}) {
-    return request.info().then(response => {
-      if (response.success) {
-        commit('setDatas', response.data)
-      }
-    })
+    return request.info().then(response => commit('setDatas', response.data))
   }
 }
 

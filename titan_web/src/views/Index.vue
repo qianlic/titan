@@ -64,20 +64,14 @@ export default {
       this.$router.push(this.activepage.code)
     },
     logout: function () {
-      request.logout().then(response => {
-        if (response.success) {
-          localStore.removeStoreItem('AUTH_TOKEN')
-          this.$router.push('/login')
-        }
+      request.logout().then(() => {
+        localStore.removeStoreItem('AUTH_TOKEN')
+        this.$router.push('/login')
       })
     }
   },
   created: function () {
-    request.token().then(response => {
-      if (response.success) {
-        this.loadTokenInfo(response.data)
-      }
-    })
+    request.token().then(response => this.loadTokenInfo(response.data))
   },
   mounted: function () {
     const that = this
