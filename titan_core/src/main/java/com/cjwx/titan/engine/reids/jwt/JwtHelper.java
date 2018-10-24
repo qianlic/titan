@@ -1,5 +1,6 @@
 package com.cjwx.titan.engine.reids.jwt;
 
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.exception.ServiceException;
 import com.cjwx.titan.engine.reids.util.RedisUtils;
 import com.cjwx.titan.engine.util.EndecryptUtils;
@@ -34,7 +35,7 @@ public class JwtHelper {
     public static String createJWT(JwtToken token) {
         String tokenId = token.getTokenId();
         JwtBuilder jwtBuilder = createJWT(tokenId, token.getHost());
-        RedisUtils.set(AUTHORIZATION_KEY + "." + tokenId, token, EXPIRE_TIME);
+        RedisUtils.set(AUTHORIZATION_KEY + "." + HttpConstant.VERSION + "." + tokenId, token, EXPIRE_TIME);
         return jwtBuilder.compact();
     }
 
@@ -52,13 +53,6 @@ public class JwtHelper {
                 .signWith(SIGNATURE_ALGORITHM, generalKey());
     }
 
-    /**
-     * 更新Token
-     */
-    public static void updateToken(JwtToken token){
-        String tokenId = token.getTokenId();
-        RedisUtils.set(AUTHORIZATION_KEY + "." + tokenId, token, EXPIRE_TIME);
-    }
 
     /**
      * 删除Token
@@ -88,7 +82,7 @@ public class JwtHelper {
      * 解析JWT获取TokenKey
      */
     public static String parseTokenKey(String authorization, String host) {
-        return AUTHORIZATION_KEY + "." + parseTokenId(authorization, host);
+        return AUTHORIZATION_KEY + "." + HttpConstant.VERSION + "." + parseTokenId(authorization, host);
     }
 
     /**

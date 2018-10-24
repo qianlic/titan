@@ -1,6 +1,7 @@
 package com.cjwx.titan.engine.reids.jwt;
 
 import com.cjwx.titan.engine.core.base.bean.UserBean;
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.util.StringUtils;
 import lombok.Data;
 
@@ -17,7 +18,6 @@ import java.util.regex.Pattern;
 public class JwtToken implements Serializable {
 
     private static final long serialVersionUID = -9017410322938026917L;
-    public static final String TOKEN_URL = "/system/user/token";
 
     private String tokenId;
     private String host;
@@ -26,10 +26,9 @@ public class JwtToken implements Serializable {
     private List<Pattern> promise;
 
     public boolean checkPromise(String url) {
-        if (TOKEN_URL.equalsIgnoreCase(url)) {
+        if (HttpConstant.EXCLUSIONS.contains(url)) {
             return true;
-        }
-        if (this.promise == null || StringUtils.isEmpty(url)) {
+        } else if (this.promise == null || StringUtils.isEmpty(url)) {
             return false;
         }
         return this.getPromise().stream().anyMatch(s -> s.matcher(url).matches());

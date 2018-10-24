@@ -33,4 +33,12 @@
         <property name="queueCapacity" value="200"/>
     </bean>
 
+    <bean id="httpConstant" class="com.cjwx.titan.engine.core.constant.HttpConstant">
+        <property name="VERSION" value="0.0.1"/>
+        <property name="EXCLUSIONS">
+            <list>
+                <value>/system/user/token</value>
+            </list>
+        </property>
+    </bean>
 </beans>

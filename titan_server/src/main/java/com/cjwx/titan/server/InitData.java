@@ -1,5 +1,6 @@
 package com.cjwx.titan.server;
 
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.server.bean.SysResourceBean;
 import com.cjwx.titan.server.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent> {
                         url = url.replace("//", "/").toLowerCase();
                         String[] s = url.split("/");
                         int l = s.length;
-                        if (url.startsWith("/system") && !urls.contains(url) && l > 3) {
+                        if (url.startsWith("/system") && !urls.contains(url)
+                                && !HttpConstant.EXCLUSIONS.contains(url) && l > 3) {
                             SysResourceBean resource = new SysResourceBean();
                             String key = s[l - 2];
                             Long parentid = allMap.get(key.toLowerCase());

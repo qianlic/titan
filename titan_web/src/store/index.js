@@ -62,6 +62,13 @@ const mutations = {
         page.color = 'yellow'
       }
     })
+  },
+  clearCache (state) {
+    state.cachepages = [{
+      code: 'home',
+      name: '主页',
+      color: 'green'
+    }]
   }
 }
 
@@ -87,6 +94,9 @@ const actions = {
     } else {
       commit('actCachePage', code)
     }
+  },
+  clearCache ({commit}) {
+    commit('clearCache')
   },
   closePageInfo ({state, commit}, code) {
     commit('delCachePage', code)

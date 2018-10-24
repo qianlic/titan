@@ -53,7 +53,8 @@ export default {
     ...mapActions([
       'loadTokenInfo',
       'openPageInfo',
-      'closePageInfo'
+      'closePageInfo',
+      'clearCache'
     ]),
     loadPage: function (code) {
       this.openPageInfo(code)
@@ -71,6 +72,7 @@ export default {
     }
   },
   created: function () {
+    this.clearCache()
     request.token().then(response => this.loadTokenInfo(response.data))
   },
   mounted: function () {
