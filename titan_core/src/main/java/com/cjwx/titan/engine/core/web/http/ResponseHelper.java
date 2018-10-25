@@ -19,7 +19,7 @@ public class ResponseHelper {
 
     private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 
-    private static HttpServletResponse getResponse() {
+    public static HttpServletResponse getResponse() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return ((ServletRequestAttributes) attributes).getResponse();
     }

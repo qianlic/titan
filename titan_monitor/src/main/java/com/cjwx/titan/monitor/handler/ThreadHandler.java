@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.util.file.ExcelUtils;
 import com.cjwx.titan.monitor.bean.ThreadBean;
 import com.cjwx.titan.monitor.helper.ThreadHelper;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,13 @@ public class ThreadHandler {
     @RequestMapping("list")
     public PageList<ThreadBean> list(@RequestBody Model model) {
         return ThreadHelper.findThreadList(model.getStart(), model.getSize(), model.getParams(ThreadBean.class));
+    }
+
+    @RequestMapping("download")
+    public void download(@RequestBody Model model) {
+        String[] title = {"线程编号", "线程名"};
+        String[][] data = ThreadHelper.findThreadList(model.getParams(ThreadBean.class));
+        ExcelUtils.download(title, data);
     }
 
     @RequestMapping("interrupt")

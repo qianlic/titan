@@ -64,6 +64,50 @@ public class ThreadHelper implements Serializable {
         return pageList;
     }
 
+    public static String[][] findThreadList(Map<String, Object> wheres) {
+        ThreadMXBean threadMXBean = MBeans.THREAD_MXBEAN;
+        boolean cpuTimeEnabled = threadMXBean.isThreadCpuTimeSupported()
+                && threadMXBean.isThreadCpuTimeEnabled();
+
+        Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
+        long[] deadlockedThreads;
+        if (threadMXBean.isSynchronizerUsageSupported()) {
+            deadlockedThreads = threadMXBean.findDeadlockedThreads();
+        } else {
+            deadlockedThreads = threadMXBean.findMonitorDeadlockedThreads();
+        }
+        List<ThreadBean> threadList = new ArrayList<>();
+        stackTraces.forEach((k, v) -> {
+            Long id = k.getId();
+            boolean deadlocked = false;
+            if (deadlockedThreads != null && Arrays.binarySearch(deadlockedThreads, id) >= 0) {
+                deadlocked = true;
+            }
+            if (wheres.containsKey("state") && !k.getState().name().equals(wheres.get("state"))) {
+                return;
+            } else if (wheres.containsKey("daemon") && k.isDaemon() != ObjectUtils.objectToBoolean(wheres.get("daemon"))) {
+                return;
+            } else if (wheres.containsKey("deadlocked") && deadlocked != ObjectUtils.objectToBoolean(wheres.get("deadlocked"))) {
+                return;
+            }
+            ThreadBean thread = new ThreadBean(k);
+            thread.setStackTrace(Arrays.asList(v).stream().map(StackTraceElement::toString).collect(Collectors.toList()));
+            if (cpuTimeEnabled) {
+                thread.setCpuTimeMillis(threadMXBean.getThreadCpuTime(id) / 1000000);
+                thread.setUserTimeMillis(threadMXBean.getThreadUserTime(id) / 1000000);
+            }
+            thread.setDeadlocked(deadlocked);
+            threadList.add(thread);
+        });
+        String[][] data = new String[threadList.size()][];
+        for (int i = 0; i < threadList.size(); i++) {
+            data[i] = new String[2];
+            data[i][0] = String.valueOf(threadList.get(i).getId());
+            data[i][1] = threadList.get(i).getName();
+        }
+        return data;
+    }
+
     public static int interruptThread(List ids) {
         final Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
         int count = 0;

@@ -40,7 +40,8 @@ export default async function (url, params, heads) {
         const {status, data} = error.response
         if (data.message) Message.error(data.message)
         switch (status) {
-          case 401:router.push('/login')
+          case 401:
+            router.push('/login')
         }
         console.log('请求[' + url + ']异常', data)
       })

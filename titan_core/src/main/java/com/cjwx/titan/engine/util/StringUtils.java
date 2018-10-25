@@ -3,7 +3,10 @@ package com.cjwx.titan.engine.util;
 import com.cjwx.titan.engine.core.exception.ServiceException;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -73,10 +76,17 @@ public abstract class StringUtils {
      * 字符串字符集转换
      */
     public static String convert(String target, String charset) {
+        return convert(target, "ISO-8859-1", charset);
+    }
+
+    /**
+     * 字符串字符集转换
+     */
+    public static String convert(String target, String charset1, String charset2) {
         try {
-            return new String(stringToByte(target, "ISO-8859-1"), charset);
+            return new String(stringToByte(target, charset1), charset2);
         } catch (UnsupportedEncodingException e) {
-            throw new ServiceException("字符串转换字符集 [" + target + COMMA_STRING + charset + "] 失败", e);
+            throw new ServiceException("字符串转换字符集 [" + target + COMMA_STRING + charset2 + "] 失败", e);
         }
     }
 

@@ -1,4 +1,4 @@
-import request from '../'
+import request from '../request'
 
 const baseUrl = '/system/memory'
 

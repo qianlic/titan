@@ -121,6 +121,14 @@ export default {
         type: 'error',
         icon: 'close',
         on: () => this.interrupt(this.selectIds)
+      }, {
+        title: '导 出',
+        type: 'primary',
+        icon: 'android-download',
+        on: () => this.downloadDatas({
+          filename: 'asdsadad.xls',
+          params: {}
+        })
       }]
     }
   },
@@ -135,6 +143,7 @@ export default {
   methods: {
     ...mapActions('thread', [
       'loadDatas',
+      'downloadDatas',
       'interruptDatas',
       'setSelectRows'
     ]),

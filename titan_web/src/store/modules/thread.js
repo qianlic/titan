@@ -24,6 +24,9 @@ const actions = {
   loadDatas ({commit}, params) {
     return request.list(params).then(response => commit('setDatas', response.data))
   },
+  downloadDatas ({commit}, params) {
+    return request.download(params)
+  },
   interruptDatas (context, params) {
     return request.interrupt(params)
   },

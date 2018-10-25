@@ -20,7 +20,7 @@ import java.io.InputStreamReader;
 @Slf4j
 public class RequestHelper {
 
-    private static HttpServletRequest getRequest() {
+    public static HttpServletRequest getRequest() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return ((ServletRequestAttributes) attributes).getRequest();
     }
