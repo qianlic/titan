@@ -106,6 +106,14 @@ export default {
         icon: 'locked',
         on: () => this.changeStatus(false)
       }, {
+        title: '导 出',
+        type: 'primary',
+        icon: 'android-download',
+        on: () => this.downloadDatas({
+          filename: '用户列表.xls',
+          params: this.$refs.table.searchInfo
+        })
+      }, {
         title: '设置密码',
         type: 'warning',
         icon: 'key',
@@ -124,6 +132,7 @@ export default {
   methods: {
     ...mapActions('user', [
       'loadDatas',
+      'downloadDatas',
       'removeDatas',
       'editStatus',
       'editPassword',

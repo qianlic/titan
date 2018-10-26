@@ -18,6 +18,8 @@ public interface UserDao {
 
     int update(List ids, String password, String salt);
 
+    List<SysUserBean> select(Map<String, Object> where);
+
     PageList<SysUserBean> select(int start, int size, Map<String, Object> where);
 
     List<SysUserBean> select(List ids);

@@ -21,6 +21,8 @@ public interface UserService {
 
     int updatePassword(List ids, String password,String salt);
 
+    List<SysUserBean> getUserList(Map<String, Object> wheres);
+
     PageList<SysUserBean> getUserList(int start, int size, Map<String, Object> wheres);
 
     List<SysUserBean> findUserByIds(List ids);

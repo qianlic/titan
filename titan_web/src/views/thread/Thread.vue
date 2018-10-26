@@ -127,7 +127,7 @@ export default {
         icon: 'android-download',
         on: () => this.downloadDatas({
           filename: 'asdsadad.xls',
-          params: {}
+          params: this.$refs.table.searchInfo
         })
       }]
     }

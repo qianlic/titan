@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<SysUserBean> getUserList(Map<String, Object> wheres) {
+        return userDao.select( wheres);
+    }
+
+    @Override
     public PageList<SysUserBean> getUserList(int start, int size, Map<String, Object> wheres) {
         return userDao.select(start, size, wheres);
     }

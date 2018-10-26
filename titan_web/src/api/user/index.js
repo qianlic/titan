@@ -1,4 +1,5 @@
 import request from '../request'
+import filedown from '../filedown'
 
 const baseUrl = '/system/user'
 
@@ -16,6 +17,10 @@ function logout (params) {
 
 function list (params) {
   return request(`${baseUrl}/list`, params)
+}
+
+function download (params) {
+  return filedown(`${baseUrl}/download`, params)
 }
 
 function create (params) {
@@ -43,6 +48,7 @@ export default {
   login,
   logout,
   list,
+  download,
   create,
   edit,
   status,

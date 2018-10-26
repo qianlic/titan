@@ -6,6 +6,7 @@ import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.core.web.annotation.RestHandler;
 import com.cjwx.titan.engine.util.EndecryptUtils;
+import com.cjwx.titan.engine.util.file.ExcelUtils;
 import com.cjwx.titan.server.bean.SysUserBean;
 import com.cjwx.titan.server.service.UserService;
 import com.cjwx.titan.server.util.TokenUtils;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: qian li
@@ -34,6 +36,23 @@ public class UserHandler {
     @RequestMapping("list")
     public PageList<SysUserBean> list(@RequestBody Model model) {
         return userService.getUserList(model.getStart(), model.getSize(), model.getParams(SysUserBean.class));
+    }
+
+    @RequestMapping("download")
+    public void download(@RequestBody Model model) {
+        List<SysUserBean> users = userService.getUserList(model.getParams(SysUserBean.class));
+        String[] title = {"用户编号", "用户名", "性别", "联系电话", "状态"};
+        String[][] data = new String[users.size()][];
+        for (int i = 0; i < users.size(); i++) {
+            data[i] = new String[5];
+            SysUserBean user = users.get(i);
+            data[i][0] = user.getUsercode();
+            data[i][1] = user.getUsername();
+            data[i][2] = user.getSex();
+            data[i][3] = user.getMobile();
+            data[i][4] = user.getStatus() ? "启用" : "禁用";
+        }
+        ExcelUtils.download(title, data);
     }
 
     @RequestMapping("create")
