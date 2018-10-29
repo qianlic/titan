@@ -1,5 +1,5 @@
 # 技术栈
-[预览](https://45.76.222.218:8000)
+[预览](https://45.76.222.218:8000) 用户名：gust ，密码：123456
 ## 前端
 > mpvue + iview + vue-router + vuex + echarts
 ## 后端

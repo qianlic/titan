@@ -17,6 +17,11 @@ function download (filename = 'download.xls', blob) {
   }
 }
 
+function decode (data) {
+  const enc = new TextDecoder('utf-8')
+  return JSON.parse(enc.decode(new Uint8Array(data)))
+}
+
 const request = Axios.create({
   baseURL: '/api/',
   headers: {
@@ -49,19 +54,19 @@ export default async function (url, params, heads) {
         if (disposition) {
           download(params.filename, new Blob([data]))
         } else {
-          const enc = new TextDecoder('utf-8')
-          const res = JSON.parse(enc.decode(new Uint8Array(data)))
+          const res = decode(data)
           Message.warning(res.message)
           reject(res)
         }
       }).catch(error => {
         const {status, data} = error.response
-        if (data.message) Message.error(data.message)
+        const res = decode(data)
+        if (res.message) Message.error(res.message)
         switch (status) {
           case 401:
             router.push('/login')
         }
-        console.log('请求[' + url + ']异常', data)
+        console.log('请求[' + url + ']异常', res)
       })
   })
 }

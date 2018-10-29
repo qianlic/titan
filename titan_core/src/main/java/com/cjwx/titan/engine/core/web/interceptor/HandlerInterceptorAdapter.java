@@ -24,7 +24,7 @@ public class HandlerInterceptorAdapter implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handlerMethod) {
-        String url = request.getRequestURI();
+        String url = request.getServletPath();
         if (url.startsWith("/system") && handlerMethod instanceof HandlerMethod) {
             String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
             if (StringUtils.isEmpty(authHeader)) {
