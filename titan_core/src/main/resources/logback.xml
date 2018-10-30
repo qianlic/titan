@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property resource="/config/sys.properties" />
+    <property resource="config/sys.properties" />
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
