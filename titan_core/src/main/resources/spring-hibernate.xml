@@ -3,14 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/tx
-	http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <import resource="classpath:spring-datasource.xml"/>
 
     <!-- 创建Hibernate连接工厂 -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan">
             <list>
@@ -40,7 +40,7 @@
                 <!-- 指定hibernate在何时释放JDBC连接 -->
                 hibernate.connection.release_mode=auto
                 <!-- 创建session方式 hibernate4.x 的方式 -->
-                hibernate.current_session_context_class=org.springframework.orm.hibernate4.SpringSessionContext
+                hibernate.current_session_context_class=org.springframework.orm.hibernate5.SpringSessionContext
                 <!-- javax.persistence.validation.mode默认情况下是auto -->
                 javax.persistence.validation.mode=none
             </value>
@@ -48,7 +48,7 @@
     </bean>
 
     <!-- HibernateTransactionManager事务管理 -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

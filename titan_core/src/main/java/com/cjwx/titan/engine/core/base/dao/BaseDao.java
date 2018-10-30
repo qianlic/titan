@@ -24,13 +24,13 @@ public abstract class BaseDao {
     private SessionFactory sessionFactory;
 
     public SQLQuery sqlQuery(String sql) {
-        return this.getSession().createSQLQuery(sql);
+        return this.getSession().createNativeQuery(sql);
     }
 
     public SQLQuery sqlQuery(String sql, Object args[]) {
         SQLQuery q = this.sqlQuery(sql);
         if (ObjectUtils.isNotEmpty(args) && args.length > 0) {
-            IntStream.range(0, args.length).forEach(idx -> q.setParameter(idx, args[idx]));
+            IntStream.range(0, args.length).forEach(idx -> q.setParameter(idx + 1, args[idx]));
         }
         return q;
     }

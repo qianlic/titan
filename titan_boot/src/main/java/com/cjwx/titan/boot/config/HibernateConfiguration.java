@@ -56,5 +56,4 @@ public class HibernateConfiguration {
         return properties;
     }
 
-
 }
