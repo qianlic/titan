@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * ClrCrawlerBean
@@ -16,11 +15,8 @@ import javax.persistence.Transient;
  */
 @Data
 @Entity
-@Table(name = ClrCrawlerBean.TABLE)
+@Table(name = "clr_crawler")
 public class ClrCrawlerBean extends AbstractBean {
-
-    @Transient
-    public static final String TABLE = "clr_crawler";
 
     @Column(name = "name")
     private String name;

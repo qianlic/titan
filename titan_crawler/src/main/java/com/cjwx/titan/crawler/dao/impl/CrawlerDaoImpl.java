@@ -15,33 +15,30 @@ public class CrawlerDaoImpl extends BaseDao implements CrawlerDao {
 
     @Override
     public int delete(List ids) {
-        return this.getExecute().table(ClrCrawlerBean.TABLE).in("id", ids).delete();
+        return this.getExecute(ClrCrawlerBean.class).in("id", ids).delete();
     }
 
     @Override
     public int update(int id, Map<String, Object> set) {
-        return this.getExecute().table(ClrCrawlerBean.TABLE).set(set).eq("id", id).update();
+        return this.getExecute(ClrCrawlerBean.class).set(set).eq("id", id).update();
     }
 
     @Override
     public int update(List ids, boolean status) {
-        return this.getExecute().table(ClrCrawlerBean.TABLE).set("status", status).in("id", ids).update();
+        return this.getExecute(ClrCrawlerBean.class).set("status", status).in("id", ids).update();
     }
 
     @Override
     public List<ClrCrawlerBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
-            return this.getQuery().from(ClrCrawlerBean.TABLE)
-                    .eq("status", true)
-                    .in("id", ids)
-                    .list(ClrCrawlerBean.class);
+            return this.getQuery(ClrCrawlerBean.class).eq("status", true).in("id", ids).list();
         }
         return null;
     }
 
     @Override
     public PageList<ClrCrawlerBean> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().from(ClrCrawlerBean.TABLE).eq(where).page(start, size, ClrCrawlerBean.class);
+        return this.getQuery(ClrCrawlerBean.class).eq(where).page(start, size);
     }
 
 }

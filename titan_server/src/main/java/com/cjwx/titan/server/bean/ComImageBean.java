@@ -6,15 +6,11 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Data
 @Entity
-@Table(name = ComImageBean.TABLE)
+@Table(name = "com_image")
 public class ComImageBean extends AbstractBean {
-
-    @Transient
-    public static final String TABLE = "com_image";
 
     @Column(name = "filename")
     private String filename;

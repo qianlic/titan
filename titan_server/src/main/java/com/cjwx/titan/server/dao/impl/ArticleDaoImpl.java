@@ -14,16 +14,16 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 
     @Override
     public int delete(List ids) {
-        return this.getExecute().table(ComArticleBean.TABLE).in("id", ids).delete();
+        return this.getExecute(ComArticleBean.class).in("id", ids).delete();
     }
 
     @Override
     public int update(int id, Map<String, Object> set) {
-        return this.getExecute().table(ComArticleBean.TABLE).set(set).eq("id", id).update();
+        return this.getExecute(ComArticleBean.class).set(set).eq("id", id).update();
     }
 
     @Override
     public PageList<ComArticleBean> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().from(ComArticleBean.TABLE).eq(where).page(start, size, ComArticleBean.class);
+        return this.getQuery(ComArticleBean.class).eq(where).page(start, size);
     }
 }

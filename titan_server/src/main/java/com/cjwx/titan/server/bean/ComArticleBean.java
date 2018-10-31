@@ -6,15 +6,11 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Data
 @Entity
-@Table(name = ComArticleBean.TABLE)
+@Table(name = "com_article")
 public class ComArticleBean extends AbstractBean {
-
-    @Transient
-    public static final String TABLE = "com_article";
 
     @Column(name = "title")
     private String title;

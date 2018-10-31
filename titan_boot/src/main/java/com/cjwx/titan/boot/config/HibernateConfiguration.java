@@ -27,6 +27,7 @@ public class HibernateConfiguration {
     @Bean
     public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
+        factory.setPackagesToScan("com.cjwx.titan.**.bean");
         factory.setDataSource(dataSource);
         factory.setHibernateProperties(hibernateProperties());
         return factory;

@@ -15,38 +15,35 @@ public class RoleDaoImpl extends BaseDao implements RoleDao {
 
     @Override
     public int delete(List ids) {
-        return this.getExecute().table(SysRoleBean.TABLE).in("id", ids).delete();
+        return this.getExecute(SysRoleBean.class).in("id", ids).delete();
     }
 
     @Override
     public int update(int id, Map<String, Object> set) {
-        return this.getExecute().table(SysRoleBean.TABLE).set(set).eq("id", id).update();
+        return this.getExecute(SysRoleBean.class).set(set).eq("id", id).update();
     }
 
     @Override
     public int update(List ids, boolean status) {
-        return this.getExecute().table(SysRoleBean.TABLE).set("status", status).in("id", ids).update();
+        return this.getExecute(SysRoleBean.class).set("status", status).in("id", ids).update();
     }
 
     @Override
     public List<SysRoleBean> select() {
-        return this.getQuery().from(SysRoleBean.TABLE).eq("status", true).list(SysRoleBean.class);
+        return this.getQuery(SysRoleBean.class).eq("status", true).list();
     }
 
     @Override
     public List<SysRoleBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
-            return this.getQuery().from(SysRoleBean.TABLE)
-                    .eq("status", true)
-                    .in("id", ids)
-                    .list(SysRoleBean.class);
+            return this.getQuery(SysRoleBean.class).eq("status", true).in("id", ids).list();
         }
         return null;
     }
 
     @Override
     public PageList<SysRoleBean> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().from(SysRoleBean.TABLE).eq(where).page(start, size, SysRoleBean.class);
+        return this.getQuery(SysRoleBean.class).eq(where).page(start, size);
     }
 
 }

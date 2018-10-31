@@ -3,10 +3,9 @@ package com.cjwx.titan.engine.core.base.dao;
 import com.cjwx.titan.engine.core.base.dao.query.DbExecute;
 import com.cjwx.titan.engine.core.base.dao.query.DbQuery;
 import com.cjwx.titan.engine.util.ObjectUtils;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 
 import javax.annotation.Resource;
@@ -23,20 +22,22 @@ public abstract class BaseDao {
     @Resource
     private SessionFactory sessionFactory;
 
-    public SQLQuery sqlQuery(String sql) {
+    public NativeQuery sqlQuery(String sql) {
         return this.getSession().createNativeQuery(sql);
     }
 
-    public SQLQuery sqlQuery(String sql, Object args[]) {
-        SQLQuery q = this.sqlQuery(sql);
+    public NativeQuery sqlQuery(String sql, Object args[]) {
+        NativeQuery q = this.sqlQuery(sql);
         if (ObjectUtils.isNotEmpty(args) && args.length > 0) {
             IntStream.range(0, args.length).forEach(idx -> q.setParameter(idx + 1, args[idx]));
         }
         return q;
     }
 
-    public Query sqlQuery(String sql, Object args[], Class bean) {
-        return this.sqlQuery(sql, args).setResultTransformer(Transformers.aliasToBean(bean));
+    public <T> NativeQuery<T> sqlQuery(String sql, Object args[], Class<T> bean) {
+        NativeQuery<T> q = this.sqlQuery(sql, args);
+        q.setResultTransformer(Transformers.aliasToBean(bean));
+        return q;
     }
 
     public long insert(Object bean) {
@@ -68,12 +69,12 @@ public abstract class BaseDao {
         return this.sessionFactory.getCurrentSession();
     }
 
-    public DbQuery getQuery() {
-        return new DbQuery(this);
+    public <T> DbQuery<T> getQuery(Class<T> bean) {
+        return new DbQuery<>(this, bean);
     }
 
-    public DbExecute getExecute() {
-        return new DbExecute(this);
+    public <T> DbExecute<T> getExecute(Class<T> bean) {
+        return new DbExecute(this, bean);
     }
 
 }

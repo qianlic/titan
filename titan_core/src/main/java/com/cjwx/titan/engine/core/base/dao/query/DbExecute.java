@@ -4,6 +4,7 @@ import com.cjwx.titan.engine.core.base.dao.BaseDao;
 import com.cjwx.titan.engine.util.ObjectUtils;
 import com.cjwx.titan.engine.util.StringUtils;
 
+import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -14,46 +15,45 @@ import java.util.stream.Collectors;
  * @Author: qian li
  * @Date: 2018年04月26日 19:44
  */
-public class DbExecute {
+public class DbExecute<T> {
 
     private BaseDao baseDao;
     private ExecuteParameter executeParameter;
+    private Class<T> bean;
 
-    public DbExecute(BaseDao baseDao) {
+    public DbExecute(BaseDao baseDao, Class<T> bean) {
         this.baseDao = baseDao;
         this.executeParameter = new ExecuteParameter();
+        this.bean = bean;
+        Table t = bean.getAnnotation(Table.class);
+        this.executeParameter.table(t.name());
     }
 
-    public DbExecute table(String table) {
-        this.executeParameter.table(table);
-        return this;
-    }
-
-    public DbExecute set(Map<String, Object> set) {
+    public DbExecute<T> set(Map<String, Object> set) {
         if (ObjectUtils.isNotEmpty(set)) {
             set.forEach(this::set);
         }
         return this;
     }
 
-    public DbExecute set(String column, Object value) {
+    public DbExecute<T> set(String column, Object value) {
         this.executeParameter.set(column + " = ?");
         this.executeParameter.arg(value);
         return this;
     }
 
-    public DbExecute where(String where, Object value) {
+    public DbExecute<T> where(String where, Object value) {
         this.executeParameter.where(where);
         this.executeParameter.arg(value);
         return this;
     }
 
-    public DbExecute where(String column, String condition, Object value) {
+    public DbExecute<T> where(String column, String condition, Object value) {
         this.executeParameter.where(new SqlCondition(column, condition, value));
         return this;
     }
 
-    public <T> DbExecute in(String column, List<T> values) {
+    public <R> DbExecute<T> in(String column, List<R> values) {
         if (ObjectUtils.isNotEmpty(values)) {
             if (ObjectUtils.isNotEmpty(this.executeParameter.getWhereList())) {
                 column = SqlCondition.CONDITION.AND + column;
@@ -69,38 +69,38 @@ public class DbExecute {
         return this;
     }
 
-    public DbExecute eq(Map<String, Object> where) {
+    public DbExecute<T> eq(Map<String, Object> where) {
         if (ObjectUtils.isNotEmpty(where)) {
             where.forEach(this::eq);
         }
         return this;
     }
 
-    public DbExecute eq(String column, Object value) {
+    public DbExecute<T> eq(String column, Object value) {
         return this.where(column, SqlCondition.CONDITION.EQ, value);
     }
 
-    public DbExecute gt(String column, Object value) {
+    public DbExecute<T> gt(String column, Object value) {
         return this.where(column, SqlCondition.CONDITION.GT, value);
     }
 
-    public DbExecute lt(String column, Object value) {
+    public DbExecute<T> lt(String column, Object value) {
         return this.where(column, SqlCondition.CONDITION.LT, value);
     }
 
-    public DbExecute gtEq(String column, Object value) {
+    public DbExecute<T> gtEq(String column, Object value) {
         return this.where(column, SqlCondition.CONDITION.GTEQ, value);
     }
 
-    public DbExecute ltEq(String column, Object value) {
+    public DbExecute<T> ltEq(String column, Object value) {
         return this.where(column, SqlCondition.CONDITION.LTEQ, value);
     }
 
-    public DbExecute unequal(String column, Object value) {
+    public DbExecute<T> unequal(String column, Object value) {
         return this.where(column, SqlCondition.CONDITION.UNEQUAL, value);
     }
 
-    public DbExecute like(String column, Object value) {
+    public DbExecute<T> like(String column, Object value) {
         return where(column, SqlCondition.CONDITION.LIKE, value);
     }
 

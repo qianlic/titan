@@ -19,14 +19,14 @@ public class JobDetailDaoImpl extends BaseDao implements JobDetailDao {
 
     @Override
     public List<QtzJobEntity> select() {
-        return this.getQuery().select("JOB_NAME 'name',JOB_GROUP 'group'")
-                .from("qtz_job_details").list(QtzJobEntity.class);
+        String colums = "JOB_NAME 'name',JOB_GROUP 'group'";
+        return this.getQuery(QtzJobEntity.class).select(colums).list();
     }
 
     @Override
     public PageList<QtzJobEntity> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().select("JOB_NAME 'name',JOB_GROUP 'group'")
-                .from("qtz_job_details").eq(where).page(start, size, QtzJobEntity.class);
+        String colums = "JOB_NAME 'name',JOB_GROUP 'group'";
+        return this.getQuery(QtzJobEntity.class).select(colums).eq(where).page(start, size);
     }
 
 }

@@ -18,8 +18,8 @@ public class TriggerDaoImpl extends BaseDao implements TriggerDao {
 
     @Override
     public PageList<QtzTriggerEntity> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().select("TRIGGER_NAME 'name',TRIGGER_GROUP 'group'")
-                .from("qtz_triggers").eq(where).page(start, size, QtzTriggerEntity.class);
+        String colums = "TRIGGER_NAME 'name',TRIGGER_GROUP 'group'";
+        return this.getQuery(QtzTriggerEntity.class).select(colums).eq(where).page(start, size);
     }
 
 }

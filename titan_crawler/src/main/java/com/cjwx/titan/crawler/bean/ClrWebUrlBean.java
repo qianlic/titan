@@ -5,18 +5,14 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * Created by CJWX on 2016/4/4.
  */
 @Data
 @Entity
-@Table(name = ClrWebUrlBean.TABLE)
+@Table(name = "clr_weburl")
 public class ClrWebUrlBean extends AbstractBean {
-
-    @Transient
-    public static final String TABLE = "clr_weburl";
 
     private String subDomain;
     private String domain;

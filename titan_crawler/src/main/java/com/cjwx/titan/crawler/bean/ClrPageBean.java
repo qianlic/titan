@@ -15,11 +15,8 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 @Data
 @Entity
-@Table(name = ClrPageBean.TABLE)
+@Table(name = "clr_page")
 public class ClrPageBean extends AbstractBean {
-
-    @Transient
-    public static final String TABLE = "clr_page";
 
     private boolean redirect;
     private String redirectedToUrl;

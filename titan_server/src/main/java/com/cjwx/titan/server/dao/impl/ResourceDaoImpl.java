@@ -14,38 +14,33 @@ public class ResourceDaoImpl extends BaseDao implements ResourceDao {
 
     @Override
     public int delete(List ids) {
-        return this.getExecute().table(SysResourceBean.TABLE).in("id", ids).delete();
+        return this.getExecute(SysResourceBean.class).in("id", ids).delete();
     }
 
     @Override
     public int update(int id, Map<String, Object> set) {
-        return this.getExecute().table(SysResourceBean.TABLE).set(set).eq("id", id).update();
+        return this.getExecute(SysResourceBean.class).set(set).eq("id", id).update();
     }
 
     @Override
     public int update(List ids, boolean status) {
-        return this.getExecute().table(SysResourceBean.TABLE).set("status", status).in("id", ids).update();
+        return this.getExecute(SysResourceBean.class).set("status", status).in("id", ids).update();
     }
 
     @Override
     public List<SysResourceBean> select() {
-        return this.getQuery().from(SysResourceBean.TABLE).list(SysResourceBean.class);
+        return this.getQuery(SysResourceBean.class).list();
     }
 
     @Override
     public List<SysResourceBean> select(boolean status) {
-        return this.getQuery().from(SysResourceBean.TABLE)
-                .eq("status", status)
-                .list(SysResourceBean.class);
+        return this.getQuery(SysResourceBean.class).eq("status", status).list();
     }
 
     @Override
     public List<SysResourceBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
-            return this.getQuery().from(SysResourceBean.TABLE)
-                    .eq("status", true)
-                    .in("id", ids)
-                    .list(SysResourceBean.class);
+            return this.getQuery(SysResourceBean.class).eq("status", true).in("id", ids).list();
         }
         return null;
     }

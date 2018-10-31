@@ -13,12 +13,12 @@ public class ImageDaoImpl extends BaseDao implements ImageDao {
 
     @Override
     public int delete(String hash) {
-        return this.getExecute().table(ComImageBean.TABLE).eq("hash", hash).delete();
+        return this.getExecute(ComImageBean.class).eq("hash", hash).delete();
     }
 
     @Override
     public PageList<ComImageBean> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().from(ComImageBean.TABLE).eq(where).page(start, size, ComImageBean.class);
+        return this.getQuery(ComImageBean.class).eq(where).page(start, size);
     }
 
 }

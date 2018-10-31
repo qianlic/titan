@@ -14,12 +14,12 @@ public class WebUrlDaoImpl extends BaseDao implements WebUrlDao {
 
     @Override
     public int delete(List ids) {
-        return this.getExecute().table(ClrWebUrlBean.TABLE).in("id", ids).delete();
+        return this.getExecute(ClrWebUrlBean.class).in("id", ids).delete();
     }
 
     @Override
     public PageList<ClrWebUrlBean> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery().from(ClrWebUrlBean.TABLE).eq(where).page(start, size, ClrWebUrlBean.class);
+        return this.getQuery(ClrWebUrlBean.class).eq(where).page(start, size);
     }
 
 }
