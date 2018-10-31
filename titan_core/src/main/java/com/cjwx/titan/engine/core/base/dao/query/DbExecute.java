@@ -19,14 +19,19 @@ public class DbExecute<T> {
 
     private BaseDao baseDao;
     private ExecuteParameter executeParameter;
-    private Class<T> bean;
 
     public DbExecute(BaseDao baseDao, Class<T> bean) {
         this.baseDao = baseDao;
         this.executeParameter = new ExecuteParameter();
-        this.bean = bean;
         Table t = bean.getAnnotation(Table.class);
-        this.executeParameter.table(t.name());
+        if (ObjectUtils.isNotEmpty(t)) {
+            this.table(t.name());
+        }
+    }
+
+    public DbExecute<T> table(String table) {
+        this.executeParameter.table(table);
+        return this;
     }
 
     public DbExecute<T> set(Map<String, Object> set) {

@@ -1,6 +1,6 @@
 package com.cjwx.titan.crawler.bean;
 
-import com.cjwx.titan.engine.core.base.dao.AbstractBean;
+import com.cjwx.titan.engine.core.base.bean.AbstractBean;
 import lombok.Data;
 
 import javax.persistence.Column;

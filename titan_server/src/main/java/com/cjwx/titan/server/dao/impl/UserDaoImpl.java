@@ -12,6 +12,8 @@ import java.util.Map;
 @Repository
 public class UserDaoImpl extends BaseDao implements UserDao {
 
+    private static final String CUSTOM_COLUMS = "id,usercode,username,sex,birthday,mobile,email,imgurl,lastlogintime,roleids,status";
+
     @Override
     public int delete(List ids) {
         return this.getExecute(SysUserBean.class).in("id", ids).delete();
@@ -34,14 +36,12 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
     @Override
     public List<SysUserBean> select(Map<String, Object> where) {
-        String columns = "id,usercode,username,sex,birthday,mobile,email,imgurl,lastlogintime,roleids,status";
-        return this.getQuery(SysUserBean.class).select(columns).eq(where).list();
+        return this.getQuery(SysUserBean.class).select(CUSTOM_COLUMS).eq(where).list();
     }
 
     @Override
     public PageList<SysUserBean> select(int start, int size, Map<String, Object> where) {
-        String columns = "id,usercode,username,sex,birthday,mobile,email,imgurl,lastlogintime,roleids,status";
-        return this.getQuery(SysUserBean.class).select(columns).eq(where).page(start, size);
+        return this.getQuery(SysUserBean.class).select(CUSTOM_COLUMS).eq(where).page(start, size);
     }
 
     @Override

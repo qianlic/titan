@@ -1,6 +1,5 @@
 package com.cjwx.titan.engine.core.base.bean;
 
-import com.cjwx.titan.engine.core.base.dao.AbstractBean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 

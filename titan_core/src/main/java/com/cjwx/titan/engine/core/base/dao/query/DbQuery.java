@@ -29,7 +29,14 @@ public class DbQuery<T> {
         this.queryParameter = new QueryParameter();
         this.bean = bean;
         Table t = bean.getAnnotation(Table.class);
-        this.queryParameter.from(t.name());
+        if (ObjectUtils.isNotEmpty(t)) {
+            this.table(t.name());
+        }
+    }
+
+    public DbQuery<T> table(String table) {
+        this.queryParameter.from(table);
+        return this;
     }
 
     public DbQuery<T> select(String column) {
@@ -140,7 +147,7 @@ public class DbQuery<T> {
 
     public PageList<T> page(int start, int pageSize) {
         PageList<T> pageList = new PageList<>(start, pageSize);
-        pageList.setList(this.build().getResultList());
+        pageList.setList(this.build().setFirstResult(start).setMaxResults(pageSize).getResultList());
         pageList.setTotal(this.count());
         return pageList;
     }

@@ -1,4 +1,4 @@
-package com.cjwx.titan.engine.core.base.dao;
+package com.cjwx.titan.engine.core.base.bean;
 
 import com.cjwx.titan.engine.util.DateUtils;
 import lombok.Data;

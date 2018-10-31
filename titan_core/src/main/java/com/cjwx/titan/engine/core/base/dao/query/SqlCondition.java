@@ -37,13 +37,12 @@ public class SqlCondition {
             result = this.linkIdentifier + StringUtils.SPACE_STRING + result;
         }
         if (CONDITION.LIKE.equalsIgnoreCase(this.condition)) {
-            return result +  " %?% ";
+            return result + " %?% ";
         }
         return result + " ? ";
     }
 
     public class CONDITION {
-
         public static final String AND = " AND ";
         public static final String OR = " OR ";
 
@@ -55,7 +54,6 @@ public class SqlCondition {
         public static final String UNEQUAL = " <> ";
         public static final String LIKE = " LIKE ";
         public static final String IN = " IN ";
-
     }
 
 }

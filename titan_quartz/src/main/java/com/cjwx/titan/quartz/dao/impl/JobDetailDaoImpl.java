@@ -17,16 +17,18 @@ import java.util.Map;
 @Repository
 public class JobDetailDaoImpl extends BaseDao implements JobDetailDao {
 
+    private static final String CUSTOM_TABLE = "qtz_job_details";
+    private static final String CUSTOM_COLUMS = "JOB_NAME 'name',JOB_GROUP 'group'";
+
     @Override
     public List<QtzJobEntity> select() {
-        String colums = "JOB_NAME 'name',JOB_GROUP 'group'";
-        return this.getQuery(QtzJobEntity.class).select(colums).list();
+        return this.getQuery(QtzJobEntity.class).table(CUSTOM_TABLE).select(CUSTOM_COLUMS).list();
     }
 
     @Override
     public PageList<QtzJobEntity> select(int start, int size, Map<String, Object> where) {
-        String colums = "JOB_NAME 'name',JOB_GROUP 'group'";
-        return this.getQuery(QtzJobEntity.class).select(colums).eq(where).page(start, size);
+        return this.getQuery(QtzJobEntity.class).table(CUSTOM_TABLE)
+                .select(CUSTOM_COLUMS).eq(where).page(start, size);
     }
 
 }

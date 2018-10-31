@@ -16,10 +16,13 @@ import java.util.Map;
 @Repository
 public class TriggerDaoImpl extends BaseDao implements TriggerDao {
 
+    private static final String CUSTOM_TABLE = "qtz_triggers";
+    private static final String CUSTOM_COLUMS = "TRIGGER_NAME 'name',TRIGGER_GROUP 'group'";
+
     @Override
     public PageList<QtzTriggerEntity> select(int start, int size, Map<String, Object> where) {
-        String colums = "TRIGGER_NAME 'name',TRIGGER_GROUP 'group'";
-        return this.getQuery(QtzTriggerEntity.class).select(colums).eq(where).page(start, size);
+        return this.getQuery(QtzTriggerEntity.class).table(CUSTOM_TABLE)
+                .select(CUSTOM_COLUMS).eq(where).page(start, size);
     }
 
 }
