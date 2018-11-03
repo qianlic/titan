@@ -2,7 +2,7 @@ package com.cjwx.titan.server.handler;
 
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.engine.util.StringUtils;
 import com.cjwx.titan.server.bean.ComImageBean;
 import com.cjwx.titan.server.service.ImageService;

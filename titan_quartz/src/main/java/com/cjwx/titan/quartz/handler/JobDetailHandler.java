@@ -2,7 +2,7 @@ package com.cjwx.titan.quartz.handler;
 
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.quartz.entity.QtzJobEntity;
 import com.cjwx.titan.quartz.service.JobDetilService;
 import org.quartz.JobKey;

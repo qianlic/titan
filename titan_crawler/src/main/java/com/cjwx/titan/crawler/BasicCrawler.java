@@ -5,7 +5,7 @@ import com.cjwx.titan.crawler.bean.ClrWebUrlBean;
 import com.cjwx.titan.crawler.fetcher.Page;
 import com.cjwx.titan.crawler.handler.WebUrlHandler;
 import com.cjwx.titan.crawler.url.WebURL;
-import com.cjwx.titan.engine.core.helper.ApplicationContextHelper;
+import com.cjwx.titan.engine.web.helper.ApplicationContextHelper;
 import org.springframework.beans.BeanUtils;
 
 import java.util.regex.Pattern;
@@ -34,12 +34,12 @@ public class BasicCrawler extends WebCrawler {
     public void visit(Page page) {
         WebURL webURL = page.getWebURL();
         ClrPageBean pb = new ClrPageBean();
-        BeanUtils.copyProperties(page,pb);
+        BeanUtils.copyProperties(page, pb);
         pb.setContent(page.getContentData());
         ClrWebUrlBean wu = new ClrWebUrlBean();
-        BeanUtils.copyProperties(webURL,wu);
+        BeanUtils.copyProperties(webURL, wu);
         pb.setWebURL(wu);
-        WebUrlHandler handler = (WebUrlHandler) ApplicationContextHelper.getBean("webUrlHandler");
+        WebUrlHandler handler = ApplicationContextHelper.getBean("webUrlHandler", WebUrlHandler.class);
         handler.create(pb);
     }
 

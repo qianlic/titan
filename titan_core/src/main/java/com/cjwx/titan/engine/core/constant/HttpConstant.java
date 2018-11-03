@@ -3,7 +3,6 @@ package com.cjwx.titan.engine.core.constant;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @Description: 常量类
@@ -26,13 +25,5 @@ public class HttpConstant {
 
     public static String VERSION;
     public static List<String> EXCLUSIONS;
-
-    public void setVERSION(String version) {
-        this.VERSION = version;
-    }
-
-    public void setEXCLUSIONS(List<String> exclusions) {
-        this.EXCLUSIONS = exclusions;
-    }
 
 }

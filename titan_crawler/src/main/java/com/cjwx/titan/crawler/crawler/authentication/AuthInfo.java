@@ -23,6 +23,9 @@ public abstract class AuthInfo {
     protected String username;
     protected String password;
 
+    public AuthInfo() {
+    }
+
     protected AuthInfo(AuthenticationType authenticationType, MethodType httpMethod,
                        String loginUrl, String username, String password) throws MalformedURLException {
         this.authenticationType = authenticationType;

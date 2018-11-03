@@ -1,7 +1,7 @@
 package com.cjwx.titan.engine.reids.util;
 
+import com.cjwx.titan.engine.web.helper.ApplicationContextHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
 
@@ -19,13 +19,15 @@ public class RedisUtils {
 
     private static RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public static RedisTemplate<String, Object> getRedisTemplate() {
+        if (redisTemplate == null) {
+            redisTemplate = ApplicationContextHelper.getBean("redisTemplate", RedisTemplate.class);
+        }
+        return redisTemplate;
     }
 
     public static RedisConnection getRedisConnection() {
-        return redisTemplate.getConnectionFactory().getConnection();
+        return getRedisTemplate().getConnectionFactory().getConnection();
     }
 
     /**
@@ -141,14 +143,14 @@ public class RedisUtils {
      * 删除缓存
      */
     public static void remove(String k) {
-        redisTemplate.delete(k);
+        getRedisTemplate().delete(k);
     }
 
     /**
      * 批量删除缓存
      */
     public static void remove(List<String> ks) {
-        redisTemplate.delete(ks);
+        getRedisTemplate().delete(ks);
     }
 
     /**
@@ -190,14 +192,14 @@ public class RedisUtils {
      * 指定缓存失效时间
      */
     public static void expire(String k, long t) {
-        redisTemplate.expire(k, t, TimeUnit.SECONDS);
+        getRedisTemplate().expire(k, t, TimeUnit.SECONDS);
     }
 
     /**
      * 获取过期时间
      */
     public static long getExpire(String k) {
-        return redisTemplate.getExpire(k, TimeUnit.SECONDS);
+        return getRedisTemplate().getExpire(k, TimeUnit.SECONDS);
     }
 
     /**
@@ -211,7 +213,7 @@ public class RedisUtils {
      * 判断key是否存在
      */
     public static boolean exists(String k) {
-        return redisTemplate.hasKey(k);
+        return getRedisTemplate().hasKey(k);
     }
 
     /**
@@ -220,7 +222,7 @@ public class RedisUtils {
      * 从链表的两端推入或者弹出元素；根据偏移量对链表进行修剪(trim)；读取单个或者多个元素；根据值来查找或者移除元素
      */
     public static ListOperations<String, Object> opsForList() {
-        return redisTemplate.opsForList();
+        return getRedisTemplate().opsForList();
     }
 
     /**
@@ -229,7 +231,7 @@ public class RedisUtils {
      * 添加、获取、移除单个元素；检查一个元素是否存在于某个集合中；计算交集、并集、差集；从集合里卖弄随机获取元素
      */
     public static SetOperations<String, Object> opsForSet() {
-        return redisTemplate.opsForSet();
+        return getRedisTemplate().opsForSet();
     }
 
     /**
@@ -238,7 +240,7 @@ public class RedisUtils {
      * 添加、获取、删除单个元素；根据分值范围(range)或者成员来获取元素
      */
     public static ZSetOperations<String, Object> opsForZSet() {
-        return redisTemplate.opsForZSet();
+        return getRedisTemplate().opsForZSet();
     }
 
     /**
@@ -247,7 +249,7 @@ public class RedisUtils {
      * 对整个字符串或者字符串的其中一部分执行操作；对象和浮点数执行自增(increment)或者自减(decrement)
      */
     public static ValueOperations<String, Object> opsForValue() {
-        return redisTemplate.opsForValue();
+        return getRedisTemplate().opsForValue();
     }
 
     /**
@@ -256,7 +258,7 @@ public class RedisUtils {
      * 添加、获取、移除单个键值对；获取所有键值对
      */
     public static HashOperations<String, String, Object> opsForHash() {
-        return redisTemplate.opsForHash();
+        return getRedisTemplate().opsForHash();
     }
 
 }

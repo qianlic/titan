@@ -4,11 +4,11 @@ import com.cjwx.titan.engine.core.base.dao.query.DbExecute;
 import com.cjwx.titan.engine.core.base.dao.query.DbQuery;
 import com.cjwx.titan.engine.util.ObjectUtils;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 
-import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -19,8 +19,8 @@ import java.util.stream.IntStream;
  */
 public abstract class BaseDao {
 
-    @Resource
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public NativeQuery sqlQuery(String sql) {
         return this.getSession().createNativeQuery(sql);
@@ -66,7 +66,7 @@ public abstract class BaseDao {
     }
 
     public Session getSession() {
-        return this.sessionFactory.getCurrentSession();
+        return (Session) entityManager.getDelegate();
     }
 
     public <T> DbQuery<T> getQuery(Class<T> bean) {

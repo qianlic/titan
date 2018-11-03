@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.cjwx.titan</groupId>
     <artifactId>titan</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -19,12 +18,39 @@
         <version.spring>5.0.10.RELEASE</version.spring>
         <version.hibernate>5.2.17.Final</version.hibernate>
         <version.swagger>2.6.1</version.swagger>
+        <version.spring-boot>2.0.6.RELEASE</version.spring-boot>
+        <version.spring-cloud>Finchley.M9</version.spring-cloud>
     </properties>
 
-    <!-- 资源库地址 http://mvnrepository.com/ -->
+    <modules>
+        <module>titan_crawler</module>
+        <module>titan_quartz</module>
+        <module>titan_monitor</module>
+        <module>titan_server</module>
+        <module>titan_core</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.spring-boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${version.spring-cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
-            <!-- 设置编译器版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -34,14 +60,21 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
-    <modules>
-        <module>titan_monitor</module>
-        <module>titan_crawler</module>
-        <module>titan_quartz</module>
-        <module>titan_server</module>
-        <module>titan_core</module>
-    </modules>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

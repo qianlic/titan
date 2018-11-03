@@ -6,7 +6,7 @@ import com.cjwx.titan.crawler.bean.ClrWebUrlBean;
 import com.cjwx.titan.crawler.service.WebUrlService;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

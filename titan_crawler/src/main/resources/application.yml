@@ -1,0 +1,26 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /
+logging:
+  config: classpath:logback.xml
+spring:
+  application:
+    name: crawler
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 600
+        max-wait: 1000s
+        max-idle: 300
+    timeout: 10000s
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/

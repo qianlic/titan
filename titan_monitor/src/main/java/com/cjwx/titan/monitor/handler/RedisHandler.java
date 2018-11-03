@@ -1,6 +1,6 @@
 package com.cjwx.titan.monitor.handler;
 
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.monitor.helper.RedisHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

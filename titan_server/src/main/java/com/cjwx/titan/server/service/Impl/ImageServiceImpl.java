@@ -40,7 +40,7 @@ public class ImageServiceImpl implements ImageService {
         if (StringUtils.isNotEmpty(result)) {
             JSONObject josn = JSONObject.parseObject(result);
             if ("success".equalsIgnoreCase(josn.getString("code"))) {
-                imge = josn.getObject("data", ComImageBean.class);
+                imge = josn.getObject("script", ComImageBean.class);
                 imge.setFilename(name);
                 imageDao.insert(imge);
             } else {

@@ -1,7 +1,7 @@
 package com.cjwx.titan.server.handler;
 
 import com.cjwx.titan.engine.core.model.Model;
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.engine.util.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import me.chanjar.weixin.common.api.WxConsts;

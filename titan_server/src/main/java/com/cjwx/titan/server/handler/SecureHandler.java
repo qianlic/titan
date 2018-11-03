@@ -1,11 +1,10 @@
 package com.cjwx.titan.server.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cjwx.titan.engine.core.base.bean.UserBean;
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.exception.ServiceException;
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
-import com.cjwx.titan.engine.core.web.http.RequestHelper;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.http.RequestHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
 import com.cjwx.titan.engine.util.EndecryptUtils;

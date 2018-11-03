@@ -1,6 +1,6 @@
 package com.cjwx.titan.monitor.handler;
 
-import com.cjwx.titan.engine.core.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.monitor.bean.MemoryBean;
 import com.cjwx.titan.monitor.helper.MemoryHelper;
 import org.springframework.web.bind.annotation.RequestMapping;

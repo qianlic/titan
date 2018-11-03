@@ -36,16 +36,9 @@
             <artifactId>lidalia-slf4j-ext</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
     </dependencies>
-
-    <!-- 资源库地址 http://mvnrepository.com/ -->
-    <build>
-        <plugins>
-            <!-- 设置编译器版本 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
