@@ -17,7 +17,7 @@ import java.util.List;
  * @Date: 2018年04月18日 10:54
  */
 @RestHandler("系统管理-资源管理")
-@RequestMapping(value = "/system/resource/", method = RequestMethod.POST)
+@RequestMapping(value = "/resource/", method = RequestMethod.POST)
 public class ResourceHandler {
 
     @Resource

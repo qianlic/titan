@@ -1,8 +1,11 @@
 package com.cjwx.titan.engine.util;
 
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.exception.ServiceException;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +20,6 @@ import java.util.stream.IntStream;
  */
 public abstract class StringUtils {
 
-    public static final String DEFAULT_CHARSET = "UTF-8";
     public static final String NULL_STRING = "";
     public static final String SPACE_STRING = " ";
     public static final String COMMA_STRING = ",";
@@ -69,7 +71,7 @@ public abstract class StringUtils {
      * 字符串字符集转换 UTF-8
      */
     public static String convert(String target) {
-        return convert(target, DEFAULT_CHARSET);
+        return convert(target, HttpConstant.DEFAULT_CHARSET);
     }
 
     /**
@@ -87,6 +89,22 @@ public abstract class StringUtils {
             return new String(stringToByte(target, charset1), charset2);
         } catch (UnsupportedEncodingException e) {
             throw new ServiceException("字符串转换字符集 [" + target + COMMA_STRING + charset2 + "] 失败", e);
+        }
+    }
+
+    public static String encodeURLEncoder(String target) {
+        try {
+            return URLEncoder.encode(target, HttpConstant.DEFAULT_CHARSET);
+        } catch (UnsupportedEncodingException e) {
+            throw new ServiceException("字符串 [" + target + "] 编码失败", e);
+        }
+    }
+
+    public static String decodeURLEncoder(String target) {
+        try {
+            return URLDecoder.decode(target, HttpConstant.DEFAULT_CHARSET);
+        } catch (UnsupportedEncodingException e) {
+            throw new ServiceException("字符串 [" + target + "] 编码失败", e);
         }
     }
 
@@ -190,7 +208,7 @@ public abstract class StringUtils {
      * 字符串转Byte  字符集UTF-8
      */
     public static byte[] stringToByte(String source) {
-        return stringToByte(source, DEFAULT_CHARSET);
+        return stringToByte(source, HttpConstant.DEFAULT_CHARSET);
     }
 
     /**

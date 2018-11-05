@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @RestHandler("文章管理接口")
-@RequestMapping(value = "/system/article/", method = RequestMethod.POST)
+@RequestMapping(value = "/article/", method = RequestMethod.POST)
 public class ArticleHandler {
 
     @Resource

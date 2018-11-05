@@ -2,13 +2,12 @@ server:
   port: 8080
   servlet:
     context-path: /
+  max-http-header-size: 4048576
 logging:
   config: classpath:logback.xml
 spring:
   application:
-    name: server
-  profiles:
-    active: server
+    name: system
   redis:
     database: 0
     host: 127.0.0.1
@@ -36,8 +35,10 @@ eureka:
       defaultZone: http://localhost:8080/eureka/
   server:
     enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
 zuul:
   routes:
+    system: /system/**
     monitor: /monitor/**
     quartz: /quartz/**
     crawler: /crawler/**

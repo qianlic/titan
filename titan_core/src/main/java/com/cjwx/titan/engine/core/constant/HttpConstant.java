@@ -1,6 +1,6 @@
 package com.cjwx.titan.engine.core.constant;
 
-import com.cjwx.titan.engine.reids.jwt.JwtToken;
+import com.cjwx.titan.engine.util.StringUtils;
 
 import java.util.List;
 
@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class HttpConstant {
 
-    public static final ThreadLocal<JwtToken> threadLocalModel = new ThreadLocal<>();
     public static final String SIGNING_KEY = "9af4d563dbc8cf2b08bd3391cd00c5f2";
 
     public static final String DEFAULT_FIX = "/system/*";
@@ -22,6 +21,8 @@ public class HttpConstant {
     public static final String PARAM_USERNAME = "username";
     public static final String PARAM_DIGEST = "password";
     public static final String PARAM_VERIFYCODE = "verifycode";
+
+    public static final String DEFAULT_CHARSET = "UTF-8";
 
     public static String VERSION;
     public static List<String> EXCLUSIONS;

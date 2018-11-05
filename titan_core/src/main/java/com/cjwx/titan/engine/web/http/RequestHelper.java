@@ -1,6 +1,7 @@
 package com.cjwx.titan.engine.web.http;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestAttributes;
@@ -57,7 +58,7 @@ public class RequestHelper {
 
     public static String requestString() {
         try {
-            InputStreamReader ir = new InputStreamReader(getRequest().getInputStream(), StringUtils.DEFAULT_CHARSET);
+            InputStreamReader ir = new InputStreamReader(getRequest().getInputStream(), HttpConstant.DEFAULT_CHARSET);
             BufferedReader br = new BufferedReader(ir);
             StringBuffer sb = new StringBuffer();
             String temp;

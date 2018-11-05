@@ -1,8 +1,11 @@
 package com.cjwx.titan.server.util;
 
-import com.cjwx.titan.engine.core.constant.HttpConstant;
-import com.cjwx.titan.engine.reids.jwt.JwtToken;
+import com.alibaba.fastjson.JSON;
+import com.cjwx.titan.engine.util.StringUtils;
+import com.cjwx.titan.engine.web.http.RequestHelper;
 import com.cjwx.titan.server.bean.SysUserBean;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description:
@@ -12,11 +15,9 @@ import com.cjwx.titan.server.bean.SysUserBean;
 public class TokenUtils {
 
     public static SysUserBean getCurrentUser() {
-        JwtToken token = HttpConstant.threadLocalModel.get();
-        if (token == null) {
-            return null;
-        }
-        return (SysUserBean) token.getUser();
+        HttpServletRequest request = RequestHelper.getRequest();
+        String user = StringUtils.decodeURLEncoder(request.getHeader("CURRENT_USER"));
+        return JSON.parseObject(user, SysUserBean.class);
     }
 
 }

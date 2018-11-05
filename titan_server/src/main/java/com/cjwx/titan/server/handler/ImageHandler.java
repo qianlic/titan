@@ -21,7 +21,7 @@ import java.io.File;
  */
 @Slf4j
 @RestHandler("图片管理接口")
-@RequestMapping(value = "/system/image/", method = RequestMethod.POST)
+@RequestMapping(value = "/image/", method = RequestMethod.POST)
 public class ImageHandler {
 
     @Resource

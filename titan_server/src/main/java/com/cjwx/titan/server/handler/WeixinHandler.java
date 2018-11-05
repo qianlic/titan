@@ -27,7 +27,7 @@ import java.util.Map;
  * @Date: 2018年08月01日 16:12
  */
 @RestHandler("微信公众号接口")
-@RequestMapping(value = "/system/weixin/", method = RequestMethod.POST)
+@RequestMapping(value = "/weixin/", method = RequestMethod.POST)
 public class WeixinHandler {
 
     @Resource
