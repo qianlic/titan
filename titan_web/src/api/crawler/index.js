@@ -1,6 +1,6 @@
 import request from '../request'
 
-const baseUrl = '/system/crawler'
+const baseUrl = '/crawler/crawler'
 
 function list (params) {
   return request(`${baseUrl}/list`, params)

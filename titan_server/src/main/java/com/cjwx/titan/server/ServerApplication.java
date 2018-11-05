@@ -4,9 +4,11 @@ import com.cjwx.titan.engine.core.constant.HttpConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 import java.util.Arrays;
 
+@EnableZuulProxy
 @EnableEurekaServer
 @SpringBootApplication
 public class ServerApplication {

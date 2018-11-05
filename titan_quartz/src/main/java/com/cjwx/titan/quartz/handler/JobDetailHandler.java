@@ -18,7 +18,7 @@ import java.util.List;
  * @Date: 2018年08月01日 16:12
  */
 @RestHandler("定时任务-任务管理")
-@RequestMapping(value = "/system/jobDetail/", method = RequestMethod.POST)
+@RequestMapping(value = "/jobDetail/", method = RequestMethod.POST)
 public class JobDetailHandler {
 
     @Resource

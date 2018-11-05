@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @Date: 2018年04月18日 10:54
  */
 @RestHandler("网页爬虫-爬虫管理")
-@RequestMapping(value = "/system/crawler/", method = RequestMethod.POST)
+@RequestMapping(value = "/crawler/", method = RequestMethod.POST)
 public class CrawlerHandler {
 
     @Resource

@@ -13,7 +13,7 @@ import java.util.List;
  * @Date: 2018年08月18日 5:39
  */
 @RestHandler("系统监控-TOMCAT")
-@RequestMapping(value = "/system/tomcat/", method = RequestMethod.POST)
+@RequestMapping(value = "/tomcat/", method = RequestMethod.POST)
 public class TomcatHandler {
 
     @RequestMapping("list")

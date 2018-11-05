@@ -36,3 +36,8 @@ eureka:
       defaultZone: http://localhost:8080/eureka/
   server:
     enable-self-preservation: false
+zuul:
+  routes:
+    monitor: /monitor/**
+    quartz: /quartz/**
+    crawler: /crawler/**

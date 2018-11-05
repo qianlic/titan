@@ -1,7 +1,7 @@
 import request from '../request'
 import filedown from '../filedown'
 
-const baseUrl = '/system/thread'
+const baseUrl = '/monitor/thread'
 
 function list (params) {
   return request(`${baseUrl}/list`, params)

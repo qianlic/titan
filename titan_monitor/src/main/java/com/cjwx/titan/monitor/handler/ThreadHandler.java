@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Date: 2018年08月18日 5:39
  */
 @RestHandler("系统监控-线程管理")
-@RequestMapping(value = "/system/thread/", method = RequestMethod.POST)
+@RequestMapping(value = "/thread/", method = RequestMethod.POST)
 public class ThreadHandler {
 
     @RequestMapping("list")

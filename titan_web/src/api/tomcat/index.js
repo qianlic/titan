@@ -1,6 +1,6 @@
 import request from '../request'
 
-const baseUrl = '/system/tomcat'
+const baseUrl = '/monitor/tomcat'
 
 function list () {
   return request(`${baseUrl}/list`)

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Date: 2018年08月18日 5:39
  */
 @RestHandler("系统监控-内存管理")
-@RequestMapping(value = "/system/memory/", method = RequestMethod.POST)
+@RequestMapping(value = "/memory/", method = RequestMethod.POST)
 public class MemoryHandler {
 
     @RequestMapping("info")

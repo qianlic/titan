@@ -1,6 +1,6 @@
 import request from '../request'
 
-const baseUrl = '/system/memory'
+const baseUrl = '/monitor/memory'
 
 function info () {
   return request(`${baseUrl}/info`)

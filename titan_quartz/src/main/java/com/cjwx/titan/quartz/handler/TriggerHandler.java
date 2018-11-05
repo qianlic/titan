@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @Date: 2018年08月01日 16:12
  */
 @RestHandler("定时任务-触发器管理")
-@RequestMapping(value = "/system/trigger/", method = RequestMethod.POST)
+@RequestMapping(value = "/trigger/", method = RequestMethod.POST)
 public class TriggerHandler {
 
     @Resource

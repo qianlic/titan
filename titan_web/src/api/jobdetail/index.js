@@ -1,6 +1,6 @@
 import request from '../request'
 
-const baseUrl = '/system/jobDetail'
+const baseUrl = '/quartz/jobDetail'
 
 function availableList (params) {
   return request(`${baseUrl}/all`, params)

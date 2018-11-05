@@ -16,6 +16,10 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.cjwx.titan</groupId>
             <artifactId>core</artifactId>
             <version>${project.version}</version>

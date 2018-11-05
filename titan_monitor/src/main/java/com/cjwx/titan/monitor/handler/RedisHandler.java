@@ -12,7 +12,7 @@ import java.util.Map;
  * @Date: 2018年08月01日 16:12
  */
 @RestHandler("系统监控-REDIS")
-@RequestMapping(value = "/system/redis/", method = RequestMethod.POST)
+@RequestMapping(value = "/redis/", method = RequestMethod.POST)
 public class RedisHandler {
 
     @RequestMapping("info")

@@ -1,6 +1,6 @@
 import request from '../request'
 
-const baseUrl = '/system/trigger'
+const baseUrl = '/quartz/trigger'
 
 function list (params) {
   return request(`${baseUrl}/list`, params)
