@@ -17,8 +17,6 @@ public class SysResourceBean extends ResourceBean {
 
     @Column(name = "description")
     private String description;
-    @Column(name = "url")
-    private String url;
     @Column(name = "ico")
     private String ico;
     @Column(name = "level")

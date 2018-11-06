@@ -25,11 +25,16 @@ function availableList (params) {
   return request(`${baseUrl}/availableList`, params)
 }
 
+function sync (params) {
+  return request(`${baseUrl}/sync`, params)
+}
+
 export default {
   list,
   create,
   edit,
   status,
   remove,
-  availableList
+  availableList,
+  sync
 }

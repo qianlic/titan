@@ -18,6 +18,8 @@ public class ResourceBean extends AbstractBean {
     private String resourcecode;
     @Column(name = "resourcename")
     private String resourcename;
+    @Column(name = "url")
+    private String url;
     @Column(name = "type")
     private String type;
     @Column(name = "parentid")

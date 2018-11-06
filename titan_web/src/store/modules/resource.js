@@ -86,6 +86,9 @@ const actions = {
   editStatus (context, params) {
     return request.status(params)
   },
+  sync () {
+    return request.sync()
+  },
   setSelectRows ({commit}, selectRows) {
     commit('setSelectRows', selectRows)
   }

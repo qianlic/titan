@@ -22,6 +22,11 @@ spring:
 eureka:
   instance:
     hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${server.port}
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
   client:
     serviceUrl:
-      defaultZone: http://localhost:8080/eureka/
+      defaultZone: http://localhost:8081/eureka/

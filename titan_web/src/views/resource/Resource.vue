@@ -71,6 +71,11 @@ export default {
         type: 'warning',
         icon: 'locked',
         on: () => this.changeStatus(false)
+      }, {
+        title: '同步',
+        type: 'info',
+        icon: 'shuffle',
+        on: () => this.sync().then(response => this.$Message.success(response.message))
       }]
     }
   },
@@ -87,7 +92,8 @@ export default {
       'expandData',
       'removeDatas',
       'editStatus',
-      'setSelectRows'
+      'setSelectRows',
+      'sync'
     ]),
     createData () {
       this.$router.push({

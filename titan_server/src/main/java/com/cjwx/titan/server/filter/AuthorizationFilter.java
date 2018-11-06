@@ -48,17 +48,20 @@ public class AuthorizationFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        String url = request.getServletPath();
+        String url = request.getServletPath().replace("//", "/").toLowerCase();
+        if (url.contains("v2/api-docs")) {
+            return null;
+        }
         String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
         if (StringUtils.isEmpty(authHeader)) {
-            return this.response401(ctx, "登录未认证，请重新登录！");
+            return this.response401(ctx);
         }
         try {
             JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
             if (token == null) {
-                return this.response401(ctx, "登录认证失败，请重新登录！");
+                return this.response401(ctx);
             } else if (!token.checkPromise(url)) {
-                return this.response403(ctx, "无法访问资源，权限不足！");
+                return this.response403(ctx);
             }
             String user = StringUtils.encodeURLEncoder(JSON.toJSONString(token.getUser()));
             ctx.addZuulRequestHeader("CURRENT_USER", user);
@@ -68,12 +71,16 @@ public class AuthorizationFilter extends ZuulFilter {
         return null;
     }
 
+    private Object response401(RequestContext ctx) {
+        return this.response401(ctx, "登录认证失败，请重新登录！");
+    }
+
     private Object response401(RequestContext ctx, String message) {
         return this.responseJson(ctx, HttpServletResponse.SC_UNAUTHORIZED, message);
     }
 
-    private Object response403(RequestContext ctx, String message) {
-        return this.responseJson(ctx, HttpServletResponse.SC_FORBIDDEN, message);
+    private Object response403(RequestContext ctx) {
+        return this.responseJson(ctx, HttpServletResponse.SC_FORBIDDEN, "无法访问资源，权限不足！");
     }
 
     private Object responseJson(RequestContext ctx, int status, String message) {
