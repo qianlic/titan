@@ -43,16 +43,19 @@ public class JwtHelper {
      * 生成JWT
      */
     public static JwtBuilder createJWT(String tokenId, String host) {
+        return createJWT().setId(tokenId).setIssuer(StringUtils.trim(host));
+    }
+
+    /**
+     * 生成JWT
+     */
+    public static JwtBuilder createJWT() {
         long time = System.currentTimeMillis();
-        return Jwts.builder()
-                .setHeaderParam("type", "JWT")
-                .setId(tokenId)
-                .setIssuer(StringUtils.trim(host))
+        return Jwts.builder().setHeaderParam("type", "JWT")
                 .setIssuedAt(new Date(time))
                 .setExpiration(new Date(time + 1000 * EXPIRE_TIME))
                 .signWith(SIGNATURE_ALGORITHM, generalKey());
     }
-
 
     /**
      * 删除Token

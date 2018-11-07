@@ -46,5 +46,4 @@ public class RibbonClientHelper {
         return discoveryClient.getServices();
     }
 
-
 }

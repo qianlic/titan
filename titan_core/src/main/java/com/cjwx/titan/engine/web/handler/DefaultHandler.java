@@ -6,6 +6,7 @@ import com.cjwx.titan.engine.web.http.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -31,7 +32,7 @@ public class DefaultHandler {
         return new Result(false, "远程服务未被发现！");
     }
 
-    @RequestMapping("/urlStream")
+    @RequestMapping(value = "/urlStream", method = RequestMethod.GET)
     public Stream<String> urlStream() {
         return handlerMappings.stream()
                 .map(RequestMappingHandlerMapping::getHandlerMethods)

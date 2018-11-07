@@ -23,8 +23,6 @@ spring:
     database: MYSQL
     hibernate:
       ddl-auto: update
-      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-      dialect: org.hibernate.dialect.MySQL5Dialect
 eureka:
   instance:
     hostname: localhost
@@ -37,3 +35,4 @@ zuul:
     monitor: /monitor/**
     quartz: /quartz/**
     crawler: /crawler/**
+  retryable: true

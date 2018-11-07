@@ -1,5 +1,6 @@
 package com.cjwx.titan.engine.web.http;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 /**
@@ -21,6 +22,11 @@ public class Result<T> {
     public Result(boolean success, String message) {
         this.success = success;
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 
 }

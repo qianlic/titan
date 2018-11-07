@@ -23,7 +23,7 @@ public class ApplicationConfiguration {
 
     @Bean
     @LoadBalanced
-    RestTemplate restTemplate() {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
