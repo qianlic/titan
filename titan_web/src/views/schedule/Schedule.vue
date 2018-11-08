@@ -8,21 +8,26 @@ import PageTable from '../../components/table/PageTable'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-  name: 'trigger',
+  name: 'schedule',
   data () {
     return {
       columns: [{
-        title: '触发器名',
+        title: '任务名',
         key: 'name'
       }, {
         title: '所属组',
         key: 'group'
       }, {
-        title: '优先级',
-        key: 'priority'
-      }, {
         title: 'cron表达式',
         key: 'cronExpression'
+      }, {
+        title: '上次运行时间',
+        type: 'datetime',
+        key: 'previousTime'
+      }, {
+        title: '下次运行时间',
+        type: 'datetime',
+        key: 'nextTime'
       }, {
         title: '状态',
         key: 'state'
@@ -50,45 +55,48 @@ export default {
         icon: 'plus',
         on: this.createData
       }, {
+        title: '运 行',
+        type: 'error',
+        icon: 'ios-play',
+        on: () => this.startJobs(this.selectRows)
+      }, {
         title: '暂 停',
         type: 'warning',
         icon: 'ios-pause',
-        on: () => this.pauseTiggers(this.selectRows)
+        on: () => this.pauseJobs(this.selectRows)
       }, {
         title: '恢 复',
         type: 'info',
         icon: 'refresh',
-        on: () => this.resumeTiggers(this.selectRows)
+        on: () => this.resumeJobs(this.selectRows)
       }]
     }
   },
   components: {
     PageTable
   },
-  computed: mapGetters('trigger', [
+  computed: mapGetters('schedule', [
     'datas',
     'selectRows'
   ]),
   methods: {
-    ...mapActions('trigger', [
+    ...mapActions('schedule', [
       'loadDatas',
       'removeDatas',
-      'pauseTigger',
-      'resumeTigger',
+      'startJob',
+      'pauseJob',
+      'resumeJob',
       'setSelectRows'
-    ]),
-    ...mapActions('jobdetail', [
-      'loadAvailablelist'
     ]),
     createData () {
       this.$router.push({
-        name: 'triggerFrom',
+        name: 'scheduleFrom',
         params: {iscreate: true}
       })
     },
     editData (row) {
       this.$router.push({
-        name: 'triggerFrom',
+        name: 'scheduleFrom',
         params: row
       })
     },
@@ -98,29 +106,36 @@ export default {
         this.$Message.success(response.message)
       })
     },
-    pauseTiggers (keys) {
+    startJobs (keys) {
       if (keys.length === 0) {
         this.$Message.info('请选择操作数据！')
         return
       }
-      this.pauseTigger(keys[0]).then(response => {
+      this.startJob(keys[0]).then(response => {
         this.$refs.table.pageChange()
         this.$Message.success(response.message)
       })
     },
-    resumeTiggers (keys) {
+    pauseJobs (keys) {
       if (keys.length === 0) {
         this.$Message.info('请选择操作数据！')
         return
       }
-      this.resumeTigger(keys[0]).then(response => {
+      this.pauseJob(keys[0]).then(response => {
+        this.$refs.table.pageChange()
+        this.$Message.success(response.message)
+      })
+    },
+    resumeJobs (keys) {
+      if (keys.length === 0) {
+        this.$Message.info('请选择操作数据！')
+        return
+      }
+      this.resumeJob(keys[0]).then(response => {
         this.$refs.table.pageChange()
         this.$Message.success(response.message)
       })
     }
-  },
-  created () {
-    this.loadAvailablelist()
   }
 }
 </script>

@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @Date: 2018年11月07日 20:03
  */
 @Api(tags = "定时任务-调度管理")
-@RestHandler("/scedule/")
+@RestHandler("/schedule/")
 public class ScheduleHandler {
 
     @Resource
@@ -33,9 +33,29 @@ public class ScheduleHandler {
         scheduleService.create(job);
     }
 
-    @RestMethod("update")
-    public void update(@RequestBody QtzScheduleEntity job) {
+    @RestMethod("edit")
+    public void edit(@RequestBody QtzScheduleEntity job) {
         scheduleService.update(job);
+    }
+
+    @RestMethod("remove")
+    public void remove(@RequestBody QtzScheduleEntity job) {
+        scheduleService.delete(job);
+    }
+
+    @RestMethod("pause")
+    public void pause(@RequestBody QtzScheduleEntity job) {
+        scheduleService.pause(job);
+    }
+
+    @RestMethod("resume")
+    public void resume(@RequestBody QtzScheduleEntity job) {
+        scheduleService.resume(job);
+    }
+
+    @RestMethod("start")
+    public void start(@RequestBody QtzScheduleEntity job) {
+        scheduleService.start(job);
     }
 
 }

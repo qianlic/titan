@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "sys_resource")
 public class SysResourceBean extends ResourceBean {
 
-    @Column(name = "tags")
+    @Column(name = "description")
     private String description;
     @Column(name = "ico")
     private String ico;

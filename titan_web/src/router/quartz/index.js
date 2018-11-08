@@ -10,21 +10,21 @@ const jobdetailFrom = {
   component: () => import('../../views/jobdetail/JobDetailFrom')
 }
 
-const trigger = {
-  path: 'trigger',
-  name: 'trigger',
-  component: () => import('../../views/trigger/Trigger')
+const schedule = {
+  path: 'schedule',
+  name: 'schedule',
+  component: () => import('../../views/schedule/Schedule')
 }
 
-const triggerFrom = {
-  path: 'triggerFrom',
-  name: 'triggerFrom',
-  component: () => import('../../views/trigger/TriggerFrom')
+const scheduleFrom = {
+  path: 'scheduleFrom',
+  name: 'scheduleFrom',
+  component: () => import('../../views/schedule/ScheduleFrom')
 }
 
 export default [
   jobdetail,
   jobdetailFrom,
-  trigger,
-  triggerFrom
+  schedule,
+  scheduleFrom
 ]

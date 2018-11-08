@@ -75,7 +75,10 @@ export default {
         title: '同步',
         type: 'info',
         icon: 'shuffle',
-        on: () => this.sync().then(response => this.$Message.success(response.message))
+        on: () => this.sync().then(response => {
+          this.$Message.success(response.message)
+          this.loadDatas()
+        })
       }]
     }
   },

@@ -4,26 +4,22 @@
       <Input v-model="formInline.name" :disabled="!requsetParams.iscreate"/>
     </FormItem>
     <FormItem label="所属组">
-      <Select v-model="formInline.group" :disabled="!requsetParams.iscreate">
-        <Option value="GROUPA">任务组A</Option>
-        <Option value="GROUPB">任务组B</Option>
-        <Option value="GROUPC">任务组C</Option>
-      </Select>
+      <Input v-model="formInline.group" :disabled="!requsetParams.iscreate"/>
+    </FormItem>
+    <FormItem label="服务">
+      <Input v-model="formInline.server"/>
+    </FormItem>
+    <FormItem label="路径">
+      <Input v-model="formInline.path"/>
+    </FormItem>
+    <FormItem label="参数">
+      <Input v-model="formInline.data"/>
     </FormItem>
     <FormItem label="优先级">
       <Input v-model="formInline.priority"/>
     </FormItem>
     <FormItem label="CRON表达式">
       <Input v-model="formInline.cronExpression"/>
-    </FormItem>
-    <FormItem label="执行JOB">
-      <Card>
-        <RadioGroup v-model="jobKey">
-          <Radio v-for="(item,idx) in jobdetails" :key="idx" :label="JSON.stringify(item)">
-            {{ item.name }}
-          </Radio>
-        </RadioGroup>
-      </Card>
     </FormItem>
     <FormItem label="描述">
       <Input v-model="formInline.description" type="textarea"/>
@@ -36,42 +32,31 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
-  name: 'trigger-from',
+  name: 'schedule-from',
   data () {
     return {
-      jobKey: null,
       formInline: {}
     }
   },
   computed: {
-    ...mapGetters('jobdetail', [
-      'availablelist'
-    ]),
-    jobdetails () {
-      return this.availablelist.filter(job => job.group === this.formInline.group)
-    },
     requsetParams () {
       return this.$route.params
     }
   },
   methods: {
-    ...mapActions('trigger', [
+    ...mapActions('schedule', [
       'editDatas',
       'createData'
     ]),
     handleSubmit () {
       let method = this.createData
-      let params = {
-        ...this.formInline,
-        jobKey: JSON.parse(this.jobKey)
-      }
       if (!this.requsetParams.iscreate) {
         method = this.editDatas
       }
-      method(params).then(response => {
+      method(this.formInline).then(response => {
         this.$Message.success(response.message)
         this.handleCancel()
       })
@@ -83,16 +68,16 @@ export default {
   created () {
     if (!this.requsetParams.iscreate) {
       const {
-        name, group, priority, type, repeatInterval, repeatCount, cronExpression, jobKey, description
+        name, group, server, path, data, priority, type, cronExpression, description
       } = this.requsetParams
-      this.jobKey = JSON.stringify(jobKey)
       this.formInline = {
         name,
         group,
+        server,
+        path,
+        data,
         priority,
         type,
-        repeatInterval,
-        repeatCount,
         cronExpression,
         description
       }

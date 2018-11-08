@@ -1,4 +1,4 @@
-import request from '../../api/trigger'
+import request from '../../api/schedule'
 
 const state = {
   datas: {},
@@ -26,13 +26,19 @@ const actions = {
   createData (context, params) {
     return request.create(params)
   },
+  editDatas (context, params) {
+    return request.edit(params)
+  },
   removeDatas (context, params) {
     return request.remove(params)
   },
-  pauseTigger (context, params) {
+  startJob (context, params) {
+    return request.start(params)
+  },
+  pauseJob (context, params) {
     return request.pause(params)
   },
-  resumeTigger (context, params) {
+  resumeJob (context, params) {
     return request.resume(params)
   },
   setSelectRows ({commit}, selectRows) {

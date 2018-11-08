@@ -4,6 +4,7 @@ import lombok.Data;
 import org.quartz.JobKey;
 import org.quartz.TriggerKey;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,14 +17,15 @@ public class QtzScheduleEntity {
 
     private String name;
     private String group;
-    private String service;
-    private String method;
+    private String server;
+    private String path;
     private String data;
-    private String description;
     private int priority;
     private String cronExpression;
+    private Date previousTime;
+    private Date nextTime;
+    private String description;
     private String state;
-    private JobKey jobKey;
 
     /**
      * 生成JobKey

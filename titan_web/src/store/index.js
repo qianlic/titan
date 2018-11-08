@@ -10,7 +10,7 @@ import memory from './modules/memory'
 import redis from './modules/redis'
 import tomcat from './modules/tomcat'
 import jobdetail from './modules/jobdetail'
-import trigger from './modules/trigger'
+import schedule from './modules/schedule'
 import crawler from './modules/crawler'
 import weburl from './modules/weburl'
 import createLogger from '../plugin/logger'
@@ -114,7 +114,7 @@ const modules = {
   redis,
   tomcat,
   jobdetail,
-  trigger,
+  schedule,
   crawler,
   weburl
 }

@@ -2,9 +2,9 @@ package com.cjwx.titan.engine.web.handler;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.util.file.FileTool;
-import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.engine.web.annotation.RestMethod;
 import com.cjwx.titan.engine.web.http.Result;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Author: qian li
  * @Date: 2018年03月29日 11:02
  */
-@RestHandler
+@RestController
 public class FileHandler {
 
     @Resource

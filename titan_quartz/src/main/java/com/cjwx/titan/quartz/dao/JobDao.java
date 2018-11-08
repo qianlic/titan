@@ -10,7 +10,7 @@ import java.util.Map;
  * @Author: qian li
  * @Date: 2018年08月03日 9:10
  */
-public interface TriggerDao {
+public interface JobDao {
 
     PageList<QtzScheduleEntity> select(int start, int size, Map<String, Object> where);
 

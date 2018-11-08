@@ -21,7 +21,7 @@ public class QtzJobDetailsBean {
     private String jobName;
     @Column(name = "job_group")
     private String jobGroup;
-    @Column(name = "tags")
+    @Column(name = "description")
     private String description;
     @Column(name = "job_class_name")
     private String jobClassName;

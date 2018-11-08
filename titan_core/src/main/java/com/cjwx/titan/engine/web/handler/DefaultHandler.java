@@ -7,6 +7,7 @@ import com.cjwx.titan.engine.web.http.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
  * @Author: qian li
  * @Date: 2018年08月18日 11:57
  */
-@RestHandler
+@RestController
 public class DefaultHandler {
 
     @Value("${spring.application.name}")

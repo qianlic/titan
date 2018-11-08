@@ -2,7 +2,6 @@ package com.cjwx.titan.quartz.service;
 
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.quartz.entity.QtzScheduleEntity;
-import org.quartz.SchedulerException;
 
 import java.util.Map;
 
@@ -14,8 +13,12 @@ public interface ScheduleService {
 
     void update(QtzScheduleEntity job);
 
-    void start() throws SchedulerException;
+    void delete(QtzScheduleEntity job);
 
-    void shutdown() throws SchedulerException;
+    void pause(QtzScheduleEntity job);
+
+    void resume(QtzScheduleEntity job);
+
+    void start(QtzScheduleEntity job);
 
 }

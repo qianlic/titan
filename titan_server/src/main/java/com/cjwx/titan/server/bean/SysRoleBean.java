@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "sys_role")
 public class SysRoleBean extends RoleBean {
 
-    @Column(name = "tags")
+    @Column(name = "description")
     private String description;
 
 }
