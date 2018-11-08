@@ -1,12 +1,12 @@
 package com.cjwx.titan.quartz.execute;
 
-import com.cjwx.titan.engine.web.helper.ApplicationContextHelper;
+import com.cjwx.titan.engine.web.helper.RibbonClientHelper;
+import com.cjwx.titan.engine.web.http.Result;
+import com.cjwx.titan.quartz.config.QuartzConfiguration;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-
-import java.lang.reflect.Method;
 
 /**
  * @Description: 简单的实现了Spring QuartzJobBean接口
@@ -22,13 +22,10 @@ public class BaseExecService extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
             JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-            String serviceName = dataMap.getString("SERVICE");
-            String methodName = dataMap.getString("METHOD");
-            String data = dataMap.getString("DATA");
-
-            BaseExecService service = ApplicationContextHelper.getBean(serviceName, BaseExecService.class);
-            Method method = service.getClass().getDeclaredMethod(methodName, String.class);
-            method.invoke(service, data);
+            String service = dataMap.getString(QuartzConfiguration.SERVER_KEY);
+            String path = dataMap.getString(QuartzConfiguration.PATH_KEY);
+            String data = dataMap.getString(QuartzConfiguration.DATA_KEY);
+            Result result = RibbonClientHelper.doPost(service, path, data, Result.class);
         } catch (Exception e) {
             throw new JobExecutionException(e);
         }

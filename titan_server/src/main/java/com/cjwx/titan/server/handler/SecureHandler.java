@@ -3,13 +3,14 @@ package com.cjwx.titan.server.handler;
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.exception.ServiceException;
-import com.cjwx.titan.engine.web.annotation.RestHandler;
-import com.cjwx.titan.engine.web.http.RequestHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
 import com.cjwx.titan.engine.util.EndecryptUtils;
 import com.cjwx.titan.engine.util.ObjectUtils;
 import com.cjwx.titan.engine.util.StringUtils;
+import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestMethod;
+import com.cjwx.titan.engine.web.http.RequestHelper;
 import com.cjwx.titan.server.bean.SysResourceBean;
 import com.cjwx.titan.server.bean.SysRoleBean;
 import com.cjwx.titan.server.bean.SysUserBean;
@@ -17,10 +18,10 @@ import com.cjwx.titan.server.capcha.CaptchaHepler;
 import com.cjwx.titan.server.service.ResourceService;
 import com.cjwx.titan.server.service.RoleService;
 import com.cjwx.titan.server.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
@@ -38,8 +39,8 @@ import java.util.stream.Collectors;
  * @Date: 2018年04月18日 10:54
  */
 @Slf4j
-@RestHandler("权限认证")
-@RequestMapping("/secure/")
+@Api(tags = "权限认证")
+@RestHandler("/secure/")
 public class SecureHandler {
 
     public static final String SYS_ACCOUNT = "0";
@@ -51,7 +52,7 @@ public class SecureHandler {
     @Resource
     private ResourceService resourceService;
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RestMethod("login")
     public String login(@RequestBody JSONObject object) {
         String s = object.getString("s");
         String verifycode = object.getString(HttpConstant.PARAM_VERIFYCODE);
@@ -98,13 +99,13 @@ public class SecureHandler {
         return JwtHelper.createJWT(token);
     }
 
-    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    @RestMethod("logout")
     public String logout(@RequestHeader(JwtHelper.AUTHORIZATION_KEY) String authHeader) {
         JwtHelper.removeToken(authHeader, RequestHelper.getClientIp());
         return "登录退出成功！";
     }
 
-    @RequestMapping(value = "captcha", method = RequestMethod.GET)
+    @RestMethod(value = "captcha", method = RequestMethod.GET)
     public void captcha(HttpServletRequest request, HttpServletResponse response) {
         String key = request.getParameter("s");
         if (StringUtils.isNotEmpty(key)) {

@@ -12,15 +12,25 @@ import java.util.List;
  * @Date: 2018年04月08日 15:02
  */
 @Data
-public class QtzTriggerEntity {
+public class QtzScheduleEntity {
 
     private String name;
     private String group;
+    private String service;
+    private String method;
+    private String data;
+    private String description;
     private int priority;
     private String cronExpression;
-    private String description;
     private String state;
     private JobKey jobKey;
+
+    /**
+     * 生成JobKey
+     */
+    public JobKey getJobKey() {
+        return JobKey.jobKey(this.name, this.group);
+    }
 
     /**
      * 生成TriggerKey

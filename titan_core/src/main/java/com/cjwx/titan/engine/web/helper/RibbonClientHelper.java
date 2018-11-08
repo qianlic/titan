@@ -1,8 +1,14 @@
 package com.cjwx.titan.engine.web.helper;
 
+import com.alibaba.fastjson.JSON;
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,18 +38,36 @@ public class RibbonClientHelper {
         restTemplate = rest;
     }
 
-    public static <T> T getResult(String serviceId, String url, Class<T> responseType) {
-        return restTemplate.getForEntity("http://" + serviceId + "/" + url, responseType).getBody();
+    public static <T> T exchange(String url, HttpMethod method, Object params, Class<T> responseType) {
+        return restTemplate.exchange(url, method, getRequestEntity(params), responseType).getBody();
     }
 
-    public static <T> List<T> getResult(String url, Class<T> responseType) {
+    public static <T> T doPost(String serviceId, String url, Object params, Class<T> responseType) {
+        return exchange("http://" + serviceId + "/" + url, HttpMethod.POST, params, responseType);
+    }
+
+    public static <T> T doPost(String serviceId, String url, Class<T> responseType) {
+        return doPost(serviceId, url, null, responseType);
+    }
+
+    public static <T> List<T> doPost(String url, Class<T> responseType) {
         return getServiceIds().stream()
-                .map(s -> getResult(s, url, responseType))
+                .map(s -> doPost(s, url, responseType))
                 .collect(Collectors.toList());
     }
 
     public static List<String> getServiceIds() {
         return discoveryClient.getServices();
+    }
+
+    public static HttpEntity<String> getRequestEntity(Object params) {
+        return new HttpEntity<>(JSON.toJSONString(params), getDefaultHeaders());
+    }
+
+    public static HttpHeaders getDefaultHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf(HttpConstant.DEFAULT_MEDIA_TYPE));
+        return headers;
     }
 
 }

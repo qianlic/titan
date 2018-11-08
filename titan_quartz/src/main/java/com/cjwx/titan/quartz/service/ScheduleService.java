@@ -1,14 +1,18 @@
 package com.cjwx.titan.quartz.service;
 
+import com.cjwx.titan.engine.core.model.PageList;
+import com.cjwx.titan.quartz.entity.QtzScheduleEntity;
 import org.quartz.SchedulerException;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ScheduleService {
 
-    List<String> getJobGroupNames() throws SchedulerException;
+    PageList<QtzScheduleEntity> getScheduleList(int start, int size, Map<String, Object> wheres);
 
-    List<String> getTriggerGroupNames() throws SchedulerException;
+    void create(QtzScheduleEntity job);
+
+    void update(QtzScheduleEntity job);
 
     void start() throws SchedulerException;
 

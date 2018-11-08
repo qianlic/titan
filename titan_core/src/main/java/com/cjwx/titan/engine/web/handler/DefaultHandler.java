@@ -2,12 +2,11 @@ package com.cjwx.titan.engine.web.handler;
 
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestMethod;
 import com.cjwx.titan.engine.web.http.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.stream.Stream;
  * @Author: qian li
  * @Date: 2018年08月18日 11:57
  */
-@RestController
+@RestHandler
 public class DefaultHandler {
 
     @Value("${spring.application.name}")
@@ -27,12 +26,12 @@ public class DefaultHandler {
     @Autowired
     private List<RequestMappingHandlerMapping> handlerMappings;
 
-    @RequestMapping(HttpConstant.DEFAULT_FIX)
+    @RestMethod(value = HttpConstant.DEFAULT_FIX, method = {RequestMethod.POST, RequestMethod.GET})
     public Result error() {
         return new Result(false, "远程服务未被发现！");
     }
 
-    @RequestMapping(value = "/urlStream", method = RequestMethod.GET)
+    @RestMethod("/urlStream")
     public Stream<String> urlStream() {
         return handlerMappings.stream()
                 .map(RequestMappingHandlerMapping::getHandlerMethods)

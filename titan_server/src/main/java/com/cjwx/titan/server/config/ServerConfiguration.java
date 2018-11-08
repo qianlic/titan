@@ -3,6 +3,7 @@ package com.cjwx.titan.server.config;
 import com.cjwx.titan.engine.config.ApplicationConfiguration;
 import com.cjwx.titan.engine.config.WebMvcConfiguration;
 import lombok.Data;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @Import({ApplicationConfiguration.class, WebMvcConfiguration.class})
 @ImportResource("classpath:spring-server.xml")
+@ComponentScan("com.cjwx.titan.server.zuul")
 public class ServerConfiguration {
 
 }

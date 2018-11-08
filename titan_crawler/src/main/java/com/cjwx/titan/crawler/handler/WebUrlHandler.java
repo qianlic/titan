@@ -7,9 +7,9 @@ import com.cjwx.titan.crawler.service.WebUrlService;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestMethod;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 
@@ -17,19 +17,19 @@ import javax.annotation.Resource;
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler("网页爬虫-页面管理")
-@RequestMapping(value = "/webUrl/", method = RequestMethod.POST)
+@Api(tags = "网页爬虫-页面管理")
+@RestHandler("/webUrl/")
 public class WebUrlHandler {
 
     @Resource
     private WebUrlService webUrlService;
 
-    @RequestMapping("list")
+    @RestMethod("list")
     public PageList<ClrWebUrlBean> list(@RequestBody Model model) {
         return webUrlService.getWebUrlList(model.getStart(), model.getSize(), model.getParams(ClrWebUrlBean.class));
     }
 
-    @RequestMapping("remove")
+    @RestMethod("remove")
     public int remove(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
         return webUrlService.deleteWebUrl(ids);

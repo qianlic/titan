@@ -24,7 +24,7 @@ public class QtzTriggersBean {
     private String jobName;
     @Column(name = "job_group")
     private String jobGroup;
-    @Column(name = "description")
+    @Column(name = "tags")
     private String description;
     @Column(name = "next_fire_time")
     private String nextFireTime;

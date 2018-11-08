@@ -1,5 +1,6 @@
 package com.cjwx.titan.engine.util.file;
 
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.exception.ServiceException;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
@@ -34,7 +35,7 @@ public class FileTool {
     public String uploadFile(MultipartFile multipartFile) {
         String fileName = "";
         try {
-            fileName = new String(multipartFile.getOriginalFilename().getBytes("ISO8859-1"), "UTF-8");
+            fileName = new String(multipartFile.getOriginalFilename().getBytes("ISO8859-1"), HttpConstant.DEFAULT_CHARSET);
         } catch (UnsupportedEncodingException e1) {
         }
         int n = fileName.lastIndexOf(".");
@@ -109,7 +110,7 @@ public class FileTool {
             // 设置上传目录
             ftp.changeWorkingDirectory(this.ftpRootPath);
             ftp.setBufferSize(1024);
-            ftp.setControlEncoding("UTF-8");
+            ftp.setControlEncoding(HttpConstant.DEFAULT_CHARSET);
             FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_NT);
             conf.setServerLanguageCode("zh");
             ftp.enterLocalPassiveMode();
@@ -159,7 +160,7 @@ public class FileTool {
             ftp.changeWorkingDirectory(this.ftpRootPath);
 
             ftp.setBufferSize(1024);
-            ftp.setControlEncoding("UTF-8");
+            ftp.setControlEncoding(HttpConstant.DEFAULT_CHARSET);
             FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_NT);
             conf.setServerLanguageCode("zh");
             ftp.enterLocalPassiveMode();

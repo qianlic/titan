@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestMethod;
 import com.cjwx.titan.server.bean.SysRoleBean;
 import com.cjwx.titan.server.service.RoleService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,40 +17,40 @@ import java.util.List;
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler("系统管理-角色管理")
-@RequestMapping(value = "/role/", method = RequestMethod.POST)
+@Api(tags = "系统管理-角色管理")
+@RestHandler("/role/")
 public class RoleHandler {
 
     @Resource
     private RoleService roleService;
 
-    @RequestMapping("list")
+    @RestMethod("list")
     public PageList<SysRoleBean> list(@RequestBody Model model) {
         return roleService.getRoleList(model.getStart(), model.getSize(), model.getParams(SysRoleBean.class));
     }
 
-    @RequestMapping("availableList")
+    @RestMethod("availableList")
     public List<SysRoleBean> availableList() {
         return roleService.getRoleList();
     }
 
-    @RequestMapping("create")
+    @RestMethod("create")
     public void create(@RequestBody SysRoleBean role) {
         roleService.createRole(role);
     }
 
-    @RequestMapping("edit")
+    @RestMethod("edit")
     public int edit(@RequestBody Model model) {
         return roleService.updateRole(model.getId(), model.getParams(SysRoleBean.class));
     }
 
-    @RequestMapping("remove")
+    @RestMethod("remove")
     public int remove(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
         return roleService.deleteRole(ids);
     }
 
-    @RequestMapping("status")
+    @RestMethod("status")
     public int status(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
         boolean status = model.getBoolean("status");

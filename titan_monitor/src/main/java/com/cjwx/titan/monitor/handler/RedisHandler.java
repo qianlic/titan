@@ -1,9 +1,9 @@
 package com.cjwx.titan.monitor.handler;
 
 import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestMethod;
 import com.cjwx.titan.monitor.helper.RedisHelper;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import io.swagger.annotations.Api;
 
 import java.util.Map;
 
@@ -11,11 +11,11 @@ import java.util.Map;
  * @Author: qian li
  * @Date: 2018年08月01日 16:12
  */
-@RestHandler("系统监控-REDIS")
-@RequestMapping(value = "/redis/", method = RequestMethod.POST)
+@Api(tags = "系统监控-REDIS")
+@RestHandler("/redis/")
 public class RedisHandler {
 
-    @RequestMapping("info")
+    @RestMethod("info")
     public Map<String, Object> info() {
         return RedisHelper.getRedisInfo();
     }

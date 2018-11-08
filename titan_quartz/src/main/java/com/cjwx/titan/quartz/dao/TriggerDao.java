@@ -1,7 +1,7 @@
 package com.cjwx.titan.quartz.dao;
 
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.quartz.entity.QtzTriggerEntity;
+import com.cjwx.titan.quartz.entity.QtzScheduleEntity;
 
 import java.util.Map;
 
@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface TriggerDao {
 
-    PageList<QtzTriggerEntity> select(int start, int size, Map<String, Object> where);
+    PageList<QtzScheduleEntity> select(int start, int size, Map<String, Object> where);
 
 }

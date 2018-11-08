@@ -19,10 +19,6 @@ spring:
         max-wait: 1000s
         max-idle: 300
     timeout: 10000s
-  jpa:
-    database: MYSQL
-    hibernate:
-      ddl-auto: update
 eureka:
   instance:
     hostname: localhost

@@ -1,11 +1,11 @@
-package com.cjwx.titan.server.filter;
+package com.cjwx.titan.server.zuul;
 
 import com.cjwx.titan.engine.util.StringUtils;
+import com.cjwx.titan.engine.web.helper.RibbonClientHelper;
 import com.cjwx.titan.engine.web.http.Result;
 import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * @Description:
+ * @Description: 路由请求失败熔断
  * @Author: qian li
  * @Date: 2018年11月07日 13:46
  */
@@ -33,9 +33,7 @@ public class ProducerFallback implements FallbackProvider {
 
             @Override
             public HttpHeaders getHeaders() {
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.APPLICATION_JSON);
-                return headers;
+                return RibbonClientHelper.getDefaultHeaders();
             }
 
             @Override

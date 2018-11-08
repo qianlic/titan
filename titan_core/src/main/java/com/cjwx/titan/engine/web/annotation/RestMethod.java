@@ -2,7 +2,7 @@ package com.cjwx.titan.engine.web.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.lang.annotation.*;
 
@@ -11,14 +11,16 @@ import java.lang.annotation.*;
  * @Author: qian li
  * @Date: 2018年08月19日 12:52
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@RestController
 @RequestMapping
-public @interface RestHandler {
+public @interface RestMethod {
 
     @AliasFor(annotation = RequestMapping.class)
     String[] value() default {};
+
+    @AliasFor(annotation = RequestMapping.class)
+    RequestMethod[] method() default {RequestMethod.POST};
 
 }

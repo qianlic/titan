@@ -4,13 +4,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.web.annotation.RestHandler;
+import com.cjwx.titan.engine.web.annotation.RestMethod;
 import com.cjwx.titan.engine.web.helper.RibbonClientHelper;
 import com.cjwx.titan.server.bean.SysResourceBean;
 import com.cjwx.titan.server.service.ResourceService;
+import io.swagger.annotations.Api;
 import lombok.Data;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -20,47 +20,47 @@ import java.util.stream.Collectors;
  * @Author: qian li
  * @Date: 2018年04月18日 10:54
  */
-@RestHandler("系统管理-资源管理")
-@RequestMapping(value = "/resource/", method = RequestMethod.POST)
+@Api(tags = "系统管理-资源管理")
+@RestHandler("/resource/")
 public class ResourceHandler {
 
     @Resource
     private ResourceService resourceService;
 
-    @RequestMapping("list")
+    @RestMethod("list")
     public List<SysResourceBean> list() {
         return resourceService.getResourceList();
     }
 
-    @RequestMapping("availableList")
+    @RestMethod("availableList")
     public List<SysResourceBean> availableList() {
         return resourceService.getResourceList(true);
     }
 
-    @RequestMapping("create")
+    @RestMethod("create")
     public void create(@RequestBody SysResourceBean resource) {
         resourceService.createResource(resource);
     }
 
-    @RequestMapping("edit")
+    @RestMethod("edit")
     public int edit(@RequestBody Model model) {
         return resourceService.updateResource(model.getId(), model.getParams(SysResourceBean.class));
     }
 
-    @RequestMapping("remove")
+    @RestMethod("remove")
     public int remove(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
         return resourceService.deleteResource(ids);
     }
 
-    @RequestMapping("status")
+    @RestMethod("status")
     public int status(@RequestBody Model model) {
         JSONArray ids = model.getJSONArray("ids");
         boolean status = model.getBoolean("status");
         return resourceService.updateStatus(ids, status);
     }
 
-    @RequestMapping("sync")
+    @RestMethod("sync")
     public void sync() {
         List<String> urls = new ArrayList<>();
         Map<String, Long> allMap = new HashMap<>();
@@ -68,7 +68,7 @@ public class ResourceHandler {
             urls.add(r.getUrl());
             allMap.put(r.getResourcecode(), r.getId());
         });
-        List<SysResourceBean> add = RibbonClientHelper.getResult("/urlStream", String[].class)
+        List<SysResourceBean> add = RibbonClientHelper.doPost("/urlStream", String[].class)
                 .stream().flatMap(s -> Arrays.stream(s))
                 .filter(url -> !HttpConstant.EXCLUSIONS.contains(url) && !urls.contains(url))
                 .map(url -> new UrlParser(allMap, url))

@@ -1,10 +1,6 @@
 package com.cjwx.titan.engine.config;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.*;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,8 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({"com.cjwx.titan.engine.web"})
-@EntityScan("com.cjwx.titan.server.filter")
+@ComponentScan("com.cjwx.titan.engine.web")
+@Import(SwaggerConfiguration.class)
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Bean

@@ -18,4 +18,8 @@ import org.springframework.context.annotation.ImportResource;
 @Import({ApplicationConfiguration.class, WebMvcConfiguration.class})
 public class QuartzConfiguration {
 
+    public static final String SERVER_KEY = "SERVER";
+    public static final String PATH_KEY = "PATH";
+    public static final String DATA_KEY = "DATA";
+
 }

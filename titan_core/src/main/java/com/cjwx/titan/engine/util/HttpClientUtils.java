@@ -1,6 +1,7 @@
 package com.cjwx.titan.engine.util;
 
 import com.alibaba.fastjson.JSON;
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -28,9 +29,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class HttpClientUtils {
-
-    public static final String CHARSET_CODE = "UTF-8";
-    public static final String APPLICATION_JOSN = "application/json";
 
     /**
      * 执行表单提交
@@ -93,7 +91,7 @@ public class HttpClientUtils {
             URL uri = new URL(url);
             conn = enableHttps(uri);
             conn.setRequestProperty("connection", "keep-alive");
-            conn.setRequestProperty("Content-Type", APPLICATION_JOSN + "; charset=" + CHARSET_CODE);
+            conn.setRequestProperty("Content-Type", HttpConstant.DEFAULT_MEDIA_TYPE);
             if ("POST".equalsIgnoreCase(method)) {
                 conn.setRequestMethod("POST");
                 conn.setReadTimeout(30 * 1000); // 缓存的最长时间
@@ -110,7 +108,7 @@ public class HttpClientUtils {
                 }
             }
             if (conn.getResponseCode() == HttpStatus.SC_OK) {
-                br = new BufferedReader(new InputStreamReader(conn.getInputStream(), CHARSET_CODE));
+                br = new BufferedReader(new InputStreamReader(conn.getInputStream(), HttpConstant.DEFAULT_CHARSET));
                 StringBuffer stringBuffer = new StringBuffer();
                 String str;
                 while ((str = br.readLine()) != null) {

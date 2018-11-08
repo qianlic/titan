@@ -1,6 +1,7 @@
-package com.cjwx.titan.server.filter;
+package com.cjwx.titan.server.zuul;
 
 import com.alibaba.fastjson.JSON;
+import com.cjwx.titan.engine.core.constant.HttpConstant;
 import com.cjwx.titan.engine.reids.jwt.JwtHelper;
 import com.cjwx.titan.engine.reids.jwt.JwtToken;
 import com.cjwx.titan.engine.util.StringUtils;
@@ -27,7 +28,6 @@ public class AuthorizationFilter extends ZuulFilter {
 
     //定义filter的类型，有pre、route、post、error四种
     private static final String FILTER_TYPE = "pre";
-    private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 
     @Override
     public String filterType() {
@@ -49,24 +49,23 @@ public class AuthorizationFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String url = request.getServletPath().replace("//", "/").toLowerCase();
-        if (url.contains("v2/api-docs")) {
-            return null;
-        }
-        String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
-        if (StringUtils.isEmpty(authHeader)) {
-            return this.response401(ctx);
-        }
-        try {
-            JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
-            if (token == null) {
+        if (!url.contains(DocumentationProvider.API_DOC)) {
+            String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
+            if (StringUtils.isEmpty(authHeader)) {
                 return this.response401(ctx);
-            } else if (!token.checkPromise(url)) {
-                return this.response403(ctx);
             }
-            String user = StringUtils.encodeURLEncoder(JSON.toJSONString(token.getUser()));
-            ctx.addZuulRequestHeader("CURRENT_USER", user);
-        } catch (ExpiredJwtException e) {
-            return this.response401(ctx, "凭据已过期，请重新认证！");
+            try {
+                JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
+                if (token == null) {
+                    return this.response401(ctx);
+                } else if (!token.checkPromise(url)) {
+                    return this.response403(ctx);
+                }
+                String user = StringUtils.encodeURLEncoder(JSON.toJSONString(token.getUser()));
+                ctx.addZuulRequestHeader("CURRENT_USER", user);
+            } catch (ExpiredJwtException e) {
+                return this.response401(ctx, "凭据已过期，请重新认证！");
+            }
         }
         return null;
     }
@@ -88,7 +87,7 @@ public class AuthorizationFilter extends ZuulFilter {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(status);
             HttpServletResponse response = ctx.getResponse();
-            response.setContentType(CONTENT_TYPE);
+            response.setContentType(HttpConstant.DEFAULT_MEDIA_TYPE);
             String rspString = JSON.toJSONString(new Result(false, message));
             response.getWriter().write(rspString);
         } catch (IOException e) {
