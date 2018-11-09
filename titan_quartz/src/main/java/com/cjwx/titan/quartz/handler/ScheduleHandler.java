@@ -4,7 +4,7 @@ import com.cjwx.titan.engine.core.model.Model;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.engine.web.annotation.RestMethod;
-import com.cjwx.titan.quartz.bean.QtzScheduleJobBean;
+import com.cjwx.titan.quartz.bean.QtzJobBean;
 import com.cjwx.titan.quartz.service.ScheduleService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,40 +21,40 @@ import javax.annotation.Resource;
 public class ScheduleHandler {
 
     @Resource
-    ScheduleService scheduleService;
+    private ScheduleService scheduleService;
 
     @RestMethod("list")
-    public PageList<QtzScheduleJobBean> list(@RequestBody Model model) {
-        return scheduleService.getScheduleList(model.getStart(), model.getSize(), model.getParams(QtzScheduleJobBean.class));
+    public PageList<QtzJobBean> list(@RequestBody Model model) {
+        return scheduleService.getScheduleList(model.getStart(), model.getSize(), model.getParams(QtzJobBean.class));
     }
 
     @RestMethod("create")
-    public void create(@RequestBody QtzScheduleJobBean job) {
+    public void create(@RequestBody QtzJobBean job) {
         scheduleService.create(job);
     }
 
     @RestMethod("edit")
-    public void edit(@RequestBody QtzScheduleJobBean job) {
+    public void edit(@RequestBody QtzJobBean job) {
         scheduleService.update(job);
     }
 
     @RestMethod("remove")
-    public void remove(@RequestBody QtzScheduleJobBean job) {
+    public void remove(@RequestBody QtzJobBean job) {
         scheduleService.delete(job);
     }
 
     @RestMethod("pause")
-    public void pause(@RequestBody QtzScheduleJobBean job) {
+    public void pause(@RequestBody QtzJobBean job) {
         scheduleService.pause(job);
     }
 
     @RestMethod("resume")
-    public void resume(@RequestBody QtzScheduleJobBean job) {
+    public void resume(@RequestBody QtzJobBean job) {
         scheduleService.resume(job);
     }
 
     @RestMethod("start")
-    public void start(@RequestBody QtzScheduleJobBean job) {
+    public void start(@RequestBody QtzJobBean job) {
         scheduleService.start(job);
     }
 

@@ -14,7 +14,7 @@ import org.quartz.JobExecutionContext;
  * @Date: 2018年03月29日 19:09
  */
 @Slf4j
-public class JobExecuteService implements Job {
+public class JobExecuteAdvice implements Job {
 
     /**
      * 执行实际任务

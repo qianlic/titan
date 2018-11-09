@@ -13,7 +13,7 @@ import java.util.List;
  * @Date: 2018年04月08日 15:02
  */
 @Data
-public class QtzScheduleJobBean {
+public class QtzJobBean {
 
     private String name;
     private String group;

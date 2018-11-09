@@ -1,7 +1,7 @@
 package com.cjwx.titan.quartz.dao;
 
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.quartz.bean.QtzScheduleJobBean;
+import com.cjwx.titan.quartz.bean.QtzJobBean;
 
 import java.util.Map;
 
@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface JobDao {
 
-    PageList<QtzScheduleJobBean> select(int start, int size, Map<String, Object> where);
+    PageList<QtzJobBean> select(int start, int size, Map<String, Object> where);
 
 }

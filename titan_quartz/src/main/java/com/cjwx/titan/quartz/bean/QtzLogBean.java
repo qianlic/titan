@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "qtz_scheduler_log")
-public class QtzScheduleLogBean extends AbstractBean {
+public class QtzLogBean extends AbstractBean {
 
     @Column(name = "jobname")
     private String jobname;
