@@ -1,4 +1,4 @@
-package com.cjwx.titan.quartz.entity;
+package com.cjwx.titan.quartz.bean;
 
 import lombok.Data;
 import org.quartz.JobKey;
@@ -13,7 +13,7 @@ import java.util.List;
  * @Date: 2018年04月08日 15:02
  */
 @Data
-public class QtzScheduleEntity {
+public class QtzScheduleJobBean {
 
     private String name;
     private String group;

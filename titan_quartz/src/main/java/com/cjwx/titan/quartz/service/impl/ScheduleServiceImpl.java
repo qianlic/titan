@@ -4,8 +4,8 @@ import com.cjwx.titan.engine.core.exception.ServiceException;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.quartz.config.QuartzConfiguration;
 import com.cjwx.titan.quartz.dao.JobDao;
-import com.cjwx.titan.quartz.entity.QtzScheduleEntity;
-import com.cjwx.titan.quartz.execute.BaseExecService;
+import com.cjwx.titan.quartz.bean.QtzScheduleJobBean;
+import com.cjwx.titan.quartz.execute.JobExecuteService;
 import com.cjwx.titan.quartz.service.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -32,8 +32,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     private JobDao jobDao;
 
     @Override
-    public PageList<QtzScheduleEntity> getScheduleList(int start, int size, Map<String, Object> wheres) {
-        PageList<QtzScheduleEntity> page = jobDao.select(start, size, wheres);
+    public PageList<QtzScheduleJobBean> getScheduleList(int start, int size, Map<String, Object> wheres) {
+        PageList<QtzScheduleJobBean> page = jobDao.select(start, size, wheres);
         page.getList().stream().map(this::getTriggerEntity).map(this::getJobEntity).collect(Collectors.toList());
         return page;
     }
@@ -42,13 +42,13 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 创建定时任务
      */
     @Override
-    public void create(QtzScheduleEntity job) {
+    public void create(QtzScheduleJobBean job) {
         try {
-            JobDetail j = initJobDetail(JobBuilder.newJob(BaseExecService.class), job);
+            JobDetail j = initJobDetail(JobBuilder.newJob(JobExecuteService.class), job);
             Trigger t = initTrigger(TriggerBuilder.newTrigger(), job);
             scheduler.scheduleJob(j, t);
             if (!scheduler.isShutdown()) {
-                start();
+                scheduler.start();
             }
         } catch (SchedulerException e) {
             log.debug(e.getMessage(), e);
@@ -60,7 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 更新定时任务
      */
     @Override
-    public void update(QtzScheduleEntity job) {
+    public void update(QtzScheduleJobBean job) {
         try {
             JobDetail j = initJobDetail(getJobBuilder(job), job);
             Set<Trigger> t = new HashSet<>();
@@ -76,7 +76,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 删除定时任务
      */
     @Override
-    public void delete(QtzScheduleEntity job) {
+    public void delete(QtzScheduleJobBean job) {
         try {
             TriggerKey triggerKey = job.getTriggerKey();
             JobKey jobKey = job.getJobKey();
@@ -93,7 +93,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 暂停定时任务
      */
     @Override
-    public void pause(QtzScheduleEntity job) {
+    public void pause(QtzScheduleJobBean job) {
         try {
             scheduler.pauseJob(job.getJobKey());
         } catch (SchedulerException e) {
@@ -106,7 +106,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 暂停定时任务
      */
     @Override
-    public void resume(QtzScheduleEntity job) {
+    public void resume(QtzScheduleJobBean job) {
         try {
             scheduler.resumeJob(job.getJobKey());
         } catch (SchedulerException e) {
@@ -119,7 +119,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 立即运行任务
      */
     @Override
-    public void start(QtzScheduleEntity job) {
+    public void start(QtzScheduleJobBean job) {
         try {
             scheduler.triggerJob(job.getJobKey());
         } catch (SchedulerException e) {
@@ -128,11 +128,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
     }
 
-    public JobDetail initJobDetail(JobBuilder jobBuilder, QtzScheduleEntity job) {
+    public JobDetail initJobDetail(JobBuilder jobBuilder, QtzScheduleJobBean job) {
         return initJobBuilder(jobBuilder, job).build();
     }
 
-    public JobBuilder initJobBuilder(JobBuilder jobBuilder, QtzScheduleEntity job) {
+    public JobBuilder initJobBuilder(JobBuilder jobBuilder, QtzScheduleJobBean job) {
         return jobBuilder.withIdentity(job.getName(), job.getGroup())
                 .withDescription(job.getDescription())
                 .usingJobData(QuartzConfiguration.SERVER_KEY, job.getServer())
@@ -140,11 +140,11 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .usingJobData(QuartzConfiguration.DATA_KEY, job.getData());
     }
 
-    public Trigger initTrigger(TriggerBuilder triggerBuilder, QtzScheduleEntity trigger) {
+    public Trigger initTrigger(TriggerBuilder triggerBuilder, QtzScheduleJobBean trigger) {
         return initTriggerBuilder(triggerBuilder, trigger).build();
     }
 
-    public TriggerBuilder initTriggerBuilder(TriggerBuilder triggerBuilder, QtzScheduleEntity trigger) {
+    public TriggerBuilder initTriggerBuilder(TriggerBuilder triggerBuilder, QtzScheduleJobBean trigger) {
         String cronExpression = trigger.getCronExpression();
         if (!CronExpression.isValidExpression(cronExpression)) {
             throw new ServiceException("请输入正确的CRON表达式！");
@@ -156,7 +156,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .withDescription(trigger.getDescription());
     }
 
-    public QtzScheduleEntity getJobEntity(QtzScheduleEntity job) {
+    public QtzScheduleJobBean getJobEntity(QtzScheduleJobBean job) {
         try {
             JobDetail jobDetail = getJobDetail(job);
             JobDataMap data = jobDetail.getJobDataMap();
@@ -170,7 +170,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         return job;
     }
 
-    public QtzScheduleEntity getTriggerEntity(QtzScheduleEntity trigger) {
+    public QtzScheduleJobBean getTriggerEntity(QtzScheduleJobBean trigger) {
         try {
             CronTrigger cronTrigger = (CronTrigger) getTrigger(trigger);
             trigger.setPriority(cronTrigger.getPriority());
@@ -187,14 +187,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * 查看触发器运行状态
      */
-    public String getRunState(QtzScheduleEntity trigger) throws SchedulerException {
+    public String getRunState(QtzScheduleJobBean trigger) throws SchedulerException {
         return scheduler.getTriggerState(trigger.getTriggerKey()).name();
     }
 
     /**
      * 获取任务builder
      */
-    public JobBuilder getJobBuilder(QtzScheduleEntity job) throws SchedulerException {
+    public JobBuilder getJobBuilder(QtzScheduleJobBean job) throws SchedulerException {
         log.debug("获取JOB:" + job.getName());
         return getJobDetail(job).getJobBuilder();
     }
@@ -202,7 +202,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * 获取任务信息
      */
-    public JobDetail getJobDetail(QtzScheduleEntity job) throws SchedulerException {
+    public JobDetail getJobDetail(QtzScheduleJobBean job) throws SchedulerException {
         log.debug("获取JOB:" + job.getName());
         return scheduler.getJobDetail(job.getJobKey());
     }
@@ -210,30 +210,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * 获取触发器builder
      */
-    public TriggerBuilder getTriggerBuilder(QtzScheduleEntity trigger) throws SchedulerException {
+    public TriggerBuilder getTriggerBuilder(QtzScheduleJobBean trigger) throws SchedulerException {
         return getTrigger(trigger).getTriggerBuilder();
     }
 
     /**
      * 获取触发器信息
      */
-    public Trigger getTrigger(QtzScheduleEntity trigger) throws SchedulerException {
+    public Trigger getTrigger(QtzScheduleJobBean trigger) throws SchedulerException {
         log.debug("获取JOB:" + trigger.getName());
         return scheduler.getTrigger(trigger.getTriggerKey());
-    }
-
-    /**
-     * 启动调度器
-     */
-    public void start() throws SchedulerException {
-        scheduler.start();
-    }
-
-    /**
-     * 关闭调度器
-     */
-    public void shutdown() throws SchedulerException {
-        scheduler.shutdown(true);
     }
 
 }

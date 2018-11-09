@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,9 +15,8 @@ import org.springframework.web.client.RestTemplate;
  */
 @Data
 @Configuration
-@Import({FileToolConfiguration.class, DataSourceConfiguration.class})
-@EntityScan("com.cjwx.titan.**.bean")
 @EnableJpaRepositories
+@EntityScan("com.cjwx.titan.**.bean")
 public class ApplicationConfiguration {
 
     @Bean

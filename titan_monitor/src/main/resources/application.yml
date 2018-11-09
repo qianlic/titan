@@ -1,8 +1,8 @@
 server:
   port: 8081
   servlet:
-    context-path: /
-  max-http-header-size: 4048576
+    contextPath: /
+  maxHttpHeaderSize: 4048576
 logging:
   config: classpath:logback.xml
 spring:
@@ -15,18 +15,18 @@ spring:
     password:
     jedis:
       pool:
-        max-active: 600
-        max-wait: 1000s
-        max-idle: 300
+        maxActive: 600
+        maxWait: 1000s
+        maxIdle: 300
     timeout: 10000s
 eureka:
   instance:
     hostname: localhost
-    prefer-ip-address: true
-    instance-id: ${eureka.instance.hostname}:${server.port}
+    preferIpAddress: true
+    instanceId: ${eureka.instance.hostname}:${server.port}
   server:
-    enable-self-preservation: false
-    eviction-interval-timer-in-ms: 4000
+    enableSelfPreservation: false
+    evictionIntervalTimerInMs: 4000
   client:
     serviceUrl:
       defaultZone: http://localhost:8081/eureka/

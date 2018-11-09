@@ -3,7 +3,7 @@ package com.cjwx.titan.quartz.dao.impl;
 import com.cjwx.titan.engine.core.base.dao.BaseDao;
 import com.cjwx.titan.engine.core.model.PageList;
 import com.cjwx.titan.quartz.dao.JobDao;
-import com.cjwx.titan.quartz.entity.QtzScheduleEntity;
+import com.cjwx.titan.quartz.bean.QtzScheduleJobBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -20,8 +20,8 @@ public class JobDaoImpl extends BaseDao implements JobDao {
     private static final String CUSTOM_COLUMS = "JOB_NAME 'name',JOB_GROUP 'group'";
 
     @Override
-    public PageList<QtzScheduleEntity> select(int start, int size, Map<String, Object> where) {
-        return this.getQuery(QtzScheduleEntity.class).table(CUSTOM_TABLE)
+    public PageList<QtzScheduleJobBean> select(int start, int size, Map<String, Object> where) {
+        return this.getQuery(QtzScheduleJobBean.class).table(CUSTOM_TABLE)
                 .select(CUSTOM_COLUMS).eq(where).page(start, size);
     }
 

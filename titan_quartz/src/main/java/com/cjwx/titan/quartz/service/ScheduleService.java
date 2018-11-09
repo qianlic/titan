@@ -1,24 +1,24 @@
 package com.cjwx.titan.quartz.service;
 
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.quartz.entity.QtzScheduleEntity;
+import com.cjwx.titan.quartz.bean.QtzScheduleJobBean;
 
 import java.util.Map;
 
 public interface ScheduleService {
 
-    PageList<QtzScheduleEntity> getScheduleList(int start, int size, Map<String, Object> wheres);
+    PageList<QtzScheduleJobBean> getScheduleList(int start, int size, Map<String, Object> wheres);
 
-    void create(QtzScheduleEntity job);
+    void create(QtzScheduleJobBean job);
 
-    void update(QtzScheduleEntity job);
+    void update(QtzScheduleJobBean job);
 
-    void delete(QtzScheduleEntity job);
+    void delete(QtzScheduleJobBean job);
 
-    void pause(QtzScheduleEntity job);
+    void pause(QtzScheduleJobBean job);
 
-    void resume(QtzScheduleEntity job);
+    void resume(QtzScheduleJobBean job);
 
-    void start(QtzScheduleEntity job);
+    void start(QtzScheduleJobBean job);
 
 }

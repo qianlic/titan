@@ -1,8 +1,8 @@
 server:
   port: 8083
   servlet:
-    context-path: /
-  max-http-header-size: 4048576
+    contextPath: /
+  maxHttpHeaderSize: 4048576
 logging:
   config: classpath:logback.xml
 spring:
@@ -15,9 +15,9 @@ spring:
     password:
     jedis:
       pool:
-        max-active: 600
-        max-wait: 1000s
-        max-idle: 300
+        maxActive: 600
+        maxWait: 1000s
+        maxIdle: 300
     timeout: 10000s
 eureka:
   instance:

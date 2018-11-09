@@ -14,8 +14,8 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Data
 @Configuration
-@PropertySource("classpath:config/sys.properties")
 @ConfigurationProperties("ftp")
+@PropertySource("classpath:config/sys.properties")
 public class FileToolConfiguration {
 
     private String ftpURL;

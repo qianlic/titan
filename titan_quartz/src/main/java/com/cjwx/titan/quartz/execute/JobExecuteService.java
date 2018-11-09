@@ -9,12 +9,12 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 
 /**
- * @Description: 简单的实现了Spring QuartzJobBean接口
+ * @Description: Job执行服务接口
  * @Author: qian li
  * @Date: 2018年03月29日 19:09
  */
 @Slf4j
-public class BaseExecService implements Job {
+public class JobExecuteService implements Job {
 
     /**
      * 执行实际任务
@@ -30,8 +30,8 @@ public class BaseExecService implements Job {
             context.setResult(result);
         } catch (Exception e) {
             log.debug(e.getMessage(), e);
+            context.setResult(new Result(false, e.getMessage()));
         }
-        context.setResult(false);
     }
 
 }
