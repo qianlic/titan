@@ -9,7 +9,7 @@ import thread from './modules/thread'
 import memory from './modules/memory'
 import redis from './modules/redis'
 import tomcat from './modules/tomcat'
-import jobdetail from './modules/jobdetail'
+import execute from './modules/execute'
 import schedule from './modules/schedule'
 import crawler from './modules/crawler'
 import weburl from './modules/weburl'
@@ -113,7 +113,7 @@ const modules = {
   memory,
   redis,
   tomcat,
-  jobdetail,
+  execute,
   schedule,
   crawler,
   weburl

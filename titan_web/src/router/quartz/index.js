@@ -1,13 +1,7 @@
-const jobdetail = {
-  path: 'jobdetail',
-  name: 'jobdetail',
-  component: () => import('../../views/jobdetail/JobDetail')
-}
-
-const jobdetailFrom = {
-  path: 'jobdetailFrom',
-  name: 'jobdetailFrom',
-  component: () => import('../../views/jobdetail/JobDetailFrom')
+const execute = {
+  path: 'execute',
+  name: 'execute',
+  component: () => import('../../views/execute/Execute')
 }
 
 const schedule = {
@@ -23,8 +17,7 @@ const scheduleFrom = {
 }
 
 export default [
-  jobdetail,
-  jobdetailFrom,
+  execute,
   schedule,
   scheduleFrom
 ]

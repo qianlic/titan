@@ -1,9 +1,9 @@
 package com.cjwx.titan.quartz.service;
 
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.quartz.bean.QtzLogBean;
-import org.quartz.JobExecutionContext;
+import com.cjwx.titan.quartz.bean.QtzExecuteLogBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,8 +13,10 @@ import java.util.Map;
  */
 public interface ExecuteLogService {
 
-    void create(JobExecutionContext job);
+    void create(QtzExecuteLogBean log);
 
-    PageList<QtzLogBean> getLogList(int start, int size, Map<String, Object> wheres);
+    int delete(List ids);
+
+    PageList<QtzExecuteLogBean> getLogList(int start, int size, Map<String, Object> wheres);
 
 }

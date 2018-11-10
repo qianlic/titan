@@ -26,7 +26,11 @@ public class JobExecuteAdvice implements Job {
             String service = dataMap.getString(QuartzConfiguration.SERVER_KEY);
             String path = dataMap.getString(QuartzConfiguration.PATH_KEY);
             String data = dataMap.getString(QuartzConfiguration.DATA_KEY);
-            Result result = RibbonClientHelper.doPost(service, path, data, Result.class);
+
+            Object result = RibbonClientHelper.doPost(service, path, data, Result.class);
+            if( !(result instanceof Result)){
+                result = new Result(result);
+            }
             context.setResult(result);
         } catch (Exception e) {
             log.debug(e.getMessage(), e);

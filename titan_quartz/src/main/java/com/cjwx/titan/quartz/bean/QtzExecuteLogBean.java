@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * @Description:
@@ -14,20 +15,26 @@ import javax.persistence.Table;
  */
 @Data
 @Entity
-@Table(name = "qtz_scheduler_log")
-public class QtzLogBean extends AbstractBean {
+@Table(name = "qtz_execute_log")
+public class QtzExecuteLogBean extends AbstractBean {
 
-    @Column(name = "jobname")
-    private String jobname;
-    @Column(name = "jobgroup")
-    private String jobgroup;
+    @Column(name = "taskname")
+    private String taskname;
+    @Column(name = "taskgroup")
+    private String taskgroup;
     @Column(name = "server")
     private String server;
     @Column(name = "path")
     private String path;
-    @Column(name = "data")
-    private String data;
+    @Column(name = "param")
+    private String param;
+    @Column(name = "success")
+    private Boolean success;
+    @Column(name = "message")
+    private String message;
     @Column(name = "result")
     private String result;
+    @Column(name = "executetime")
+    private Date executetime;
 
 }
