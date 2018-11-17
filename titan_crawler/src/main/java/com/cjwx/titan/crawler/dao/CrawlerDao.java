@@ -8,13 +8,15 @@ import java.util.Map;
 
 public interface CrawlerDao {
 
-    long insert(Object bean);
+    void batchInsert(List bean);
 
     int delete(List ids);
 
     int update(int id, Map<String, Object> set);
 
     int update(List ids, boolean status);
+
+    List<ClrCrawlerBean> select();
 
     List<ClrCrawlerBean> select(List<String> ids);
 

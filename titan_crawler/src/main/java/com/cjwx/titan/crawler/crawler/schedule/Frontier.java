@@ -1,8 +1,5 @@
-package com.cjwx.titan.crawler.frontier;
+package com.cjwx.titan.crawler.crawler.schedule;
 
-import com.cjwx.titan.crawler.crawler.Configurable;
-import com.cjwx.titan.crawler.crawler.CrawlConfig;
-import com.cjwx.titan.crawler.url.WebURL;
 import com.cjwx.titan.engine.reids.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +13,7 @@ import java.util.stream.Collectors;
  * @Date: 2018年03月29日 11:02
  */
 @Slf4j
-public class Frontier extends Configurable {
+public class Frontier {
 
     private static String WORK_QUEUES = "PendingURLsDB";
     private static String WORK_HISTORIES = "HistoryURLsDB";
@@ -27,13 +24,6 @@ public class Frontier extends Configurable {
     //线程同步锁
     protected final Object mutex = new Object();
     protected final Object waitingList = new Object();
-
-    public Frontier(CrawlConfig config) {
-        super(config);
-        if (!config.isResumableCrawling()) {
-            empty();
-        }
-    }
 
     public long getQueueLength() {
         return RedisUtils.sizeList(WORK_QUEUES);
@@ -57,16 +47,19 @@ public class Frontier extends Configurable {
         }
     }
 
-    public List<WebURL> getNextURLs(int max) {
+    public List<UrlSeed> getNextURLs(int max) {
         while (true) {
             synchronized (mutex) {
                 if (isFinished) return Arrays.asList();
-                if (RedisUtils.exists(WORK_QUEUES)) {
+                if (RedisUtils.exists(WORK_QUEUES) && max > 0) {
                     try {
-                        List<Object> result = RedisUtils.getList(WORK_QUEUES, 0, max);
+                        List<Object> result = RedisUtils.getList(WORK_QUEUES, 0, max - 1);
                         if (result.size() > 0) {
                             RedisUtils.remove(WORK_QUEUES, max);
-                            return result.stream().map(url -> (WebURL) url).collect(Collectors.toList());
+                            return result.stream()
+                                    .filter(url -> url instanceof UrlSeed)
+                                    .map(url -> (UrlSeed) url)
+                                    .collect(Collectors.toList());
                         }
                     } catch (Exception e) {
                         log.error("Error while getting next urls", e);
@@ -83,7 +76,7 @@ public class Frontier extends Configurable {
         }
     }
 
-    public void scheduleAll(List<WebURL> urls) {
+    public void scheduleAll(List<UrlSeed> urls) {
         synchronized (mutex) {
             urls.stream().forEach(this::saveUrl);
             synchronized (waitingList) {
@@ -92,23 +85,24 @@ public class Frontier extends Configurable {
         }
     }
 
-    public void schedule(WebURL url) {
+    public void schedule(UrlSeed url) {
         synchronized (mutex) {
             saveUrl(url);
         }
     }
 
-    private void saveUrl(WebURL url) {
+    private void saveUrl(UrlSeed url) {
         try {
-            if (RedisUtils.exists(WORK_HISTORIES, url.getUrl())) {
-                return;
+            if (url.isHistory()) {
+                if (RedisUtils.exists(WORK_HISTORIES, url.getUrl())) {
+                    return;
+                }
+                RedisUtils.setHash(WORK_HISTORIES, url.getUrl(), url);
             }
             RedisUtils.setList(WORK_QUEUES, url);
-            RedisUtils.setHash(WORK_HISTORIES, url.getUrl(), url);
             scheduledPages++;
         } catch (Exception e) {
             log.error("Error while putting the url in the work queue", e);
         }
     }
-
 }

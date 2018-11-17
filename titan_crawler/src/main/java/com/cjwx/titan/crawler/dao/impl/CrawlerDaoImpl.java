@@ -29,6 +29,11 @@ public class CrawlerDaoImpl extends BaseDao implements CrawlerDao {
     }
 
     @Override
+    public List<ClrCrawlerBean> select() {
+        return this.getQuery(ClrCrawlerBean.class).list();
+    }
+
+    @Override
     public List<ClrCrawlerBean> select(List<String> ids) {
         if (ObjectUtils.isNotEmpty(ids)) {
             return this.getQuery(ClrCrawlerBean.class).eq("status", true).in("id", ids).list();

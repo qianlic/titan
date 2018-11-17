@@ -7,10 +7,10 @@ import java.util.Map;
 
 public interface ImageDao {
 
-    long insert(Object bean);
+    void insert(Object bean);
 
     int delete(String hash);
 
     PageList<ComImageBean> select(int start, int size, Map<String, Object> where);
-    
+
 }

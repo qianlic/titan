@@ -18,13 +18,11 @@ import javax.persistence.Table;
 @Table(name = "clr_crawler")
 public class ClrCrawlerBean extends AbstractBean {
 
+    @Column(name = "code")
+    private String code;
     @Column(name = "name")
     private String name;
-    @Column(name = "resumable")
-    private boolean resumable;
-    @Column(name = "seed")
-    private String seed;
-    @Column(name = "number")
-    private int number;
+    @Column(name = "url")
+    private String url;
 
 }

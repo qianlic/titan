@@ -1,20 +1,19 @@
 package com.cjwx.titan.crawler.service.impl;
 
-import com.cjwx.titan.crawler.BasicCrawler;
 import com.cjwx.titan.crawler.bean.ClrCrawlerBean;
-import com.cjwx.titan.crawler.crawler.CrawlConfig;
-import com.cjwx.titan.crawler.crawler.CrawlConstant;
-import com.cjwx.titan.crawler.crawler.CrawlController;
+import com.cjwx.titan.crawler.crawler.schedule.CrawlerScheduler;
+import com.cjwx.titan.crawler.crawler.schedule.UrlSeed;
 import com.cjwx.titan.crawler.dao.CrawlerDao;
 import com.cjwx.titan.crawler.service.CrawlerService;
 import com.cjwx.titan.engine.core.model.PageList;
-import com.cjwx.titan.engine.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * CrawlerServiceImpl
@@ -28,54 +27,30 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Resource
     private CrawlerDao crawlerDao;
+    @Autowired
+    private CrawlerScheduler crawlerScheduler;
 
     @Override
-    public void execute(List ids) {
-        List<ClrCrawlerBean> crawlers = crawlerDao.select(ids);
-        crawlers.forEach(c -> {
-            if (CrawlConstant.contains(c.getName())) {
-                CrawlController controller = CrawlConstant.get(c.getName());
-                controller.close();
-                controller.start(BasicCrawler.class, c.getNumber());
-            } else {
-                CrawlConfig config = new CrawlConfig();
-                config.setResumableCrawling(c.isResumable());
-                CrawlController controller = new CrawlController(config);
-                controller.addSeed(c.getSeed());
-                controller.start(BasicCrawler.class, c.getNumber());
-                CrawlConstant.put(c.getName(), controller);
-            }
-        });
+    public void execute(List<String> ids) {
+        crawlerScheduler.schedule(crawlerDao.select(ids)
+                .stream()
+                .map(c -> new UrlSeed(c.getCode(), c.getUrl()))
+                .collect(Collectors.toList()));
     }
 
     @Override
-    public void createCrawler(ClrCrawlerBean crawler) {
-        crawlerDao.insert(crawler);
+    public void batchInsert(List<ClrCrawlerBean> crawlers) {
+        crawlerDao.batchInsert(crawlers);
     }
 
     @Override
-    public int deleteCrawler(List ids) {
-        return crawlerDao.delete(ids);
-    }
-
-    @Override
-    public int updateCrawler(int id, Map<String, Object> set) {
-        return crawlerDao.update(id, set);
-    }
-
-    @Override
-    public int updateStatus(List ids, boolean status) {
-        return crawlerDao.update(ids, status);
+    public List<ClrCrawlerBean> getCrawlerList() {
+        return crawlerDao.select();
     }
 
     @Override
     public PageList<ClrCrawlerBean> getCrawlerList(int start, int size, Map<String, Object> whereCondition) {
         return crawlerDao.select(start, size, whereCondition);
-    }
-
-    @Override
-    public List<ClrCrawlerBean> findCrawlerByIds(String ids) {
-        return crawlerDao.select(StringUtils.stringToList(ids));
     }
 
 }

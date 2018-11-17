@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
  * @Author: qian li
  * @Date: 2018年03月29日 11:02
  */
-public abstract class StringUtils {
+public class StringUtils {
 
     public static final String NULL_STRING = "";
     public static final String SPACE_STRING = " ";

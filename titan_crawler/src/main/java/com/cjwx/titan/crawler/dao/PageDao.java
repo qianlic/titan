@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PageDao {
 
-    long insert(Object bean);
+    void insert(Object bean);
 
     int delete(List ids);
 

@@ -28,33 +28,9 @@ public class CrawlerHandler {
         return crawlerService.getCrawlerList(model.getStart(), model.getSize(), model.getParams(ClrCrawlerBean.class));
     }
 
-    @RestMethod("create")
-    public void create(@RequestBody ClrCrawlerBean crawler) {
-        crawlerService.createCrawler(crawler);
-    }
-
-    @RestMethod("edit")
-    public int edit(@RequestBody Model model) {
-        return crawlerService.updateCrawler(model.getId(), model.getParams(ClrCrawlerBean.class));
-    }
-
-    @RestMethod("remove")
-    public int remove(@RequestBody Model model) {
-        JSONArray ids = model.getJSONArray("ids");
-        return crawlerService.deleteCrawler(ids);
-    }
-
-    @RestMethod("status")
-    public int status(@RequestBody Model model) {
-        JSONArray ids = model.getJSONArray("ids");
-        boolean status = model.getBoolean("status");
-        return crawlerService.updateStatus(ids, status);
-    }
-
     @RestMethod("run")
     public void run(@RequestBody Model model) {
-        JSONArray ids = model.getJSONArray("ids");
-        crawlerService.execute(ids);
+        crawlerService.execute(model.getJSONArray("ids").toJavaList(String.class));
     }
 
 }

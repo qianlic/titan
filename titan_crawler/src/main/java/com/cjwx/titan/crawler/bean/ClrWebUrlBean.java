@@ -3,6 +3,7 @@ package com.cjwx.titan.crawler.bean;
 import com.cjwx.titan.engine.core.base.bean.AbstractBean;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -14,14 +15,12 @@ import javax.persistence.Table;
 @Table(name = "clr_weburl")
 public class ClrWebUrlBean extends AbstractBean {
 
-    private String subDomain;
     private String domain;
 
     private short depth;
     private String path;
 
     private String url;
-    private String parentUrl;
 
     private String anchor;
     private String tag;

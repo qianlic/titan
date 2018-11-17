@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface ResourceDao {
 
-    long insert(Object bean);
+    void insert(Object bean);
 
-    long batchInsert(List beans);
+    void batchInsert(List beans);
 
     int delete(List ids);
 

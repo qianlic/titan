@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface LogDao {
 
-    long insert(Object bean);
+    void insert(Object bean);
 
     int delete(List ids);
 

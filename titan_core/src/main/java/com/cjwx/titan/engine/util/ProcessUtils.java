@@ -1,5 +1,7 @@
 package com.cjwx.titan.engine.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -11,6 +13,7 @@ import java.util.StringTokenizer;
  * @Author: qian li
  * @Date: 2018年03月29日 11:02
  */
+@Slf4j
 public class ProcessUtils {
 
     /**
@@ -73,6 +76,14 @@ public class ProcessUtils {
             pid = e.toString();
         }
         return pid;
+    }
+
+    public static void threadSleep(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            log.error("Error occurred", e);
+        }
     }
 
 }

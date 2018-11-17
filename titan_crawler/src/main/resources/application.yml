@@ -8,6 +8,12 @@ logging:
 spring:
   application:
     name: crawler
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/titan?useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: 123456
   redis:
     database: 0
     host: 127.0.0.1

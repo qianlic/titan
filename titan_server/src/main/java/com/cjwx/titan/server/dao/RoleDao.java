@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface RoleDao {
 
-    long insert(Object bean);
+    void insert(Object bean);
 
     int delete(List ids);
 

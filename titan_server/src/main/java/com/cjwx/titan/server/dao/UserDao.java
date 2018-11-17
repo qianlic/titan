@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface UserDao {
 
-    long insert(Object bean);
+    void insert(Object bean);
 
     int delete(List ids);
 

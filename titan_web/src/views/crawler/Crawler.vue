@@ -12,17 +12,27 @@ export default {
   data () {
     return {
       columns: [{
-        title: '任务名',
+        title: '编码',
+        width: 120,
+        key: 'code'
+      }, {
+        title: '爬虫名称',
+        width: 120,
         key: 'name'
       }, {
-        title: '可恢复',
-        key: 'resumable'
-      }, {
         title: '地址',
-        key: 'seed'
+        key: 'url'
       }, {
-        title: '线程数',
-        key: 'number'
+        title: '状态',
+        width: 80,
+        align: 'center',
+        render: (h, {row}) => h('Icon', {
+          props: {
+            type: 'record',
+            size: 20,
+            color: row.status ? '#19be6b' : '#ed3f14'
+          }
+        })
       }, {
         title: '操作',
         type: 'operation',
