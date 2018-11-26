@@ -22,7 +22,7 @@ public class CrawlerConfiguration {
 
     @Bean
     public CrawlerScheduler scheduler(CrawlerScheduler crawlerScheduler) {
-        crawlerScheduler.start(10, 20, 3);
+        crawlerScheduler.start(10, 10, 3);
         return crawlerScheduler;
     }
 

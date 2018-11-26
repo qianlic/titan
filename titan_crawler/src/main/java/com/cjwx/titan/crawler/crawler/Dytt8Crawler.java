@@ -6,11 +6,13 @@ import com.cjwx.titan.crawler.crawler.schedule.CrawlerScheduler;
 import com.cjwx.titan.crawler.crawler.schedule.HtmlCrawler;
 import com.cjwx.titan.crawler.crawler.schedule.UrlSeed;
 import com.cjwx.titan.crawler.dao.WebUrlDao;
+import com.cjwx.titan.engine.util.StringUtils;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +31,6 @@ public class Dytt8Crawler implements CrawlerFunction {
 
     @Override
     public void process(UrlSeed seed, Document document) {
-        getMenu(document);
         switch (seed.getType()) {
             case 2:
                 getMovieLink(document);
@@ -57,6 +58,7 @@ public class Dytt8Crawler implements CrawlerFunction {
      * 获取翻页信息
      */
     public void getPage(Document document) {
+        getMenu(document);
         List<UrlSeed> urls = document.select("select[name='sldd'] option").stream()
                 .map(e -> new UrlSeed("dytt8Crawler", 1, e.absUrl("value")))
                 .collect(Collectors.toList());
@@ -79,10 +81,21 @@ public class Dytt8Crawler implements CrawlerFunction {
     public void getMovieLink(Document document) {
         document.select("#Zoom table a").stream().forEach(e -> {
             ClrWebUrlBean weburl = new ClrWebUrlBean();
-            weburl.setDomain(e.baseUri());
+            weburl.setDomain(document.baseUri());
+            weburl.setAnchor(document.title());
             weburl.setTag(e.text());
             weburl.setUrl(e.absUrl("href"));
             webUrlDao.insert(weburl);
         });
     }
+
+    public static void main(String[] args) {
+        String str = "2013年动作《金刚王：死亡救赎》720p.BD中字迅雷下载_阳光电影";
+        String s = "《", e = "》";
+        System.out.println(StringUtils.getAttr(str, s, e));
+        for (int i = 0; i < 100; i++) {
+            System.out.println(String.format("%017d", Math.abs(UUID.randomUUID().hashCode())));
+        }
+    }
+
 }

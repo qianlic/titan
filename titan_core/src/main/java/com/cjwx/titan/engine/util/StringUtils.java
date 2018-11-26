@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -313,6 +315,18 @@ public class StringUtils {
             fileFullPath = fileFullPath.substring(fileFullPath.lastIndexOf("\\") + 1, fileFullPath.length());
         }
         return fileFullPath;
+    }
+
+    /**
+     * 字符串匹配
+     */
+    public static String getAttr(String source, String start, String end) {
+        Pattern pattern = Pattern.compile("(?<=(" + start + "))[.\\s\\S]*?(?=(" + end + "))");
+        Matcher matcher = pattern.matcher(source);
+        while (matcher.find()) {
+            return matcher.group();
+        }
+        return NULL_STRING;
     }
 
     /**
