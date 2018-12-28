@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
  */
 @Data
 @Configuration
-@ConfigurationProperties("ftp")
+@ConfigurationProperties("common.ftp")
 @Import({ApplicationConfiguration.class, WebMvcConfiguration.class})
 @ComponentScan("com.cjwx.titan.server.zuul")
 public class ServerConfiguration {

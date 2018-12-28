@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 @Data
 @Configuration
-@ConfigurationProperties("kaptcha")
+@ConfigurationProperties("common.kaptcha")
 public class CaptchaConfiguration {
 
     private String border;

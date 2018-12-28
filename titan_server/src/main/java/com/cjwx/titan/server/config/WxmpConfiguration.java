@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties("wxmp")
+@ConfigurationProperties("common.wxmp")
 public class WxmpConfiguration {
 
     private String appId;
