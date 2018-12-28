@@ -38,3 +38,23 @@ zuul:
     quartz: /quartz/**
     crawler: /crawler/**
   retryable: true
+wxmp:
+  appId: wxe47b750e870ce1cf
+  secret: 02731ae42f5957ec29650965f63cef4e
+  token: Titan
+  aesKey: hU6PLdwpHwHko5x0Wvdm7pvaz8HF8ILZMk5HMaaj0Dw
+kaptcha:
+  border: no
+  width: 125
+  height: 45
+  font: 宋体,楷体,微软雅黑
+  noise: com.cjwx.titan.server.capcha.CaptchaNoise
+  chars: 3456789ABCDEFGHJKMNPQRSTUVWXYabcdefghjkmnpqrstuvwxy
+ftp:
+  ftpURL: 127.0.0.1
+  ftpPort: 22
+  ftpAdmin: root
+  ftpPassword: 123456
+  ftpRootPath: /
+  maxFileSize: 100000000
+  fileFormat: txt,xls

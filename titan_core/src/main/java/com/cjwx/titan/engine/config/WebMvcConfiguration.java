@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan("com.cjwx.titan.engine.web")
-@Import({SwaggerConfiguration.class, FileToolConfiguration.class})
+@Import({SwaggerConfiguration.class})
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Bean

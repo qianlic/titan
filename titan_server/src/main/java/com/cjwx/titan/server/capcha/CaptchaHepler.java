@@ -4,7 +4,6 @@ import com.cjwx.titan.engine.reids.util.RedisUtils;
 import com.cjwx.titan.engine.util.StringUtils;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.image.BufferedImage;
 
@@ -18,9 +17,8 @@ public class CaptchaHepler {
 
     private static DefaultKaptcha captchaProducer;
 
-    @Autowired
-    public void setCaptchaProducer(DefaultKaptcha captchaProducer) {
-        this.captchaProducer = captchaProducer;
+    public static void setCaptchaProducer(DefaultKaptcha producer) {
+        captchaProducer = producer;
     }
 
     public static BufferedImage drawVerifyCode(String key) {

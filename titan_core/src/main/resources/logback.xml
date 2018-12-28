@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property resource="config/sys.properties" />
+    <property name="log.path" value="G:/temp/logs/" />
+    <property name="log.level" value="DEBUG" />
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

@@ -2,9 +2,7 @@ package com.cjwx.titan.quartz.config;
 
 import com.cjwx.titan.engine.config.ApplicationConfiguration;
 import com.cjwx.titan.engine.config.WebMvcConfiguration;
-import lombok.Data;
 import org.quartz.JobListener;
-import org.quartz.TriggerListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.quartz.SchedulerFactoryBeanCustomizer;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +15,6 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  * @Author: qian li
  * @Date: 2018年10月30日 15:58
  */
-@Data
 @Configuration
 @ComponentScan("com.cjwx.titan.quartz")
 @Import({ApplicationConfiguration.class, WebMvcConfiguration.class})

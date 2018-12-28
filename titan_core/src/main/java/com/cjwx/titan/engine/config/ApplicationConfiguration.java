@@ -1,6 +1,5 @@
 package com.cjwx.titan.engine.config;
 
-import lombok.Data;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
  * @Author: qian li
  * @Date: 2018年10月30日 15:58
  */
-@Data
 @Configuration
 @EnableJpaRepositories
 @EntityScan("com.cjwx.titan.**.bean")
