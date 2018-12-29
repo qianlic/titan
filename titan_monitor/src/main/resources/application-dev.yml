@@ -3,8 +3,6 @@ server:
   servlet:
     contextPath: /
   maxHttpHeaderSize: 4048576
-logging:
-  config: classpath:logback.xml
 spring:
   application:
     name: monitor
