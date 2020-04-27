@@ -6,4 +6,7 @@ package com.cjwx.titan.activity.service;
  * @Date: 2020年04月27日  16:46
  */
 public interface ActivityService {
+
+    void deploy(String name);
+
 }
