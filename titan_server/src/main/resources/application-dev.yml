@@ -43,7 +43,7 @@ common:
     token: Titan
     aesKey: hU6PLdwpHwHko5x0Wvdm7pvaz8HF8ILZMk5HMaaj0Dw
   kaptcha:
-    border: no
+    border: 'no'
     width: 125
     height: 45
     font: 宋体,楷体,微软雅黑

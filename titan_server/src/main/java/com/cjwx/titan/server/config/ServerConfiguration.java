@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Component;
 
 /**
  * @Description:
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Import;
  * @Date: 2018年11月03日 10:20
  */
 @Data
+@Component
 @Configuration
 @ConfigurationProperties("common.ftp")
 @Import({ApplicationConfiguration.class, WebMvcConfiguration.class})

@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
@@ -16,6 +17,7 @@ import java.util.Properties;
  * @Date: 2018年11月03日 10:20
  */
 @Data
+@Component
 @Configuration
 @ConfigurationProperties("common.kaptcha")
 public class CaptchaConfiguration {

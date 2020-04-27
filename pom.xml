@@ -25,6 +25,7 @@
         <module>titan_monitor</module>
         <module>titan_server</module>
         <module>titan_core</module>
+        <module>titan_activity</module>
     </modules>
 
     <dependencyManagement>
@@ -81,6 +82,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring-boot}</version>
             </plugin>
         </plugins>
     </build>

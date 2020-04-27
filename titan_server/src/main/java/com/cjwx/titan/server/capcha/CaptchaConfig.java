@@ -19,18 +19,22 @@ public class CaptchaConfig extends Config {
         super(properties);
     }
 
+    @Override
     public Color getTextProducerFontColor() {
         return randomRGB(150);
     }
 
+    @Override
     public Color getNoiseColor() {
         return randomRGB(120);
     }
 
+    @Override
     public Color getBackgroundColorFrom() {
         return randomRGB(200, 55);
     }
 
+    @Override
     public Color getBackgroundColorTo() {
         return randomRGB(200, 55);
     }
