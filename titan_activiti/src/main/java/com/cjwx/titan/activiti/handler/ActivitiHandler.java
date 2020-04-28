@@ -1,6 +1,6 @@
-package com.cjwx.titan.activity.handler;
+package com.cjwx.titan.activiti.handler;
 
-import com.cjwx.titan.activity.service.ActivityService;
+import com.cjwx.titan.activiti.service.ActivitiService;
 import com.cjwx.titan.engine.web.annotation.RestHandler;
 import com.cjwx.titan.engine.web.annotation.RestMethod;
 import io.swagger.annotations.Api;
@@ -14,10 +14,10 @@ import javax.annotation.Resource;
  */
 @Api(tags = "工作流-流程管理")
 @RestHandler("/activity/")
-public class ActivityHandler {
+public class ActivitiHandler {
 
     @Resource
-    private ActivityService activityService;
+    private ActivitiService activityService;
 
     @RestMethod("list")
     public String list() {

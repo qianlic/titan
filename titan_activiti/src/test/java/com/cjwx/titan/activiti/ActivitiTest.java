@@ -1,6 +1,6 @@
-package com.cjwx.titan.activity;
+package com.cjwx.titan.activiti;
 
-import com.cjwx.titan.activity.service.ActivityService;
+import com.cjwx.titan.activiti.service.ActivitiService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +18,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
-public class ActivityTest {
+public class ActivitiTest {
 
     @Autowired
-    private ActivityService activityService;
+    private ActivitiService activityService;
 
     @Test
     public void test() {

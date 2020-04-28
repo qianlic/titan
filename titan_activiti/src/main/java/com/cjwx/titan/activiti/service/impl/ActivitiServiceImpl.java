@@ -1,10 +1,9 @@
-package com.cjwx.titan.activity.service.impl;
+package com.cjwx.titan.activiti.service.impl;
 
-import com.cjwx.titan.activity.service.ActivityService;
+import com.cjwx.titan.activiti.service.ActivitiService;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -14,7 +13,7 @@ import javax.annotation.Resource;
  * @Date: 2020年04月27日  16:47
  */
 @Service("activityService")
-public class ActivityServiceImpl implements ActivityService {
+public class ActivitiServiceImpl implements ActivitiService {
 
     @Resource
     private RuntimeService runtimeService;

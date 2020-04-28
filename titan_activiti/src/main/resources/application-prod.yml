@@ -5,7 +5,7 @@ server:
   maxHttpHeaderSize: 4048576
 spring:
   application:
-    name: activity
+    name: activiti
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
@@ -23,9 +23,9 @@ spring:
         maxWait: 1000s
         maxIdle: 300
     timeout: 10000s
-  activiti:
-    database-schema-update: true
-    check-process-definitions: false
+activiti:
+  database-schema-update: true
+  check-process-definitions: false
 eureka:
   instance:
     hostname: localhost
