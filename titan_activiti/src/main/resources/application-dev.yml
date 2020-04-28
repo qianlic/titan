@@ -26,8 +26,6 @@ spring:
   activiti:
     database-schema-update: true
     check-process-definitions: false
-  mvc:
-    static-path-pattern: editor-app/**:
 eureka:
   instance:
     hostname: localhost
