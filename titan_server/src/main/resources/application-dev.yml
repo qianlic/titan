@@ -34,6 +34,7 @@ zuul:
     system: /system/**
     monitor: /monitor/**
     quartz: /quartz/**
+    activiti: /activiti/**
     crawler: /crawler/**
   retryable: true
 common:

@@ -25,7 +25,7 @@
         <module>titan_monitor</module>
         <module>titan_server</module>
         <module>titan_core</module>
-        <module>titan_activity</module>
+        <module>titan_activiti</module>
     </modules>
 
     <dependencyManagement>
