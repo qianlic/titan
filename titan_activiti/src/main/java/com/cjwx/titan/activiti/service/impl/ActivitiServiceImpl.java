@@ -1,11 +1,22 @@
 package com.cjwx.titan.activiti.service.impl;
 
 import com.cjwx.titan.activiti.service.ActivitiService;
-import org.activiti.engine.*;
-import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description:
@@ -25,21 +36,85 @@ public class ActivitiServiceImpl implements ActivitiService {
     private TaskService taskService;
 
     @Resource
-    private ManagementService managementService;
-
-    @Resource
-    private IdentityService identityService;
-
-    @Resource
     private HistoryService historyService;
 
-    @Resource
-    private FormService formService;
+    @Override
+    public ProcessInstance startProcessInstance(String key, Map<String, Object> variable) {
+        return runtimeService.startProcessInstanceByKey(key, variable);
+    }
+
+    @Override
+    public List<ProcessDefinition> getProcessDifinition(String key, Integer offset, Integer limit) {
+        return repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(key)
+                .listPage(offset, limit);
+    }
+
+    @Override
+    public void deleteProcessDifinition(String id) {
+        repositoryService.deleteDeployment(id, true);
+    }
+
+    @Override
+    public List<Task> getTask(String name, Integer offset, Integer limit) {
+        return taskService.createTaskQuery()
+                .taskAssignee(name)
+                .listPage(offset, limit);
+    }
+
+    @Override
+    public void setTaskAssignee(String id, String assignee) {
+        taskService.setAssignee(id, assignee);
+    }
+
+    @Override
+    public void setTaskVariable(String id, String name, Object o) {
+        taskService.setVariable(id, name, o);
+    }
+
+    @Override
+    public Object getTaskVariable(String id, String name) {
+        return taskService.getVariable(id, name);
+    }
+
+    @Override
+    public void completeTask(String id) {
+        taskService.complete(id);
+    }
+
+    @Override
+    public List<HistoricVariableInstance> getHistoricVariable(String name, Integer offset, Integer limit) {
+        return historyService.createHistoricVariableInstanceQuery()
+                .variableName(name)
+                .listPage(offset, limit);
+    }
+
+    @Override
+    public List<HistoricProcessInstance> getHistoricProcessInstance(String key, Integer offset, Integer limit) {
+        return historyService.createHistoricProcessInstanceQuery()
+                .processDefinitionKey(key)
+                .listPage(offset, limit);
+    }
+
+    @Override
+    public List<HistoricActivityInstance> getHistoricActivityInstance(String id, Integer offset, Integer limit) {
+        return historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(id)
+                .listPage(offset, limit);
+    }
+
+    @Override
+    public List<HistoricTaskInstance> getHistoricTaskInstance(String id, Integer offset, Integer limit) {
+        return historyService.createHistoricTaskInstanceQuery()
+                .processInstanceId(id)
+                .listPage(offset, limit);
+    }
 
     @Override
     public void deploy(String name) {
-        Deployment deployment = repositoryService.createDeployment().addClasspathResource(name).deploy();
-        System.out.println(deployment.getId() + "-" + deployment.getName());
+        repositoryService.createDeployment()
+                .addClasspathResource(name)
+                .deploy();
     }
 
 }
