@@ -1,0 +1,64 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: /
+  maxHttpHeaderSize: 4048576
+spring:
+  application:
+    name: system
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/titan?useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        maxActive: 600
+        maxWait: 1000s
+        maxIdle: 300
+    timeout: 10000s
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+zuul:
+  routes:
+    system: /system/**
+    monitor: /monitor/**
+    quartz: /quartz/**
+    activiti: /activiti/**
+    crawler: /crawler/**
+  retryable: true
+common:
+  wxmp:
+    appId: wxe47b750e870ce1cf
+    secret: 02731ae42f5957ec29650965f63cef4e
+    token: Titan
+    aesKey: hU6PLdwpHwHko5x0Wvdm7pvaz8HF8ILZMk5HMaaj0Dw
+  kaptcha:
+    border: 'no'
+    width: 125
+    height: 45
+    font: 宋体,楷体,微软雅黑
+    noise: com.cjwx.spark.server.capcha.CaptchaNoise
+    chars: 3456789ABCDEFGHJKMNPQRSTUVWXYabcdefghjkmnpqrstuvwxy
+  ftp:
+    ftpURL: 127.0.0.1
+    ftpPort: 22
+    ftpAdmin: root
+    ftpPassword: 123456
+    ftpRootPath: /
+    maxFileSize: 100000000
+    fileFormat: txt,xls
