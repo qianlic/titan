@@ -1,7 +1,7 @@
-package com.cjwx.spark.monitor.helper;
+package com.cjwx.spark.server.helper;
 
-import com.cjwx.spark.monitor.MBeans;
-import com.cjwx.spark.monitor.entity.MemoryBean;
+import com.cjwx.spark.server.MBeans;
+import com.cjwx.spark.server.entity.MemoryBean;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.management.ObjectName;

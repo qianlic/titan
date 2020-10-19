@@ -1,7 +1,7 @@
-package com.cjwx.spark.monitor.handler;
+package com.cjwx.spark.server.handler;
 
-import com.cjwx.spark.monitor.entity.MemoryBean;
-import com.cjwx.spark.monitor.helper.MemoryHelper;
+import com.cjwx.spark.server.entity.MemoryBean;
+import com.cjwx.spark.server.helper.MemoryHelper;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
 import io.swagger.annotations.Api;

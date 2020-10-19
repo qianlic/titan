@@ -50,7 +50,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<SysResourceEntity> getResourceList(Boolean available) {
-        return resourceRepository.findByStatus(available);
+        return resourceRepository.findByParentIdAndStatus(0, available);
     }
 
     @Override

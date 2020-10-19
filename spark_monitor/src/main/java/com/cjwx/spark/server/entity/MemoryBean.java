@@ -1,4 +1,4 @@
-package com.cjwx.spark.monitor.entity;
+package com.cjwx.spark.server.entity;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.cjwx.spark.monitor;
+package com.cjwx.spark.server;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,7 +8,6 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import java.lang.management.*;
 import java.lang.reflect.Method;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

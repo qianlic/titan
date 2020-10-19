@@ -1,4 +1,4 @@
-package com.cjwx.spark.monitor;
+package com.cjwx.spark.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

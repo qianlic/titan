@@ -55,7 +55,7 @@ public class SysUserEntity extends AbstractEntity {
     @JoinTable(name = "sys_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<SysRoleEntity> roles;
 
 }

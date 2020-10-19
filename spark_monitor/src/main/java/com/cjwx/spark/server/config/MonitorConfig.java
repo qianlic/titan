@@ -1,4 +1,4 @@
-package com.cjwx.spark.monitor.config;
+package com.cjwx.spark.server.config;
 
 import com.cjwx.spark.engine.config.ApplicationConfig;
 import com.cjwx.spark.engine.config.WebMvcConfig;

@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public interface ResourceRepository extends JpaRepository<SysResourceEntity, Long> {
 
-    List<SysResourceEntity> findByStatus(boolean status);
+    List<SysResourceEntity> findByParentIdAndStatus(int parentId, boolean status);
 
     int deleteByIdIn(List<Long> ids);
 
@@ -25,5 +25,9 @@ public interface ResourceRepository extends JpaRepository<SysResourceEntity, Lon
     @Query("update SysResourceEntity r set r.status = :status where r.id in (:ids)")
     int updateStatusByIdIn(@Param("status") boolean status,
                            @Param("ids") List<Long> ids);
+
+    @Modifying
+    @Query("select c from SysUserEntity a inner join a.roles b inner join b.resources c where a.userCode = :userCode")
+    List<SysResourceEntity> selectByUserCode(@Param("userCode") String userCode);
 
 }

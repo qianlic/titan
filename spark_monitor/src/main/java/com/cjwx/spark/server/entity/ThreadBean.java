@@ -1,4 +1,4 @@
-package com.cjwx.spark.monitor.entity;
+package com.cjwx.spark.server.entity;
 
 import com.cjwx.spark.engine.util.ProcessUtils;
 import lombok.Data;
