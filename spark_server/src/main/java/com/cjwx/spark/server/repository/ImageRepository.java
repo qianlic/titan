@@ -1,12 +1,10 @@
 package com.cjwx.spark.server.repository;
 
-import com.cjwx.spark.server.entity.ComImageEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cjwx.spark.server.entity.ComImage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ImageRepository extends JpaRepository<ComImageEntity, Long> {
-
-    int deleteByHash(String hash);
+public interface ImageRepository extends BaseMapper<ComImage> {
 
 }

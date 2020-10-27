@@ -1,14 +1,10 @@
 package com.cjwx.spark.server.repository;
 
-import com.cjwx.spark.server.entity.ComArticleEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cjwx.spark.server.entity.ComArticle;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface ArticleRepository extends JpaRepository<ComArticleEntity, Long> {
-
-    int deleteByIdIn(List<Long> ids);
+public interface ArticleRepository extends BaseMapper<ComArticle> {
 
 }

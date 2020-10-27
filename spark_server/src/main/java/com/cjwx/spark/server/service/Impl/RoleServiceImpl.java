@@ -1,18 +1,17 @@
 package com.cjwx.spark.server.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysRoleEntity;
+import com.cjwx.spark.engine.entity.SysRole;
 import com.cjwx.spark.engine.repository.RoleRepository;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.server.service.RoleService;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -22,41 +21,43 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public SysRoleEntity createRole(SysRoleEntity role) {
-        return roleRepository.save(role);
+    public int createRole(SysRole role) {
+        return roleRepository.insert(role);
     }
 
     @Override
     public int deleteRole(List<Long> ids) {
-        return roleRepository.deleteByIdIn(ids);
+        return roleRepository.deleteBatchIds(ids);
     }
 
     @Override
-    public SysRoleEntity updateRole(SysRoleEntity role) {
-        return roleRepository.save(role);
+    public int updateRole(SysRole role) {
+        return roleRepository.updateById(role);
     }
 
     @Override
     public int updateStatus(List<Long> ids, boolean status) {
-        return roleRepository.updateStatusByIdIn(status, ids);
+        LambdaUpdateWrapper<SysRole> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(SysRole::getId, ids);
+        wrapper.set(SysRole::getStatus, status);
+        return roleRepository.update(null, wrapper);
     }
 
     @Override
-    public List<SysRoleEntity> getRoleList() {
-        return roleRepository.findByStatus(true);
+    public List<SysRole> getRoleList() {
+        LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysRole::getStatus, true);
+        return roleRepository.selectList(wrapper);
     }
 
     @Override
-    public PageList<SysRoleEntity> getRoleList(int start, int size, SysRoleEntity role) {
-        return PageList.of(roleRepository.findAll(Example.of(role), PageRequest.of(start, size)));
+    public PageList<SysRole> getRoleList(int start, int size, SysRole role) {
+        return PageList.of(roleRepository, role, start, size);
     }
 
     @Override
-    public List<SysRoleEntity> findRolesByIds(String roleids) {
-        return roleRepository.findAllById(StringUtils.stringToList(roleids)
-                .stream()
-                .map(Long::parseLong)
-                .collect(Collectors.toList()));
+    public List<SysRole> findRolesByIds(String roleids) {
+        return roleRepository.selectBatchIds(StringUtils.stringToList(roleids));
     }
 
 }

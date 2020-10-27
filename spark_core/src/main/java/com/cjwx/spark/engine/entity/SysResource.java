@@ -1,19 +1,17 @@
-package com.cjwx.spark.server.dto;
+package com.cjwx.spark.engine.entity;
 
-import com.cjwx.spark.engine.dto.BaseDTO;
-import com.cjwx.spark.engine.entity.SysResource;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 资源
  * @Author: qian li
- * @Date: 2020年09月11日 16:49
+ * @Date: 2018年04月03日 15:44
  */
 @Data
-public class SysResourceDTO extends BaseDTO {
+public class SysResource extends AbstractEntity {
 
     private String resourceCode;
 

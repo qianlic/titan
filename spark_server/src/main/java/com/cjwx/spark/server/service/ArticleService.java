@@ -1,6 +1,6 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.server.entity.ComArticleEntity;
+import com.cjwx.spark.server.entity.ComArticle;
 import com.cjwx.spark.engine.core.model.PageList;
 
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    ComArticleEntity createArticle(ComArticleEntity article);
+    int createArticle(ComArticle article);
 
     int deleteArticle(List<Long> ids);
 
-    ComArticleEntity updateArticle(ComArticleEntity article);
+    int updateArticle(ComArticle article);
 
-    PageList<ComArticleEntity> getArticleList(int start, int size, ComArticleEntity article);
+    PageList<ComArticle> getArticleList(int start, int size, ComArticle article);
 
 }

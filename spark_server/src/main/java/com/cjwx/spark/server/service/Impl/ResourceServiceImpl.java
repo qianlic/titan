@@ -1,6 +1,8 @@
 package com.cjwx.spark.server.service.Impl;
 
-import com.cjwx.spark.engine.entity.SysResourceEntity;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.cjwx.spark.engine.entity.SysResource;
 import com.cjwx.spark.engine.repository.ResourceRepository;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.server.service.ResourceService;
@@ -9,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,50 +20,48 @@ public class ResourceServiceImpl implements ResourceService {
     private ResourceRepository resourceRepository;
 
     @Override
-    public SysResourceEntity createResource(SysResourceEntity resource) {
-        return resourceRepository.save(resource);
-    }
-
-    @Override
-    public List<SysResourceEntity> createResource(List<SysResourceEntity> resources) {
-        return resourceRepository.saveAll(resources);
+    public int createResource(SysResource resource) {
+        return resourceRepository.insert(resource);
     }
 
     @Override
     public int deleteResource(List<Long> ids) {
-        return resourceRepository.deleteByIdIn(ids);
+        return resourceRepository.deleteBatchIds(ids);
     }
 
     @Override
-    public SysResourceEntity updateResource(SysResourceEntity resource) {
-        return resourceRepository.save(resource);
+    public int updateResource(SysResource resource) {
+        return resourceRepository.updateById(resource);
     }
 
     @Override
     public int updateStatus(List<Long> ids, boolean status) {
-        return resourceRepository.updateStatusByIdIn(status, ids);
+        LambdaUpdateWrapper<SysResource> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(SysResource::getId, ids);
+        wrapper.set(SysResource::getStatus, status);
+        return resourceRepository.update(null, wrapper);
     }
 
     @Override
-    public List<SysResourceEntity> getResourceList() {
-        return resourceRepository.findAll();
+    public List<SysResource> getResourceList() {
+        return resourceRepository.selectList(null);
     }
 
     @Override
-    public List<SysResourceEntity> getResourceList(Boolean available) {
-        return resourceRepository.findByParentIdAndStatus(0, available);
+    public List<SysResource> getResourceList(Boolean available) {
+        LambdaQueryWrapper<SysResource> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysResource::getStatus, available);
+        return resourceRepository.selectList(wrapper);
     }
 
     @Override
-    public List<SysResourceEntity> findResourceByIds(String resourceids) {
+    public List<SysResource> findResourceByIds(String resourceids) {
         return findResourceByIds(StringUtils.stringToList(resourceids));
     }
 
     @Override
-    public List<SysResourceEntity> findResourceByIds(List<String> resourceids) {
-        return resourceRepository.findAllById(resourceids.stream()
-                .map(Long::parseLong)
-                .collect(Collectors.toList()));
+    public List<SysResource> findResourceByIds(List<String> resourceids) {
+        return resourceRepository.selectBatchIds(resourceids);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.cjwx.spark.quartz.service.impl;
 
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.quartz.entity.QtzExecuteLogEntity;
+import com.cjwx.spark.quartz.entity.QtzExecuteLog;
 import com.cjwx.spark.quartz.repository.LogRepository;
 import com.cjwx.spark.quartz.service.ExecuteLogService;
 import org.springframework.data.domain.Example;
@@ -25,7 +25,7 @@ public class ExecuteLogServiceImpl implements ExecuteLogService {
     private LogRepository logRepository;
 
     @Override
-    public void create(QtzExecuteLogEntity log) {
+    public void create(QtzExecuteLog log) {
         logRepository.save(log);
     }
 
@@ -35,7 +35,7 @@ public class ExecuteLogServiceImpl implements ExecuteLogService {
     }
 
     @Override
-    public PageList<QtzExecuteLogEntity> getLogList(int start, int size, QtzExecuteLogEntity wheres) {
+    public PageList<QtzExecuteLog> getLogList(int start, int size, QtzExecuteLog wheres) {
         return PageList.of(logRepository.findAll(Example.of(wheres), PageRequest.of(start, size)));
     }
 

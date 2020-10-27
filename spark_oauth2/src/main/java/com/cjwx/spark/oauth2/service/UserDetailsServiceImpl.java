@@ -1,9 +1,9 @@
 package com.cjwx.spark.oauth2.service;
 
 import com.cjwx.spark.oauth2.entity.OAuthAuthority;
-import com.cjwx.spark.engine.entity.SysResourceEntity;
-import com.cjwx.spark.engine.entity.SysRoleEntity;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysResource;
+import com.cjwx.spark.engine.entity.SysRole;
+import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.repository.UserRepository;
 import com.cjwx.spark.oauth2.entity.OAuthUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,19 +29,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public OAuthUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUserEntity user = userRepository.findByUserCode(username);
+        SysUser user = userRepository.findByUserCode(username);
         OAuthUser userDetails = new OAuthUser();
         userDetails.setUserCode(user.getUserCode());
         userDetails.setUsername(user.getUserName());
         userDetails.setPassword(user.getPassword());
         userDetails.setSalt(user.getSalt());
         List<OAuthAuthority> authorities = new ArrayList<>();
-        List<SysRoleEntity> roles = user.getRoles();
+        List<SysRole> roles = user.getRoles();
         if (roles != null && !roles.isEmpty()) {
-            for (SysRoleEntity role : roles) {
-                List<SysResourceEntity> resources = role.getResources();
+            for (SysRole role : roles) {
+                List<SysResource> resources = role.getResources();
                 if (resources != null && !resources.isEmpty()) {
-                    for (SysResourceEntity resource : resources) {
+                    for (SysResource resource : resources) {
                         OAuthAuthority authorise = new OAuthAuthority(resource.getResourceCode());
                         if (!authorities.contains(authorise)) {
                             authorities.add(authorise);

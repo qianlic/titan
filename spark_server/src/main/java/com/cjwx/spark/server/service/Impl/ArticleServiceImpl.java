@@ -1,11 +1,9 @@
 package com.cjwx.spark.server.service.Impl;
 
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.server.entity.ComArticleEntity;
+import com.cjwx.spark.server.entity.ComArticle;
 import com.cjwx.spark.server.repository.ArticleRepository;
 import com.cjwx.spark.server.service.ArticleService;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,23 +23,23 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleRepository articleRepository;
 
     @Override
-    public ComArticleEntity createArticle(ComArticleEntity article) {
-        return articleRepository.save(article);
+    public int createArticle(ComArticle article) {
+        return articleRepository.insert(article);
     }
 
     @Override
     public int deleteArticle(List<Long> ids) {
-        return articleRepository.deleteByIdIn(ids);
+        return articleRepository.deleteBatchIds(ids);
     }
 
     @Override
-    public ComArticleEntity updateArticle(ComArticleEntity article) {
-        return articleRepository.save(article);
+    public int updateArticle(ComArticle article) {
+        return articleRepository.updateById(article);
     }
 
     @Override
-    public PageList<ComArticleEntity> getArticleList(int start, int size, ComArticleEntity article) {
-        return PageList.of(articleRepository.findAll(Example.of(article), PageRequest.of(start, size)));
+    public PageList<ComArticle> getArticleList(int start, int size, ComArticle article) {
+        return PageList.of(articleRepository, article, start, size);
     }
 
 }

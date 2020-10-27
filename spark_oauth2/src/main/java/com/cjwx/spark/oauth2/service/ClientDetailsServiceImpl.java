@@ -1,6 +1,6 @@
 package com.cjwx.spark.oauth2.service;
 
-import com.cjwx.spark.engine.entity.SysClientEntity;
+import com.cjwx.spark.engine.entity.SysClient;
 import com.cjwx.spark.oauth2.entity.OAuthClient;
 import com.cjwx.spark.engine.repository.ClientRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +29,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        SysClientEntity client = clientRepository.findByClientCode(clientId);
+        SysClient client = clientRepository.findByClientCode(clientId);
         OAuthClient clientDetails = new OAuthClient();
         clientDetails.setClientId(client.getClientCode());
         clientDetails.setClientSecret(passwordEncoder.encode(client.getClientSecret()));

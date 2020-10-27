@@ -2,11 +2,11 @@ package com.cjwx.spark.server.handler;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.cjwx.spark.server.entity.ComArticleEntity;
+import com.cjwx.spark.server.entity.ComArticle;
 import com.cjwx.spark.server.util.TokenUtils;
 import com.cjwx.spark.engine.core.model.Model;
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
 import com.cjwx.spark.server.service.ArticleService;
@@ -27,20 +27,20 @@ public class ArticleHandler {
     private ArticleService articleService;
 
     @RestMethod("list")
-    public PageList<ComArticleEntity> list(@RequestBody Model<ComArticleEntity> model) {
+    public PageList<ComArticle> list(@RequestBody Model<ComArticle> model) {
         return articleService.getArticleList(model.getStart(), model.getSize(), model.getParams());
     }
 
     @RestMethod("create")
-    public void create(@RequestBody ComArticleEntity article) {
-        SysUserEntity user = TokenUtils.getCurrentUser();
+    public void create(@RequestBody ComArticle article) {
+        SysUser user = TokenUtils.getCurrentUser();
         article.setAuthor(user.getUserCode());
         articleService.createArticle(article);
     }
 
     @RestMethod("edit")
-    public ComArticleEntity edit(@RequestBody ComArticleEntity article) {
-        return articleService.updateArticle(article);
+    public void edit(@RequestBody ComArticle article) {
+        articleService.updateArticle(article);
     }
 
     @RestMethod("remove")

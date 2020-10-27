@@ -1,10 +1,12 @@
 package com.cjwx.spark.server.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.repository.UserRepository;
 import com.cjwx.spark.server.service.UserService;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,48 +24,58 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public SysUserEntity createUser(SysUserEntity user) {
-        return userRepository.save(user);
+    public int createUser(SysUser user) {
+        return userRepository.insert(user);
     }
 
     @Override
-    public SysUserEntity updateUser(SysUserEntity user) {
-        return userRepository.save(user);
+    public int updateUser(SysUser user) {
+        return userRepository.updateById(user);
     }
 
     @Override
     public int deleteUser(List<Long> ids) {
-        return userRepository.deleteByIdIn(ids);
+        return userRepository.deleteBatchIds(ids);
     }
 
     @Override
     public int updateStatus(List<Long> ids, boolean status) {
-        return userRepository.updateStatusByIdIn(status, ids);
+        LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(SysUser::getId, ids);
+        wrapper.set(SysUser::getStatus, status);
+        return userRepository.update(null, wrapper);
     }
 
     @Override
     public int updatePassword(List<Long> ids, String password, String salt) {
-        return userRepository.updatePasswordAndSaltByIdIn(password, salt, ids);
+        LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(SysUser::getId, ids);
+        wrapper.set(SysUser::getPassword, password);
+        wrapper.set(SysUser::getSalt, salt);
+        return userRepository.update(null, wrapper);
     }
 
     @Override
-    public List<SysUserEntity> getUserList(SysUserEntity user) {
-        return userRepository.findAll(Example.of(user));
+    public List<SysUser> getUserList(SysUser user) {
+        QueryWrapper<SysUser> query = new QueryWrapper<>(user);
+        return userRepository.selectList(query);
     }
 
     @Override
-    public PageList<SysUserEntity> getUserList(int start, int size, SysUserEntity user) {
+    public PageList<SysUser> getUserList(int start, int size, SysUser user) {
         return PageList.of(userRepository, user, start, size);
     }
 
     @Override
-    public List<SysUserEntity> findUserByIds(List<Long> ids) {
-        return userRepository.findAllById(ids);
+    public List<SysUser> findUserByIds(List<Long> ids) {
+        return userRepository.selectBatchIds(ids);
     }
 
     @Override
-    public SysUserEntity findUserByCode(String usercode) {
-        return userRepository.findByUserCode(usercode);
+    public SysUser findUserByCode(String usercode) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserCode, usercode);
+        return userRepository.selectOne(wrapper);
     }
 
 }

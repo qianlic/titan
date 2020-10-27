@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.cjwx.spark.server.capcha.CaptchaHepler;
 import com.cjwx.spark.engine.core.constant.HttpConstant;
 import com.cjwx.spark.engine.core.exception.ServiceException;
-import com.cjwx.spark.engine.entity.SysResourceEntity;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysResource;
+import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.reids.jwt.JwtHelper;
 import com.cjwx.spark.engine.reids.jwt.JwtToken;
 import com.cjwx.spark.engine.util.EndecryptUtils;
@@ -57,7 +57,7 @@ public class SecureHandler {
             throw new ServiceException("验证码错误！");
         }
         String username = object.getString(HttpConstant.PARAM_USERNAME);
-        SysUserEntity user = userService.findUserByCode(username);
+        SysUser user = userService.findUserByCode(username);
         if (ObjectUtils.isEmpty(user)) {
             throw new ServiceException("账号[" + username + "]不存在！");
         } else if (Boolean.FALSE.equals(user.getStatus())) {
@@ -68,9 +68,9 @@ public class SecureHandler {
         if (!password.equalsIgnoreCase(user.getPassword())) {
             throw new ServiceException("用户名密码错误！");
         }
-        List<SysResourceEntity> resources;
+        List<SysResource> resources;
         if (SYS_ACCOUNT.equals(user.getType())) {
-            user.setRoles(roleService.getRoleList());
+            //user.setRoles(roleService.getRoleList());
             resources = resourceService.getResourceList(true);
         } /*else {
             user.setRoles(roleService.findRolesByIds(user.getRoleids()));

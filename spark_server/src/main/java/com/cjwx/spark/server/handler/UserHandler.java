@@ -2,7 +2,7 @@ package com.cjwx.spark.server.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.spark.server.util.TokenUtils;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.core.model.Model;
 import com.cjwx.spark.engine.core.model.PageList;
 import com.cjwx.spark.engine.util.EndecryptUtils;
@@ -28,23 +28,23 @@ public class UserHandler {
     private UserService userService;
 
     @RestMethod("token")
-    public SysUserEntity token() {
+    public SysUser token() {
         return TokenUtils.getCurrentUser();
     }
 
     @RestMethod("list")
-    public PageList<SysUserEntity> list(@RequestBody Model<SysUserEntity> model) {
+    public PageList<SysUser> list(@RequestBody Model<SysUser> model) {
         return userService.getUserList(model.getStart(), model.getSize(), model.getParams());
     }
 
     @RestMethod("download")
-    public void download(@RequestBody SysUserEntity model) {
-        List<SysUserEntity> users = userService.getUserList(model);
+    public void download(@RequestBody SysUser model) {
+        List<SysUser> users = userService.getUserList(model);
         String[] title = {"用户编号", "用户名", "性别", "联系电话", "状态"};
         String[][] data = new String[users.size()][];
         for (int i = 0; i < users.size(); i++) {
             data[i] = new String[5];
-            SysUserEntity user = users.get(i);
+            SysUser user = users.get(i);
             data[i][0] = user.getUserCode();
             data[i][1] = user.getUserName();
             data[i][2] = user.getSex();
@@ -55,7 +55,7 @@ public class UserHandler {
     }
 
     @RestMethod("create")
-    public void create(@RequestBody SysUserEntity user) {
+    public void create(@RequestBody SysUser user) {
         String salt = EndecryptUtils.createSalt();
         String password = EndecryptUtils.md5Password("123456", salt);
         user.setSalt(salt);
@@ -65,8 +65,8 @@ public class UserHandler {
     }
 
     @RestMethod("edit")
-    public SysUserEntity edit(@RequestBody SysUserEntity user) {
-        return userService.updateUser(user);
+    public void edit(@RequestBody SysUser user) {
+        userService.updateUser(user);
     }
 
     @RestMethod("remove")

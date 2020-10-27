@@ -1,6 +1,6 @@
 package com.cjwx.spark.quartz.service;
 
-import com.cjwx.spark.quartz.entity.QtzExecuteLogEntity;
+import com.cjwx.spark.quartz.entity.QtzExecuteLog;
 import com.cjwx.spark.engine.core.model.PageList;
 
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
  */
 public interface ExecuteLogService {
 
-    void create(QtzExecuteLogEntity log);
+    void create(QtzExecuteLog log);
 
     int delete(List<Long> ids);
 
-    PageList<QtzExecuteLogEntity> getLogList(int start, int size, QtzExecuteLogEntity wheres);
+    PageList<QtzExecuteLog> getLogList(int start, int size, QtzExecuteLog wheres);
 
 }

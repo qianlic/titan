@@ -1,7 +1,7 @@
 package com.cjwx.spark.quartz.execute;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.quartz.entity.QtzExecuteLogEntity;
+import com.cjwx.spark.quartz.entity.QtzExecuteLog;
 import com.cjwx.spark.engine.util.DateUtils;
 import com.cjwx.spark.engine.web.http.Result;
 import com.cjwx.spark.quartz.config.QuartzConfig;
@@ -41,7 +41,7 @@ public class JobExecuteListener implements JobListener {
 
     @Override
     public void jobWasExecuted(JobExecutionContext jobExecutionContext, JobExecutionException e) {
-        QtzExecuteLogEntity log = new QtzExecuteLogEntity();
+        QtzExecuteLog log = new QtzExecuteLog();
         log.setExecutetime(DateUtils.now());
 
         JobDetail jobDetail = jobExecutionContext.getJobDetail();

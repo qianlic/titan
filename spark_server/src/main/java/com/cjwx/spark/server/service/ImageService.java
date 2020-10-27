@@ -1,6 +1,6 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.server.entity.ComImageEntity;
+import com.cjwx.spark.server.entity.ComImage;
 import com.cjwx.spark.engine.core.model.PageList;
 
 import java.io.File;
@@ -12,10 +12,10 @@ import java.io.File;
  */
 public interface ImageService {
 
-    ComImageEntity upload(String name, File file);
+    ComImage upload(String name, File file);
 
     void delete(String hash);
 
-    PageList<ComImageEntity> getImageList(int start, int size, ComImageEntity imge);
+    PageList<ComImage> getImageList(int start, int size, ComImage imge);
 
 }

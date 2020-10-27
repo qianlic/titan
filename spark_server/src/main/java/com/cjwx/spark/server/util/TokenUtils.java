@@ -1,7 +1,7 @@
 package com.cjwx.spark.server.util;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.http.RequestHelper;
 
@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TokenUtils {
 
-    public static SysUserEntity getCurrentUser() {
+    public static SysUser getCurrentUser() {
         HttpServletRequest request = RequestHelper.getRequest();
         String user = StringUtils.decodeURLEncoder(request.getHeader("CURRENT_USER"));
-        return JSON.parseObject(user, SysUserEntity.class);
+        return JSON.parseObject(user, SysUser.class);
     }
 
 }

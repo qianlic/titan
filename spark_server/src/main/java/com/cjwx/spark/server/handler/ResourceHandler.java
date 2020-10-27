@@ -3,7 +3,7 @@ package com.cjwx.spark.server.handler;
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.spark.engine.core.constant.HttpConstant;
 import com.cjwx.spark.engine.core.model.Model;
-import com.cjwx.spark.engine.entity.SysResourceEntity;
+import com.cjwx.spark.engine.entity.SysResource;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
 import com.cjwx.spark.engine.web.helper.RibbonClientHelper;
@@ -28,23 +28,23 @@ public class ResourceHandler {
     private ResourceService resourceService;
 
     @RestMethod("list")
-    public List<SysResourceEntity> list() {
+    public List<SysResource> list() {
         return resourceService.getResourceList();
     }
 
     @RestMethod("availableList")
-    public List<SysResourceEntity> availableList() {
+    public List<SysResource> availableList() {
         return resourceService.getResourceList(true);
     }
 
     @RestMethod("create")
-    public void create(@RequestBody SysResourceEntity resource) {
+    public void create(@RequestBody SysResource resource) {
         resourceService.createResource(resource);
     }
 
     @RestMethod("edit")
-    public SysResourceEntity edit(@RequestBody Model<SysResourceEntity> model) {
-        return resourceService.updateResource(model.getParams());
+    public void edit(@RequestBody Model<SysResource> model) {
+        resourceService.updateResource(model.getParams());
     }
 
     @RestMethod("remove")
@@ -67,7 +67,7 @@ public class ResourceHandler {
             urls.add(r.getUrl());
             allMap.put(r.getResourceCode(), r.getId());
         });
-        List<SysResourceEntity> add = RibbonClientHelper.doPost("/urlStream", String[].class)
+        List<SysResource> add = RibbonClientHelper.doPost("/urlStream", String[].class)
                 .stream().flatMap(s -> Arrays.stream(s))
                 .filter(url -> !HttpConstant.EXCLUSIONS.contains(url) && !urls.contains(url))
                 .map(url -> new UrlParser(allMap, url))
@@ -75,7 +75,7 @@ public class ResourceHandler {
                 .map(UrlParser::getResource)
                 .collect(Collectors.toList());
         if (add.size() > 0) {
-            resourceService.createResource(add);
+            //resourceService.createResource(add);
         }
     }
 
@@ -102,8 +102,8 @@ public class ResourceHandler {
             }
         }
 
-        public SysResourceEntity getResource() {
-            SysResourceEntity resource = new SysResourceEntity();
+        public SysResource getResource() {
+            SysResource resource = new SysResource();
             //resource.setParentid(this.parentid);
             resource.setUrl(this.url);
             resource.setType("3");

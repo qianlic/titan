@@ -4,7 +4,7 @@ import com.cjwx.spark.engine.core.model.Model;
 import com.cjwx.spark.engine.core.model.PageList;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.quartz.entity.QtzExecuteLogEntity;
+import com.cjwx.spark.quartz.entity.QtzExecuteLog;
 import com.cjwx.spark.quartz.service.ExecuteLogService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ public class ExecuteLogHandler {
     private ExecuteLogService executeLogService;
 
     @RestMethod("list")
-    public PageList<QtzExecuteLogEntity> list(@RequestBody Model<QtzExecuteLogEntity> model) {
+    public PageList<QtzExecuteLog> list(@RequestBody Model<QtzExecuteLog> model) {
         return executeLogService.getLogList(model.getStart(), model.getSize(), model.getParams());
     }
 

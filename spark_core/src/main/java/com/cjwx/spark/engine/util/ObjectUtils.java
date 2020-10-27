@@ -2,13 +2,15 @@ package com.cjwx.spark.engine.util;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -122,7 +124,7 @@ public class ObjectUtils {
     /**
      * 对象转HashMap
      */
-    public static Map<String, Object> objectToHashMap(Object obj) {
+    /*public static Map<String, Object> objectToHashMap(Object obj) {
         if (isNotEmpty(obj)) {
             Map<String, Object> result = new HashMap<>();
             Arrays.asList(obj.getClass().getDeclaredFields()).forEach(field -> {
@@ -141,7 +143,7 @@ public class ObjectUtils {
             return result;
         }
         return null;
-    }
+    }*/
 
     /**
      * HashMap转对象

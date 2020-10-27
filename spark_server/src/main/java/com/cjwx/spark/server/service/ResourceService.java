@@ -1,27 +1,25 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.engine.entity.SysResourceEntity;
+import com.cjwx.spark.engine.entity.SysResource;
 
 import java.util.List;
 
 public interface ResourceService {
 
-    SysResourceEntity createResource(SysResourceEntity resource);
-
-    List<SysResourceEntity> createResource(List<SysResourceEntity> resources);
+    int createResource(SysResource resource);
 
     int deleteResource(List<Long> ids);
 
-    SysResourceEntity updateResource(SysResourceEntity resource);
+    int updateResource(SysResource resource);
 
     int updateStatus(List<Long> ids, boolean status);
 
-    List<SysResourceEntity> getResourceList();
+    List<SysResource> getResourceList();
 
-    List<SysResourceEntity> getResourceList(Boolean status);
+    List<SysResource> getResourceList(Boolean status);
 
-    List<SysResourceEntity> findResourceByIds(String resourceids);
+    List<SysResource> findResourceByIds(String resourceids);
 
-    List<SysResourceEntity> findResourceByIds(List<String> resourceids);
+    List<SysResource> findResourceByIds(List<String> resourceids);
 
 }

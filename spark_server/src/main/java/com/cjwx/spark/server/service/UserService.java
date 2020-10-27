@@ -1,7 +1,7 @@
 package com.cjwx.spark.server.service;
 
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysUserEntity;
+import com.cjwx.spark.engine.entity.SysUser;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface UserService {
 
-    SysUserEntity createUser(SysUserEntity user);
+    int createUser(SysUser user);
 
-    SysUserEntity updateUser(SysUserEntity user);
+    int updateUser(SysUser user);
 
     int deleteUser(List<Long> ids);
 
@@ -20,12 +20,12 @@ public interface UserService {
 
     int updatePassword(List<Long> ids, String password,String salt);
 
-    List<SysUserEntity> getUserList(SysUserEntity user);
+    List<SysUser> getUserList(SysUser user);
 
-    PageList<SysUserEntity> getUserList(int start, int size, SysUserEntity user);
+    PageList<SysUser> getUserList(int start, int size, SysUser user);
 
-    List<SysUserEntity> findUserByIds(List<Long> ids);
+    List<SysUser> findUserByIds(List<Long> ids);
 
-    SysUserEntity findUserByCode(String usercode);
+    SysUser findUserByCode(String usercode);
 
 }

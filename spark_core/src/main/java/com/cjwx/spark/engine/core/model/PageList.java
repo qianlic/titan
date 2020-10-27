@@ -1,10 +1,10 @@
 package com.cjwx.spark.engine.core.model;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
@@ -16,34 +16,33 @@ import java.util.List;
 @Data
 public class PageList<T> {
 
-    private int start;
+    private long start;
 
-    private int limit;
+    private long limit;
 
-    private int total;
+    private long total;
 
     private List<T> list;
 
-    public PageList(int start, int limit) {
+    public PageList(long start, long limit) {
         this.start = start;
         this.limit = limit;
     }
 
-    public PageList(Page<T> page) {
-        this(page.getNumber(), page.getSize());
-        this.total = page.getTotalPages();
-        this.list = page.getContent();
+    public PageList(IPage<T> page) {
+        this(page.getCurrent(), page.getSize());
+        this.total = page.getTotal();
+        this.list = page.getRecords();
     }
 
     public static <T> PageList<T> of(Page<T> page) {
         return new PageList<>(page);
     }
 
-    public static <T> PageList<T> of(JpaRepository<T, Long> jpa, T param, int start, int size) {
-        if (param == null) {
-            return PageList.of(jpa.findAll(PageRequest.of(start, size)));
-        }
-        return PageList.of(jpa.findAll(Example.of(param), PageRequest.of(start, size)));
+    public static <T> PageList<T> of(BaseMapper<T> mapper, T param, int start, int size) {
+        QueryWrapper<T> query = new QueryWrapper<>(param);
+        Page<T> page = new Page<>(start, size);
+        return PageList.of(mapper.selectPage(page, query));
     }
 
 }

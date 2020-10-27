@@ -3,7 +3,7 @@ package com.cjwx.spark.server.handler;
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.spark.engine.core.model.Model;
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysRoleEntity;
+import com.cjwx.spark.engine.entity.SysRole;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
 import com.cjwx.spark.server.service.RoleService;
@@ -25,23 +25,23 @@ public class RoleHandler {
     private RoleService roleService;
 
     @RestMethod("list")
-    public PageList<SysRoleEntity> list(@RequestBody Model<SysRoleEntity> model) {
+    public PageList<SysRole> list(@RequestBody Model<SysRole> model) {
         return roleService.getRoleList(model.getStart(), model.getSize(), model.getParams());
     }
 
     @RestMethod("availableList")
-    public List<SysRoleEntity> availableList() {
+    public List<SysRole> availableList() {
         return roleService.getRoleList();
     }
 
     @RestMethod("create")
-    public void create(@RequestBody SysRoleEntity role) {
+    public void create(@RequestBody SysRole role) {
         roleService.createRole(role);
     }
 
     @RestMethod("edit")
-    public SysRoleEntity edit(@RequestBody SysRoleEntity role) {
-        return roleService.updateRole(role);
+    public void edit(@RequestBody SysRole role) {
+        roleService.updateRole(role);
     }
 
     @RestMethod("remove")

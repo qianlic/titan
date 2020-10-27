@@ -1,13 +1,8 @@
 package com.cjwx.spark.engine.repository;
 
-import com.cjwx.spark.engine.entity.SysResourceEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cjwx.spark.engine.entity.SysResource;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @Description: 资源
@@ -15,19 +10,6 @@ import java.util.List;
  * @Date: 2020年09月09日 15:32
  */
 @Repository
-public interface ResourceRepository extends JpaRepository<SysResourceEntity, Long> {
-
-    List<SysResourceEntity> findByParentIdAndStatus(int parentId, boolean status);
-
-    int deleteByIdIn(List<Long> ids);
-
-    @Modifying
-    @Query("update SysResourceEntity r set r.status = :status where r.id in (:ids)")
-    int updateStatusByIdIn(@Param("status") boolean status,
-                           @Param("ids") List<Long> ids);
-
-    @Modifying
-    @Query("select c from SysUserEntity a inner join a.roles b inner join b.resources c where a.userCode = :userCode")
-    List<SysResourceEntity> selectByUserCode(@Param("userCode") String userCode);
+public interface ResourceRepository extends BaseMapper<SysResource> {
 
 }

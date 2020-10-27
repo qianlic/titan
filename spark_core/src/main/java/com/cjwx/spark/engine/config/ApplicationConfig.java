@@ -1,10 +1,10 @@
 package com.cjwx.spark.engine.config;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -13,14 +13,18 @@ import org.springframework.web.client.RestTemplate;
  * @Date: 2018年10月30日 15:58
  */
 @Configuration
-@EntityScan("com.cjwx.spark.**.entity")
-@EnableJpaRepositories("com.cjwx.spark.**.repository")
+@MapperScan("com.cjwx.spark.**.repository")
 public class ApplicationConfig {
 
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public PaginationInterceptor paginationInterceptor(){
+        return new PaginationInterceptor();
     }
 
 }

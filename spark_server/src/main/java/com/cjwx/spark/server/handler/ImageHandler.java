@@ -5,7 +5,7 @@ import com.cjwx.spark.engine.core.model.PageList;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.server.entity.ComImageEntity;
+import com.cjwx.spark.server.entity.ComImage;
 import com.cjwx.spark.server.service.ImageService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +31,8 @@ public class ImageHandler {
      * 图片上传
      */
     @RestMethod("upload")
-    public ComImageEntity upload(MultipartFile file) {
-        ComImageEntity img = null;
+    public ComImage upload(MultipartFile file) {
+        ComImage img = null;
         try {
             String fullName = file.getOriginalFilename();
             int i = fullName.lastIndexOf(".");
@@ -60,7 +60,7 @@ public class ImageHandler {
      * 图片列表
      */
     @RestMethod("list")
-    public PageList<ComImageEntity> list(@RequestBody Model<ComImageEntity> model) {
+    public PageList<ComImage> list(@RequestBody Model<ComImage> model) {
         return imageService.getImageList(model.getStart(), model.getSize(), model.getParams());
     }
 

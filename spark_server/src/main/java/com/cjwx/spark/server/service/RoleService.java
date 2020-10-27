@@ -1,24 +1,24 @@
 package com.cjwx.spark.server.service;
 
 import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysRoleEntity;
+import com.cjwx.spark.engine.entity.SysRole;
 
 import java.util.List;
 
 public interface RoleService {
 
-    SysRoleEntity createRole(SysRoleEntity role);
+    int createRole(SysRole role);
 
     int deleteRole(List<Long> ids);
 
-    SysRoleEntity updateRole(SysRoleEntity role);
+    int updateRole(SysRole role);
 
     int updateStatus(List<Long> ids, boolean status);
 
-    List<SysRoleEntity> getRoleList();
+    List<SysRole> getRoleList();
 
-    PageList<SysRoleEntity> getRoleList(int start, int size, SysRoleEntity role);
+    PageList<SysRole> getRoleList(int start, int size, SysRole role);
 
-    List<SysRoleEntity> findRolesByIds(String roleids);
+    List<SysRole> findRolesByIds(String roleids);
 
 }

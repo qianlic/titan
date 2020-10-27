@@ -1,7 +1,7 @@
 package com.cjwx.spark.engine.repository;
 
-import com.cjwx.spark.engine.entity.SysClientEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cjwx.spark.engine.entity.SysClient;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
  * @Date: 2020年09月09日 15:32
  */
 @Repository
-public interface ClientRepository extends JpaRepository<SysClientEntity, Long> {
-
-    SysClientEntity findByClientCode(String clientCode);
+public interface ClientRepository extends BaseMapper<SysClient> {
 
 }
