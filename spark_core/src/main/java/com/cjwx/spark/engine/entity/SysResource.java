@@ -1,5 +1,6 @@
 package com.cjwx.spark.engine.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class SysResource extends AbstractEntity {
 
     private int parentId;
 
+    @TableField(exist = false)
     private List<SysResource> children = new ArrayList<>();
 
 }

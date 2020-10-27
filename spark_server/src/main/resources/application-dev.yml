@@ -32,7 +32,7 @@ eureka:
 zuul:
   routes:
     system: /system/**
-    monitor: /monitor/**
+    center: /center/**
     quartz: /quartz/**
     activiti: /activiti/**
     crawler: /crawler/**

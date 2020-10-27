@@ -1,5 +1,6 @@
 package com.cjwx.spark.engine.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.util.Date;
@@ -34,5 +35,8 @@ public class SysUser extends AbstractEntity {
     private String imgurl;
 
     private Date lastLoginTime;
+
+    @TableField(exist = false)
+    private List<SysRole> roles;
 
 }

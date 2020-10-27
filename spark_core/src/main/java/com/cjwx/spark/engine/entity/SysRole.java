@@ -1,5 +1,6 @@
 package com.cjwx.spark.engine.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class SysRole extends AbstractEntity {
 
     private String description;
 
+    @TableField(exist = false)
     private List<SysResource> resources;
 
 }

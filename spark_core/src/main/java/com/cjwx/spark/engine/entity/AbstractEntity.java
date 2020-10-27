@@ -3,7 +3,6 @@ package com.cjwx.spark.engine.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Description: 抽象bean
@@ -18,13 +17,5 @@ public abstract class AbstractEntity implements Serializable {
     private Long id;
 
     private Boolean status = true;
-
-    private Long createUser;
-
-    private Date createTime;
-
-    private Long updateUser;
-
-    private Date updateTime;
 
 }
