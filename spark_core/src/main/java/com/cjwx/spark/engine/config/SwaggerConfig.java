@@ -2,7 +2,6 @@ package com.cjwx.spark.engine.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -17,7 +16,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
+/**
+ * @Description: Swagger文档配置
+ * @Author: qian li
+ * @Date: 2020/10/28 12:47
+ */
 @EnableSwagger2
 public class SwaggerConfig {
 

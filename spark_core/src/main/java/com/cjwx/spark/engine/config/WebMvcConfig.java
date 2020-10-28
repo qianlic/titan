@@ -1,6 +1,9 @@
 package com.cjwx.spark.engine.config;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -11,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Author: qian li
  * @Date: 2018年10月30日 19:12
  */
-@Configuration
 @EnableAspectJAutoProxy
 @ComponentScan("com.cjwx.spark.engine.web")
 @Import(SwaggerConfig.class)
@@ -29,6 +31,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowCredentials(true);    // 是否发送cookie
     }
 
+    /**
+     * 文件解析
+     */
     @Bean
     public MultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
