@@ -1,6 +1,6 @@
 package com.cjwx.spark.engine.util;
 
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.core.exception.ServiceException;
 
 import java.io.UnsupportedEncodingException;
@@ -73,7 +73,7 @@ public class StringUtils {
      * 字符串字符集转换 UTF-8
      */
     public static String convert(String target) {
-        return convert(target, HttpConstant.DEFAULT_CHARSET);
+        return convert(target, AppConstant.DEFAULT_CHARSET);
     }
 
     /**
@@ -96,7 +96,7 @@ public class StringUtils {
 
     public static String encodeURLEncoder(String target) {
         try {
-            return URLEncoder.encode(target, HttpConstant.DEFAULT_CHARSET);
+            return URLEncoder.encode(target, AppConstant.DEFAULT_CHARSET);
         } catch (UnsupportedEncodingException e) {
             throw new ServiceException("字符串 [" + target + "] 编码失败", e);
         }
@@ -104,7 +104,7 @@ public class StringUtils {
 
     public static String decodeURLEncoder(String target) {
         try {
-            return URLDecoder.decode(target, HttpConstant.DEFAULT_CHARSET);
+            return URLDecoder.decode(target, AppConstant.DEFAULT_CHARSET);
         } catch (UnsupportedEncodingException e) {
             throw new ServiceException("字符串 [" + target + "] 编码失败", e);
         }
@@ -183,10 +183,7 @@ public class StringUtils {
                     return false;
                 }
                 int day = Integer.parseInt(string.substring(10, 12));
-                if (day > 31 || day == 0) {
-                    return false;
-                }
-                return true;
+                return day <= 31 && day != 0;
             }
         }
         return false;
@@ -210,7 +207,7 @@ public class StringUtils {
      * 字符串转Byte  字符集UTF-8
      */
     public static byte[] stringToByte(String source) {
-        return stringToByte(source, HttpConstant.DEFAULT_CHARSET);
+        return stringToByte(source, AppConstant.DEFAULT_CHARSET);
     }
 
     /**
@@ -312,7 +309,7 @@ public class StringUtils {
      */
     public static String getFileNameFromPath(String fileFullPath) {
         if (fileFullPath.contains("\\")) {
-            fileFullPath = fileFullPath.substring(fileFullPath.lastIndexOf("\\") + 1, fileFullPath.length());
+            fileFullPath = fileFullPath.substring(fileFullPath.lastIndexOf("\\") + 1);
         }
         return fileFullPath;
     }
