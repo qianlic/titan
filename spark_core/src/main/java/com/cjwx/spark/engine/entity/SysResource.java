@@ -2,6 +2,7 @@ package com.cjwx.spark.engine.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
  * @Date: 2018年04月03日 15:44
  */
 @Data
-public class SysResource extends AbstractEntity {
+@EqualsAndHashCode(callSuper = true)
+public class SysResource extends BaseEntity {
 
     private String resourceCode;
 
@@ -26,9 +28,9 @@ public class SysResource extends AbstractEntity {
 
     private String ico;
 
-    private int level;
+    private Integer level;
 
-    private int parentId;
+    private Integer parentId;
 
     @TableField(exist = false)
     private List<SysResource> children = new ArrayList<>();

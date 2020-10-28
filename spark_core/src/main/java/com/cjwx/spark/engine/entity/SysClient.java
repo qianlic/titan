@@ -1,14 +1,16 @@
 package com.cjwx.spark.engine.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Description: 客户端
  * @Author: qian li
- * @Date: 2020年09月09日} 15:03
+ * @Date: 2020/10/28 13:08
  */
 @Data
-public class SysClient extends AbstractEntity {
+@EqualsAndHashCode(callSuper = true)
+public class SysClient extends BaseEntity {
 
     private String clientCode;
 

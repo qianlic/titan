@@ -2,6 +2,7 @@ package com.cjwx.spark.engine.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
  * @Date: 2018年04月03日 15:29
  */
 @Data
-public class SysUser extends AbstractEntity {
+@EqualsAndHashCode(callSuper = true)
+public class SysUser extends BaseEntity {
 
     private String userCode;
 
@@ -32,7 +34,7 @@ public class SysUser extends AbstractEntity {
 
     private String email;
 
-    private String imgurl;
+    private String imgUrl;
 
     private Date lastLoginTime;
 

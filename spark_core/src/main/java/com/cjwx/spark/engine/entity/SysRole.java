@@ -2,6 +2,7 @@ package com.cjwx.spark.engine.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
  * @Date: 2018年04月03日 15:41
  */
 @Data
-public class SysRole extends AbstractEntity {
+@EqualsAndHashCode(callSuper = true)
+public class SysRole extends BaseEntity {
 
     private String roleCode;
 
