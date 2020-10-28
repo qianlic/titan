@@ -1,6 +1,6 @@
 package com.cjwx.spark.engine.util;
 
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.core.exception.ServiceException;
 import org.springframework.util.Base64Utils;
 
@@ -110,7 +110,7 @@ public class EndecryptUtils {
      * 生成signingKey
      */
     public static String createSigningKey() {
-        return encrytBase64(HttpConstant.SIGNING_KEY);
+        return encrytBase64(AppConstant.SIGNING_KEY);
     }
 
     public static String encode(byte[] data) {

@@ -1,4 +1,4 @@
-package com.cjwx.spark.engine.reids.util;
+package com.cjwx.spark.engine.util;
 
 import com.cjwx.spark.engine.web.helper.ApplicationContextHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,7 +28,7 @@ public class RedisUtils {
     }
 
     public static RedisConnection getRedisConnection() {
-        return getRedisTemplate().getConnectionFactory().getConnection();
+        return Objects.requireNonNull(getRedisTemplate().getConnectionFactory()).getConnection();
     }
 
     /**

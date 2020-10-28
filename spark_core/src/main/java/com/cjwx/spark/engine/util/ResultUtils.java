@@ -1,7 +1,5 @@
 package com.cjwx.spark.engine.util;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cjwx.spark.engine.core.dto.PageDTO;
 import com.cjwx.spark.engine.core.dto.ResultDTO;
@@ -36,33 +34,19 @@ public class ResultUtils {
     /**
      * 失败
      */
+    public static <T> ResultDTO<T> fail(String message) {
+        return fail("0001", message);
+    }
+
+    /**
+     * 失败
+     */
     public static <T> ResultDTO<T> fail(String code, String message) {
         ResultDTO<T> result = new ResultDTO<>();
         result.setSuccess(false);
         result.setCode(code);
         result.setMessage(message);
         return result;
-    }
-
-    /**
-     * 列表页
-     */
-    public static <T> ResultDTO<PageDTO<T>> pageList(Page<T> page) {
-        PageDTO<T> pageDTO = new PageDTO<>();
-        pageDTO.setStart(page.getCurrent());
-        pageDTO.setLimit(page.getSize());
-        pageDTO.setTotal(page.getTotal());
-        pageDTO.setList(page.getRecords());
-        return success(pageDTO);
-    }
-
-    /**
-     * 列表页
-     */
-    public static <T> ResultDTO<PageDTO<T>> pageList(BaseMapper<T> mapper, T param, int start, int size) {
-        QueryWrapper<T> query = new QueryWrapper<>(param);
-        Page<T> page = new Page<>(start, size);
-        return pageList(mapper.selectPage(page, query));
     }
 
 }

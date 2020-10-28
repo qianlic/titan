@@ -1,4 +1,4 @@
-package com.cjwx.spark.engine.core.model;
+package com.cjwx.spark.engine.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

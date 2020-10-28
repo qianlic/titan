@@ -1,8 +1,6 @@
 package com.cjwx.spark.engine.core.dto;
 
-import com.cjwx.spark.engine.core.entity.BaseEntity;
 import lombok.Data;
-import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.Serializable;
 
@@ -18,10 +16,8 @@ public class BaseDTO implements Serializable {
 
     private Boolean status;
 
-    public static BaseDTO forEntity(BaseEntity entity) throws Exception {
-        BaseDTO dto = new BaseDTO();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
-    }
+    private Integer start;
+
+    private Integer size;
 
 }

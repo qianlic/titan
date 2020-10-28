@@ -1,6 +1,6 @@
 package com.cjwx.spark.server.dto;
 
-import com.cjwx.spark.engine.dto.BaseDTO;
+import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,6 +19,10 @@ public class SysUserDTO extends BaseDTO {
     private String userName;
 
     private String type;
+
+    private String password;
+
+    private String salt;
 
     private String sex;
 

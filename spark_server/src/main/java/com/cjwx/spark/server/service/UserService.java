@@ -1,7 +1,8 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysUser;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.server.dto.SysUserDTO;
 
 import java.util.List;
 
@@ -10,22 +11,20 @@ import java.util.List;
  */
 public interface UserService {
 
-    int createUser(SysUser user);
+    ResultDTO<Integer> createUser(SysUserDTO user);
 
-    int updateUser(SysUser user);
+    ResultDTO<Integer> updateUser(SysUserDTO user);
 
-    int deleteUser(List<Long> ids);
+    ResultDTO<Integer> deleteUser(List<Long> ids);
 
-    int updateStatus(List<Long> ids, boolean status);
+    ResultDTO<Integer> updateStatus(List<Long> ids, boolean status);
 
-    int updatePassword(List<Long> ids, String password,String salt);
+    ResultDTO<Integer> updatePassword(List<Long> ids, String password, String salt);
 
-    List<SysUser> getUserList(SysUser user);
+    ResultDTO<List<SysUserDTO>> getUserList(SysUserDTO user) throws Exception;
 
-    PageList<SysUser> getUserList(int start, int size, SysUser user);
+    ResultDTO<PageDTO<SysUserDTO>> getUserList(SysUserDTO user, int start, int size) throws Exception;
 
-    List<SysUser> findUserByIds(List<Long> ids);
-
-    SysUser findUserByCode(String usercode);
+    ResultDTO<SysUserDTO> findUserByCode(String userCode) throws Exception;
 
 }

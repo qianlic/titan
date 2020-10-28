@@ -1,7 +1,7 @@
 package com.cjwx.spark.engine.util;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -91,7 +91,7 @@ public class HttpClientUtils {
             URL uri = new URL(url);
             conn = enableHttps(uri);
             conn.setRequestProperty("connection", "keep-alive");
-            conn.setRequestProperty("Content-Type", HttpConstant.DEFAULT_MEDIA_TYPE);
+            conn.setRequestProperty("Content-Type", AppConstant.DEFAULT_MEDIA_TYPE);
             if ("POST".equalsIgnoreCase(method)) {
                 conn.setRequestMethod("POST");
                 conn.setReadTimeout(30 * 1000); // 缓存的最长时间
@@ -108,7 +108,7 @@ public class HttpClientUtils {
                 }
             }
             if (conn.getResponseCode() == HttpStatus.SC_OK) {
-                br = new BufferedReader(new InputStreamReader(conn.getInputStream(), HttpConstant.DEFAULT_CHARSET));
+                br = new BufferedReader(new InputStreamReader(conn.getInputStream(), AppConstant.DEFAULT_CHARSET));
                 StringBuilder stringBuffer = new StringBuilder();
                 String str;
                 while ((str = br.readLine()) != null) {

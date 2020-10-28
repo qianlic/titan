@@ -1,7 +1,7 @@
 package com.cjwx.spark.engine.web.helper;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -66,7 +66,7 @@ public class RibbonClientHelper {
 
     public static HttpHeaders getDefaultHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.valueOf(HttpConstant.DEFAULT_MEDIA_TYPE));
+        headers.setContentType(MediaType.valueOf(AppConstant.DEFAULT_MEDIA_TYPE));
         return headers;
     }
 

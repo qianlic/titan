@@ -1,10 +1,8 @@
-package com.cjwx.spark.engine.reids.jwt;
+package com.cjwx.spark.engine.util;
 
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.core.exception.ServiceException;
-import com.cjwx.spark.engine.reids.util.RedisUtils;
-import com.cjwx.spark.engine.util.EndecryptUtils;
-import com.cjwx.spark.engine.util.StringUtils;
+import com.cjwx.spark.engine.core.dto.TokenDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +20,7 @@ import java.util.Date;
  * @Date: 2018年03月31日 16:20
  */
 @Slf4j
-public class JwtHelper {
+public class JwtTokenUtils {
 
     public static final String AUTHORIZATION_KEY = "Authorization";
     public static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
@@ -32,10 +30,10 @@ public class JwtHelper {
     /**
      * 生成JWT TOKEN
      */
-    public static String createJWT(JwtToken token) {
+    public static String createJWT(TokenDTO token) {
         String tokenId = token.getTokenId();
         JwtBuilder jwtBuilder = createJWT(tokenId, token.getHost());
-        RedisUtils.set(AUTHORIZATION_KEY + "." + HttpConstant.VERSION + "." + tokenId, token, EXPIRE_TIME);
+        RedisUtils.set(AUTHORIZATION_KEY + "." + AppConstant.VERSION + "." + tokenId, token, EXPIRE_TIME);
         return jwtBuilder.compact();
     }
 
@@ -72,11 +70,11 @@ public class JwtHelper {
     /**
      * 获取token
      */
-    public static JwtToken parseToken(String authorization, String host) {
+    public static TokenDTO parseToken(String authorization, String host) {
         String tokenKey = parseTokenKey(authorization, host);
         if (RedisUtils.exists(tokenKey)) {
             RedisUtils.expire(tokenKey, EXPIRE_TIME);
-            return (JwtToken) RedisUtils.get(tokenKey);
+            return (TokenDTO) RedisUtils.get(tokenKey);
         }
         return null;
     }
@@ -85,7 +83,7 @@ public class JwtHelper {
      * 解析JWT获取TokenKey
      */
     public static String parseTokenKey(String authorization, String host) {
-        return AUTHORIZATION_KEY + "." + HttpConstant.VERSION + "." + parseTokenId(authorization, host);
+        return AUTHORIZATION_KEY + "." + AppConstant.VERSION + "." + parseTokenId(authorization, host);
     }
 
     /**

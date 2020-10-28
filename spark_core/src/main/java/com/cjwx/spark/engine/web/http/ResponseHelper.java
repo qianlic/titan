@@ -1,7 +1,7 @@
 package com.cjwx.spark.engine.web.http;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -45,7 +45,7 @@ public class ResponseHelper {
 
     public static HttpServletResponse initRequestStatus(int status) {
         HttpServletResponse response = getResponse();
-        response.setContentType(HttpConstant.DEFAULT_MEDIA_TYPE);
+        response.setContentType(AppConstant.DEFAULT_MEDIA_TYPE);
         response.setStatus(status);
         return response;
     }

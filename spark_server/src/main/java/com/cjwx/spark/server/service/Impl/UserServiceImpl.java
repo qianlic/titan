@@ -1,12 +1,15 @@
 package com.cjwx.spark.server.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.repository.UserRepository;
+import com.cjwx.spark.engine.util.MapperUtils;
+import com.cjwx.spark.server.dto.SysUserDTO;
 import com.cjwx.spark.server.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +17,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Created by CJWX on 2016/4/10.
+ * @Description: 用户服务
+ * @Author: qian li
+ * @Date: 2020/10/28 15:49
  */
 @Service
 @Transactional
@@ -24,58 +29,60 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public int createUser(SysUser user) {
-        return userRepository.insert(user);
+    public ResultDTO<Integer> createUser(SysUserDTO dto) {
+        SysUser entity = new SysUser();
+        BeanUtils.copyProperties(dto, entity);
+        return MapperUtils.insert(userRepository, entity);
     }
 
     @Override
-    public int updateUser(SysUser user) {
-        return userRepository.updateById(user);
+    public ResultDTO<Integer> updateUser(SysUserDTO dto) {
+        SysUser entity = new SysUser();
+        BeanUtils.copyProperties(dto, entity);
+        return MapperUtils.update(userRepository, entity);
     }
 
     @Override
-    public int deleteUser(List<Long> ids) {
-        return userRepository.deleteBatchIds(ids);
+    public ResultDTO<Integer> deleteUser(List<Long> ids) {
+        return MapperUtils.delete(userRepository, ids);
     }
 
     @Override
-    public int updateStatus(List<Long> ids, boolean status) {
+    public ResultDTO<Integer> updateStatus(List<Long> ids, boolean status) {
         LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
         wrapper.in(SysUser::getId, ids);
         wrapper.set(SysUser::getStatus, status);
-        return userRepository.update(null, wrapper);
+        return MapperUtils.update(userRepository, wrapper);
     }
 
     @Override
-    public int updatePassword(List<Long> ids, String password, String salt) {
+    public ResultDTO<Integer> updatePassword(List<Long> ids, String password, String salt) {
         LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
         wrapper.in(SysUser::getId, ids);
         wrapper.set(SysUser::getPassword, password);
         wrapper.set(SysUser::getSalt, salt);
-        return userRepository.update(null, wrapper);
+        return MapperUtils.update(userRepository, wrapper);
     }
 
     @Override
-    public List<SysUser> getUserList(SysUser user) {
-        QueryWrapper<SysUser> query = new QueryWrapper<>(user);
-        return userRepository.selectList(query);
+    public ResultDTO<List<SysUserDTO>> getUserList(SysUserDTO dto) throws Exception {
+        SysUser entity = new SysUser();
+        BeanUtils.copyProperties(dto, entity);
+        return MapperUtils.list(userRepository, entity, SysUserDTO.class);
     }
 
     @Override
-    public PageList<SysUser> getUserList(int start, int size, SysUser user) {
-        return PageList.of(userRepository, user, start, size);
+    public ResultDTO<PageDTO<SysUserDTO>> getUserList(SysUserDTO dto, int start, int size) throws Exception {
+        SysUser entity = new SysUser();
+        BeanUtils.copyProperties(dto, entity);
+        return MapperUtils.pageList(userRepository, entity, start, size, SysUserDTO.class);
     }
 
     @Override
-    public List<SysUser> findUserByIds(List<Long> ids) {
-        return userRepository.selectBatchIds(ids);
-    }
-
-    @Override
-    public SysUser findUserByCode(String usercode) {
+    public ResultDTO<SysUserDTO> findUserByCode(String userCode) throws Exception {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SysUser::getUserCode, usercode);
-        return userRepository.selectOne(wrapper);
+        wrapper.eq(SysUser::getUserCode, userCode);
+        return MapperUtils.select(userRepository, wrapper, SysUserDTO.class);
     }
 
 }
