@@ -1,6 +1,6 @@
-package com.cjwx.spark.engine.dto;
+package com.cjwx.spark.engine.core.dto;
 
-import com.cjwx.spark.engine.entity.BaseEntity;
+import com.cjwx.spark.engine.core.entity.BaseEntity;
 import lombok.Data;
 import org.apache.commons.beanutils.BeanUtils;
 

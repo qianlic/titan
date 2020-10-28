@@ -11,7 +11,7 @@ import java.util.List;
  * @Author: qian li
  * @Date: 2018年03月29日 11:02
  */
-public class HttpConstant {
+public class AppConstant {
 
     public static final String SIGNING_KEY = "9af4d563dbc8cf2b08bd3391cd00c5f2";
 

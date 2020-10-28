@@ -1,4 +1,4 @@
-package com.cjwx.spark.engine.entity;
+package com.cjwx.spark.engine.core.entity;
 
 import lombok.Data;
 

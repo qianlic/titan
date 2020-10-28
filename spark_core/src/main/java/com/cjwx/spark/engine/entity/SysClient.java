@@ -1,5 +1,6 @@
 package com.cjwx.spark.engine.entity;
 
+import com.cjwx.spark.engine.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
