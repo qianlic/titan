@@ -1,6 +1,6 @@
-package com.cjwx.spark.engine.reids.jwt;
+package com.cjwx.spark.engine.core.dto;
 
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.util.StringUtils;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * @Date: 2018年03月31日 16:20
  */
 @Data
-public class JwtToken implements Serializable {
+public class TokenDTO implements Serializable {
 
     private static final long serialVersionUID = -9017410322938026917L;
 
@@ -24,7 +24,7 @@ public class JwtToken implements Serializable {
     private List<Pattern> promise;
 
     public boolean checkPromise(String url) {
-        if (HttpConstant.EXCLUSIONS.contains(url)) {
+        if (AppConstant.EXCLUSIONS.contains(url)) {
             return true;
         } else if (this.promise == null || StringUtils.isEmpty(url)) {
             return false;
