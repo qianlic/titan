@@ -1,5 +1,6 @@
 package com.cjwx.spark.engine.util.file;
 
+import com.cjwx.spark.engine.util.ExceptionUtils;
 import com.cjwx.spark.engine.web.http.ResponseHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.*;
@@ -28,13 +29,13 @@ public class ExcelUtils {
             response.setHeader("Content-disposition", "attachment;filename=download.xls");
             buildWorkbook("Sheet1", title, data).write(out);
         } catch (IOException e) {
-            log.error("Excel创建失败", e);
+            ExceptionUtils.throwError("Excel创建失败", e);
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    log.error("Excel创建失败", e);
+                    ExceptionUtils.throwError("Excel创建失败", e);
                 }
             }
         }
