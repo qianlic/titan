@@ -1,22 +1,23 @@
 package com.cjwx.spark.quartz.service;
 
-import com.cjwx.spark.quartz.entity.QtzJobBean;
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.quartz.dto.QtzJobDTO;
 
 public interface ScheduleService {
 
-    PageList<QtzJobBean> getScheduleList(int start, int size, QtzJobBean wheres);
+    ResultDTO<PageDTO<QtzJobDTO>> getScheduleList(QtzJobDTO job, int start, int size) throws Exception;
 
-    void create(QtzJobBean job);
+    void create(QtzJobDTO job);
 
-    void update(QtzJobBean job);
+    void update(QtzJobDTO job);
 
-    void delete(QtzJobBean job);
+    void delete(QtzJobDTO job);
 
-    void pause(QtzJobBean job);
+    void pause(QtzJobDTO job);
 
-    void resume(QtzJobBean job);
+    void resume(QtzJobDTO job);
 
-    void start(QtzJobBean job);
+    void start(QtzJobDTO job);
 
 }

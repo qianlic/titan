@@ -1,7 +1,5 @@
 package com.cjwx.spark.engine.util;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cjwx.spark.engine.core.dto.PageDTO;
 import com.cjwx.spark.engine.core.dto.ResultDTO;
 
 /**

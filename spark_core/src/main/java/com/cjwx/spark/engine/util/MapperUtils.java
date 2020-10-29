@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cjwx.spark.engine.core.dto.PageDTO;
 import com.cjwx.spark.engine.core.dto.ResultDTO;
-import org.springframework.beans.BeanUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +45,13 @@ public class MapperUtils {
     }
 
     /**
+     * 删除
+     */
+    public static <T> ResultDTO<Integer> delete(BaseMapper<T> mapper, Wrapper<T> wrapper) {
+        return ResultUtils.success(mapper.delete(wrapper));
+    }
+
+    /**
      * 查询
      */
     public static <T> ResultDTO<T> select(BaseMapper<T> mapper, Wrapper<T> wrapper) {
@@ -54,7 +59,7 @@ public class MapperUtils {
     }
 
     public static <T, E> ResultDTO<E> select(BaseMapper<T> mapper, Wrapper<T> wrapper, Class<E> clz) throws Exception {
-        return ResultUtils.success(copyProperties(mapper.selectOne(wrapper), clz));
+        return ResultUtils.success(ObjectUtils.convert(mapper.selectOne(wrapper), clz));
     }
 
     /**
@@ -81,6 +86,13 @@ public class MapperUtils {
     /**
      * 查询
      */
+    public static <T, E> ResultDTO<List<E>> list(BaseMapper<T> mapper, Class<E> clz) throws Exception {
+        return ResultUtils.success(ObjectUtils.convert(mapper.selectList(null), clz));
+    }
+
+    /**
+     * 查询
+     */
     public static <T, E> ResultDTO<List<E>> list(BaseMapper<T> mapper, T entity, Class<E> clz) throws Exception {
         return list(mapper, new QueryWrapper<>(entity), clz);
     }
@@ -88,8 +100,15 @@ public class MapperUtils {
     /**
      * 查询
      */
+    public static <T, E> ResultDTO<List<E>> list(BaseMapper<T> mapper, List<Long> ids, Class<E> clz) throws Exception {
+        return ResultUtils.success(ObjectUtils.convert(mapper.selectBatchIds(ids), clz));
+    }
+
+    /**
+     * 查询
+     */
     public static <T, E> ResultDTO<List<E>> list(BaseMapper<T> mapper, Wrapper<T> wrapper, Class<E> clz) throws Exception {
-        return ResultUtils.success(copyProperties(mapper.selectList(wrapper), clz));
+        return ResultUtils.success(ObjectUtils.convert(mapper.selectList(wrapper), clz));
     }
 
     /**
@@ -140,22 +159,8 @@ public class MapperUtils {
         pageDTO.setStart(page.getCurrent());
         pageDTO.setLimit(page.getSize());
         pageDTO.setTotal(page.getTotal());
-        pageDTO.setList(copyProperties(page.getRecords(), clz));
+        pageDTO.setList(ObjectUtils.convert(page.getRecords(), clz));
         return ResultUtils.success(pageDTO);
-    }
-
-    private static <T, E> List<E> copyProperties(List<T> entityList, Class<E> clz) throws Exception {
-        List<E> dtoList = new ArrayList<>();
-        for (T entity : entityList) {
-            dtoList.add(copyProperties(entity, clz));
-        }
-        return dtoList;
-    }
-
-    private static <T, E> E copyProperties(T entity, Class<E> clz) throws Exception {
-        E dto = clz.newInstance();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
     }
 
 }

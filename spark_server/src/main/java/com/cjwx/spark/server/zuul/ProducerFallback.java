@@ -1,8 +1,8 @@
 package com.cjwx.spark.server.zuul;
 
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.helper.RibbonClientHelper;
-import com.cjwx.spark.engine.web.http.Result;
 import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,8 +42,7 @@ public class ProducerFallback implements FallbackProvider {
                 if (StringUtils.isEmpty(message) && cause.getCause() != null) {
                     message = cause.getCause().getMessage();
                 }
-                Result result = new Result(false, message);
-                return new ByteArrayInputStream(result.toString().getBytes());
+                return new ByteArrayInputStream(ResultUtils.fail(message).toString().getBytes());
             }
 
             @Override

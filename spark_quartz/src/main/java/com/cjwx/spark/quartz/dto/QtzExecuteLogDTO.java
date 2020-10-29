@@ -1,6 +1,6 @@
-package com.cjwx.spark.quartz.entity;
+package com.cjwx.spark.quartz.dto;
 
-import com.cjwx.spark.engine.core.entity.BaseEntity;
+import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +11,7 @@ import java.util.Date;
  * @Date: 2018年04月08日 14:51
  */
 @Data
-public class QtzExecuteLog extends BaseEntity {
+public class QtzExecuteLogDTO extends BaseDTO {
 
     private String taskName;
 

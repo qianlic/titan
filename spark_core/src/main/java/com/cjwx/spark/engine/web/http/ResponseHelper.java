@@ -2,6 +2,7 @@ package com.cjwx.spark.engine.web.http;
 
 import com.alibaba.fastjson.JSON;
 import com.cjwx.spark.engine.core.constant.AppConstant;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -23,31 +24,28 @@ public class ResponseHelper {
         return ((ServletRequestAttributes) attributes).getResponse();
     }
 
+    public static <T> void writeJson(ResultDTO<T> date) {
+        writeJson(HttpServletResponse.SC_OK, date);
+    }
 
-    public static void responseJson(Result date) {
-        responseJson(HttpServletResponse.SC_OK, date);
+    public static <T> void writeJson(int status, ResultDTO<T> date) {
+        writeJson(getResponse(), status, date);
     }
 
 
-    public static void responseJson(int status, Result date) {
+    public static <T> void writeJson(HttpServletResponse response, ResultDTO<T> date) {
+        writeJson(response, HttpServletResponse.SC_OK, date);
+    }
+
+
+    public static <T> void writeJson(HttpServletResponse response, int status, ResultDTO<T> date) {
         try {
-            HttpServletResponse response = initRequestStatus(status);
-            String rspString = JSON.toJSONString(date);
-            response.getWriter().write(rspString);
+            response.setContentType(AppConstant.DEFAULT_MEDIA_TYPE);
+            response.setStatus(status);
+            response.getWriter().write(JSON.toJSONString(date));
         } catch (IOException e) {
             log.error("返回信息异常", e);
         }
-    }
-
-    public static HttpServletResponse initRequest200() {
-        return initRequestStatus(HttpServletResponse.SC_OK);
-    }
-
-    public static HttpServletResponse initRequestStatus(int status) {
-        HttpServletResponse response = getResponse();
-        response.setContentType(AppConstant.DEFAULT_MEDIA_TYPE);
-        response.setStatus(status);
-        return response;
     }
 
 }

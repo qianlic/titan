@@ -1,12 +1,12 @@
 package com.cjwx.spark.server.zuul;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.engine.core.constant.AppConstant;
-import com.cjwx.spark.engine.util.JwtTokenUtils;
 import com.cjwx.spark.engine.core.dto.TokenDTO;
+import com.cjwx.spark.engine.util.JwtTokenUtils;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.http.RequestHelper;
-import com.cjwx.spark.engine.web.http.Result;
+import com.cjwx.spark.engine.web.http.ResponseHelper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @Description: 登录认证拦截器
@@ -52,14 +51,14 @@ public class AuthorizationFilter extends ZuulFilter {
         if (!url.contains(DocumentationProvider.API_DOC)) {
             String authHeader = request.getHeader(JwtTokenUtils.AUTHORIZATION_KEY);
             if (StringUtils.isEmpty(authHeader)) {
-                return this.response401(ctx);
+                return this.response401(ctx, "登录认证失败，请重新登录！");
             }
             try {
                 TokenDTO token = JwtTokenUtils.parseToken(authHeader, RequestHelper.getClientIp());
                 if (token == null) {
-                    return this.response401(ctx);
+                    return this.response401(ctx, "登录认证失败，请重新登录！");
                 } else if (!token.checkPromise(url)) {
-                    return this.response403(ctx);
+                    return this.response403(ctx, "无法访问资源，权限不足！");
                 }
                 String user = StringUtils.encodeURLEncoder(JSON.toJSONString(token));
                 ctx.addZuulRequestHeader("CURRENT_USER", user);
@@ -70,29 +69,19 @@ public class AuthorizationFilter extends ZuulFilter {
         return null;
     }
 
-    private Object response401(RequestContext ctx) {
-        return this.response401(ctx, "登录认证失败，请重新登录！");
-    }
-
     private Object response401(RequestContext ctx, String message) {
-        return this.responseJson(ctx, HttpServletResponse.SC_UNAUTHORIZED, message);
+        return this.writeJson(ctx, HttpServletResponse.SC_UNAUTHORIZED, message);
     }
 
-    private Object response403(RequestContext ctx) {
-        return this.responseJson(ctx, HttpServletResponse.SC_FORBIDDEN, "无法访问资源，权限不足！");
+    private Object response403(RequestContext ctx, String message) {
+        return this.writeJson(ctx, HttpServletResponse.SC_FORBIDDEN, message);
     }
 
-    private Object responseJson(RequestContext ctx, int status, String message) {
-        try {
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(status);
-            HttpServletResponse response = ctx.getResponse();
-            response.setContentType(AppConstant.DEFAULT_MEDIA_TYPE);
-            String rspString = JSON.toJSONString(new Result(false, message));
-            response.getWriter().write(rspString);
-        } catch (IOException e) {
-            log.error("返回信息异常", e);
-        }
+    private Object writeJson(RequestContext ctx, int status, String message) {
+        ctx.setSendZuulResponse(false);
+        ctx.setResponseStatusCode(status);
+
+        ResponseHelper.writeJson(ctx.getResponse(), status, ResultUtils.fail(message));
         return null;
     }
 

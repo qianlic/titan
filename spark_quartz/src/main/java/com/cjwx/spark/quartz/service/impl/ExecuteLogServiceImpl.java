@@ -1,11 +1,13 @@
 package com.cjwx.spark.quartz.service.impl;
 
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.MapperUtils;
+import com.cjwx.spark.engine.util.ObjectUtils;
+import com.cjwx.spark.quartz.dto.QtzExecuteLogDTO;
 import com.cjwx.spark.quartz.entity.QtzExecuteLog;
 import com.cjwx.spark.quartz.repository.LogRepository;
 import com.cjwx.spark.quartz.service.ExecuteLogService;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 定时任务执行日志
  * @Author: qian li
  * @Date: 2018年11月09日 15:44
  */
@@ -25,18 +27,18 @@ public class ExecuteLogServiceImpl implements ExecuteLogService {
     private LogRepository logRepository;
 
     @Override
-    public void create(QtzExecuteLog log) {
-        logRepository.save(log);
+    public ResultDTO<Integer> create(QtzExecuteLogDTO log) throws Exception {
+        return MapperUtils.insert(logRepository, ObjectUtils.convert(log, QtzExecuteLog.class));
     }
 
     @Override
-    public int delete(List<Long> ids) {
-        return logRepository.deleteByIdIn(ids);
+    public ResultDTO<Integer> delete(List<Long> ids) {
+        return MapperUtils.delete(logRepository, ids);
     }
 
     @Override
-    public PageList<QtzExecuteLog> getLogList(int start, int size, QtzExecuteLog wheres) {
-        return PageList.of(logRepository.findAll(Example.of(wheres), PageRequest.of(start, size)));
+    public ResultDTO<PageDTO<QtzExecuteLogDTO>> getLogList(QtzExecuteLogDTO log, int start, int size) throws Exception {
+        return MapperUtils.pageList(logRepository, ObjectUtils.convert(log, QtzExecuteLog.class), start, size, QtzExecuteLogDTO.class);
     }
 
 }

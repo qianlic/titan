@@ -1,17 +1,14 @@
 package com.cjwx.spark.engine.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * @Description: 对象操作工具类
@@ -44,6 +41,20 @@ public class ObjectUtils {
         return !isEmpty(obj);
     }
 
+    public static <T, E> List<E> convert(List<T> entityList, Class<E> clz) throws Exception {
+        List<E> dtoList = new ArrayList<>();
+        for (T entity : entityList) {
+            dtoList.add(convert(entity, clz));
+        }
+        return dtoList;
+    }
+
+    public static <T, E> E convert(T entity, Class<E> clz) throws Exception {
+        E dto = clz.newInstance();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
+    }
+
     /**
      * 序列化对象
      */
@@ -72,18 +83,6 @@ public class ObjectUtils {
             log.debug("对象[" + buf.toString() + "反序列化异常！", e);
             return null;
         }
-    }
-
-    /**
-     * @param objs 需要转换的对象
-     * @return 转换后的bean
-     * @Description: 对象转bean
-     */
-    public static <T> List<T> convert(List<Object> objs, Class<T> beanClass) {
-        if (objs.size() > 0) {
-            return objs.stream().map(obj -> (T) obj).collect(Collectors.toList());
-        }
-        return null;
     }
 
     /**

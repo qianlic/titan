@@ -1,13 +1,14 @@
 package com.cjwx.spark.engine.web.handler;
 
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.engine.web.http.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -22,12 +23,12 @@ public class DefaultHandler {
 
     @Value("${spring.application.name}")
     private String serviceName;
-    @Autowired
+    @Resource
     private List<RequestMappingHandlerMapping> handlerMappings;
 
     //@RestMethod(value = HttpConstant.DEFAULT_FIX, method = {RequestMethod.POST, RequestMethod.GET})
-    public Result error() {
-        return new Result(false, "远程服务未被发现！");
+    public ResultDTO<String> error() {
+        return ResultUtils.fail("远程服务未被发现！");
     }
 
     @RestMethod("/urlStream")

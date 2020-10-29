@@ -1,10 +1,10 @@
 package com.cjwx.spark.quartz.execute;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.quartz.entity.QtzExecuteLog;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.util.DateUtils;
-import com.cjwx.spark.engine.web.http.Result;
 import com.cjwx.spark.quartz.config.QuartzConfig;
+import com.cjwx.spark.quartz.dto.QtzExecuteLogDTO;
 import com.cjwx.spark.quartz.service.ExecuteLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -41,26 +41,29 @@ public class JobExecuteListener implements JobListener {
 
     @Override
     public void jobWasExecuted(JobExecutionContext jobExecutionContext, JobExecutionException e) {
-        QtzExecuteLog log = new QtzExecuteLog();
-        log.setExecutetime(DateUtils.now());
+        try {
 
-        JobDetail jobDetail = jobExecutionContext.getJobDetail();
-        log.setTaskname(jobDetail.getKey().getName());
-        log.setTaskgroup(jobDetail.getKey().getGroup());
+            QtzExecuteLogDTO log = new QtzExecuteLogDTO();
+            log.setExecuteTime(DateUtils.now());
+            JobDetail jobDetail = jobExecutionContext.getJobDetail();
+            log.setTaskName(jobDetail.getKey().getName());
+            log.setTaskGroup(jobDetail.getKey().getGroup());
 
-        JobDataMap data = jobDetail.getJobDataMap();
-        log.setServer(data.getString(QuartzConfig.SERVER_KEY));
-        log.setPath(data.getString(QuartzConfig.PATH_KEY));
-        log.setParam(data.getString(QuartzConfig.DATA_KEY));
+            JobDataMap data = jobDetail.getJobDataMap();
+            log.setServer(data.getString(QuartzConfig.SERVER_KEY));
+            log.setPath(data.getString(QuartzConfig.PATH_KEY));
+            log.setParam(data.getString(QuartzConfig.DATA_KEY));
 
-        Object result = jobExecutionContext.getResult();
-        if (result instanceof Result) {
-            Result r = (Result) result;
-            log.setSuccess(r.isSuccess());
-            log.setMessage(r.getMessage());
-            log.setResult(JSON.toJSONString(r.getData()));
+            Object result = jobExecutionContext.getResult();
+            if (result instanceof ResultDTO) {
+                ResultDTO<?> r = (ResultDTO) result;
+                log.setSuccess(r.isSuccess());
+                log.setMessage(r.getMessage());
+                log.setResult(JSON.toJSONString(r.getData()));
+            }
+            executeLogService.create(log);
+        } catch (Exception ignored) {
         }
-        executeLogService.create(log);
     }
 
 }

@@ -1,8 +1,9 @@
 package com.cjwx.spark.quartz.execute;
 
-import com.cjwx.spark.quartz.config.QuartzConfig;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.web.helper.RibbonClientHelper;
-import com.cjwx.spark.engine.web.http.Result;
+import com.cjwx.spark.quartz.config.QuartzConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -26,15 +27,10 @@ public class JobExecuteAdvice implements Job {
             String service = dataMap.getString(QuartzConfig.SERVER_KEY);
             String path = dataMap.getString(QuartzConfig.PATH_KEY);
             String data = dataMap.getString(QuartzConfig.DATA_KEY);
-
-            Object result = RibbonClientHelper.doPost(service, path, data, Result.class);
-            if( !(result instanceof Result)){
-                result = new Result(result);
-            }
-            context.setResult(result);
+            context.setResult(RibbonClientHelper.doPost(service, path, data, ResultDTO.class));
         } catch (Exception e) {
             log.debug(e.getMessage(), e);
-            context.setResult(new Result(false, e.getMessage()));
+            context.setResult(ResultUtils.fail(e.getMessage()));
         }
     }
 

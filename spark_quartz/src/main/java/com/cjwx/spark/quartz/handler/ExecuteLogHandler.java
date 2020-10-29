@@ -1,10 +1,10 @@
 package com.cjwx.spark.quartz.handler;
 
-import com.cjwx.spark.engine.core.model.Model;
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.quartz.entity.QtzExecuteLog;
+import com.cjwx.spark.quartz.dto.QtzExecuteLogDTO;
 import com.cjwx.spark.quartz.service.ExecuteLogService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 定时任务-调度管理
  * @Author: qian li
  * @Date: 2018年11月07日 20:03
  */
@@ -25,12 +25,12 @@ public class ExecuteLogHandler {
     private ExecuteLogService executeLogService;
 
     @RestMethod("list")
-    public PageList<QtzExecuteLog> list(@RequestBody Model<QtzExecuteLog> model) {
-        return executeLogService.getLogList(model.getStart(), model.getSize(), model.getParams());
+    public ResultDTO<PageDTO<QtzExecuteLogDTO>> list(@RequestBody QtzExecuteLogDTO log) throws Exception {
+        return executeLogService.getLogList(log, log.getStart(), log.getSize());
     }
 
     @RestMethod("remove")
-    public int remove(@RequestBody List<Long> ids) {
+    public ResultDTO<Integer> remove(@RequestBody List<Long> ids) {
         return executeLogService.delete(ids);
     }
 
