@@ -1,25 +1,24 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.engine.entity.SysResource;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.server.dto.SysResourceDTO;
 
 import java.util.List;
 
 public interface ResourceService {
 
-    int createResource(SysResource resource);
+    ResultDTO<Integer> createResource(SysResourceDTO resource) throws Exception;
 
-    int deleteResource(List<Long> ids);
+    ResultDTO<Integer> updateResource(SysResourceDTO resource) throws Exception;
 
-    int updateResource(SysResource resource);
+    ResultDTO<Integer> deleteResource(List<Long> ids);
 
-    int updateStatus(List<Long> ids, boolean status);
+    ResultDTO<Integer> updateStatus(List<Long> ids, boolean status);
 
-    List<SysResource> getResourceList();
+    ResultDTO<List<SysResourceDTO>> getResourceList() throws Exception;
 
-    List<SysResource> getResourceList(Boolean status);
+    ResultDTO<List<SysResourceDTO>> getResourceList(Boolean available) throws Exception;
 
-    List<SysResource> findResourceByIds(String resourceids);
-
-    List<SysResource> findResourceByIds(List<String> resourceids);
+    ResultDTO<List<SysResourceDTO>> findResourceByIds(List<Long> ids) throws Exception;
 
 }

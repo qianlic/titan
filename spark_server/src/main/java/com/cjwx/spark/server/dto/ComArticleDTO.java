@@ -1,10 +1,10 @@
-package com.cjwx.spark.server.entity;
+package com.cjwx.spark.server.dto;
 
-import com.cjwx.spark.engine.core.entity.BaseEntity;
+import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
 
 @Data
-public class ComArticle extends BaseEntity {
+public class ComArticleDTO extends BaseDTO {
 
     private String title;
 

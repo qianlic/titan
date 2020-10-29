@@ -2,10 +2,13 @@ package com.cjwx.spark.server.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.entity.SysRole;
 import com.cjwx.spark.engine.repository.RoleRepository;
-import com.cjwx.spark.engine.util.StringUtils;
+import com.cjwx.spark.engine.util.MapperUtils;
+import com.cjwx.spark.engine.util.ObjectUtils;
+import com.cjwx.spark.server.dto.SysRoleDTO;
 import com.cjwx.spark.server.service.RoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @Description: 角色服务
+ * @Author: qian li
+ * @Date: 2020/10/29 8:30
+ */
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
@@ -21,43 +29,41 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public int createRole(SysRole role) {
-        return roleRepository.insert(role);
+    public ResultDTO<Integer> createRole(SysRoleDTO role) throws Exception {
+        return MapperUtils.insert(roleRepository, ObjectUtils.convert(role, SysRole.class));
     }
 
     @Override
-    public int deleteRole(List<Long> ids) {
-        return roleRepository.deleteBatchIds(ids);
+    public ResultDTO<Integer> updateRole(SysRoleDTO role) throws Exception {
+        return MapperUtils.update(roleRepository, ObjectUtils.convert(role, SysRole.class));
     }
 
     @Override
-    public int updateRole(SysRole role) {
-        return roleRepository.updateById(role);
+    public ResultDTO<Integer> deleteRole(List<Long> ids) {
+        return MapperUtils.delete(roleRepository, ids);
     }
 
     @Override
-    public int updateStatus(List<Long> ids, boolean status) {
-        LambdaUpdateWrapper<SysRole> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.in(SysRole::getId, ids);
-        wrapper.set(SysRole::getStatus, status);
-        return roleRepository.update(null, wrapper);
+    public ResultDTO<List<SysRoleDTO>> getRoleList() throws Exception {
+        return MapperUtils.list(roleRepository, new LambdaQueryWrapper<SysRole>()
+                .eq(SysRole::getStatus, true), SysRoleDTO.class);
     }
 
     @Override
-    public List<SysRole> getRoleList() {
-        LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SysRole::getStatus, true);
-        return roleRepository.selectList(wrapper);
+    public ResultDTO<PageDTO<SysRoleDTO>> getRoleList(SysRoleDTO role, int start, int size) throws Exception {
+        return MapperUtils.pageList(roleRepository, ObjectUtils.convert(role, SysRole.class), start, size, SysRoleDTO.class);
     }
 
     @Override
-    public PageList<SysRole> getRoleList(int start, int size, SysRole role) {
-        return PageList.of(roleRepository, role, start, size);
+    public ResultDTO<Integer> updateStatus(List<Long> ids, boolean status) {
+        return MapperUtils.update(roleRepository, new LambdaUpdateWrapper<SysRole>()
+                .in(SysRole::getId, ids)
+                .set(SysRole::getStatus, status));
     }
 
     @Override
-    public List<SysRole> findRolesByIds(String roleids) {
-        return roleRepository.selectBatchIds(StringUtils.stringToList(roleids));
+    public ResultDTO<List<SysRoleDTO>> findRolesByIds(List<Long> ids) throws Exception {
+        return MapperUtils.list(roleRepository, ids, SysRoleDTO.class);
     }
 
 }

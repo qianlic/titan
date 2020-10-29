@@ -1,11 +1,11 @@
 package com.cjwx.spark.server.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cjwx.spark.engine.core.model.Model;
-import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysRole;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
+import com.cjwx.spark.server.dto.SysRoleDTO;
 import com.cjwx.spark.server.service.RoleService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,36 +24,36 @@ public class RoleHandler {
     @Resource
     private RoleService roleService;
 
-    @RestMethod("list")
-    public PageList<SysRole> list(@RequestBody Model<SysRole> model) {
-        return roleService.getRoleList(model.getStart(), model.getSize(), model.getParams());
-    }
-
-    @RestMethod("availableList")
-    public List<SysRole> availableList() {
-        return roleService.getRoleList();
-    }
-
     @RestMethod("create")
-    public void create(@RequestBody SysRole role) {
-        roleService.createRole(role);
+    public ResultDTO<Integer> create(@RequestBody SysRoleDTO role) throws Exception {
+        return roleService.createRole(role);
     }
 
     @RestMethod("edit")
-    public void edit(@RequestBody SysRole role) {
-        roleService.updateRole(role);
+    public ResultDTO<Integer> edit(@RequestBody SysRoleDTO role) throws Exception {
+        return roleService.updateRole(role);
     }
 
     @RestMethod("remove")
-    public int remove(@RequestBody List<Long> ids) {
+    public ResultDTO<Integer> remove(@RequestBody List<Long> ids) {
         return roleService.deleteRole(ids);
     }
 
+    @RestMethod("list")
+    public ResultDTO<PageDTO<SysRoleDTO>> list(@RequestBody SysRoleDTO role) throws Exception {
+        return roleService.getRoleList(role, role.getStart(), role.getSize());
+    }
+
     @RestMethod("status")
-    public int status(@RequestBody JSONObject param) {
+    public ResultDTO<Integer> status(@RequestBody JSONObject param) {
         List<Long> ids = param.getJSONArray("ids").toJavaList(Long.class);
         boolean status = param.getBoolean("status");
         return roleService.updateStatus(ids, status);
+    }
+
+    @RestMethod("availableList")
+    public ResultDTO<List<SysRoleDTO>> availableList() throws Exception {
+        return roleService.getRoleList();
     }
 
 }

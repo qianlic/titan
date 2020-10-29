@@ -1,6 +1,6 @@
 package com.cjwx.spark.server.dto;
 
-import com.cjwx.spark.engine.dto.BaseDTO;
+import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
 
 import java.util.List;

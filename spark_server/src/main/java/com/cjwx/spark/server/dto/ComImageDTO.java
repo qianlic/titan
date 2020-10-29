@@ -1,10 +1,10 @@
-package com.cjwx.spark.server.entity;
+package com.cjwx.spark.server.dto;
 
-import com.cjwx.spark.engine.core.entity.BaseEntity;
+import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
 
 @Data
-public class ComImage extends BaseEntity {
+public class ComImageDTO extends BaseDTO {
 
     private String filename;
 
@@ -17,7 +17,5 @@ public class ComImage extends BaseEntity {
     private String width;
 
     private String height;
-
-    private String size;
 
 }

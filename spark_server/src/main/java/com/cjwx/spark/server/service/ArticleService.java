@@ -1,7 +1,8 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.server.entity.ComArticle;
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.server.dto.ComArticleDTO;
 
 import java.util.List;
 
@@ -12,12 +13,12 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    int createArticle(ComArticle article);
+    ResultDTO<Integer> createArticle(ComArticleDTO article) throws Exception;
 
-    int deleteArticle(List<Long> ids);
+    ResultDTO<Integer> updateArticle(ComArticleDTO article) throws Exception;
 
-    int updateArticle(ComArticle article);
+    ResultDTO<Integer> deleteArticle(List<Long> ids);
 
-    PageList<ComArticle> getArticleList(int start, int size, ComArticle article);
+    ResultDTO<PageDTO<ComArticleDTO>> getArticleList(ComArticleDTO article, int start, int size) throws Exception;
 
 }

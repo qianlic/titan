@@ -1,7 +1,8 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.server.entity.ComImage;
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.server.dto.ComImageDTO;
 
 import java.io.File;
 
@@ -12,10 +13,16 @@ import java.io.File;
  */
 public interface ImageService {
 
-    ComImage upload(String name, File file);
+    ResultDTO<Integer> createImage(ComImageDTO image) throws Exception;
 
-    void delete(String hash);
+    ResultDTO<Integer> updateImage(ComImageDTO image) throws Exception;
 
-    PageList<ComImage> getImageList(int start, int size, ComImage imge);
+    ResultDTO<Integer> deleteImage(String hash);
+
+    ResultDTO<PageDTO<ComImageDTO>> getImageList(ComImageDTO image, int start, int size) throws Exception;
+
+    ResultDTO<ComImageDTO> upload(String name, File file) throws Exception;
+
+    ResultDTO<Integer> delete(String hash);
 
 }

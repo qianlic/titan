@@ -32,7 +32,7 @@ public class SysUserDTO extends BaseDTO {
 
     private String email;
 
-    private String imgurl;
+    private String imgUrl;
 
     private Date lastLoginTime;
 

@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface UserService {
 
-    ResultDTO<Integer> createUser(SysUserDTO user);
+    ResultDTO<Integer> createUser(SysUserDTO user) throws Exception;
 
-    ResultDTO<Integer> updateUser(SysUserDTO user);
+    ResultDTO<Integer> updateUser(SysUserDTO user) throws Exception;
 
     ResultDTO<Integer> deleteUser(List<Long> ids);
 

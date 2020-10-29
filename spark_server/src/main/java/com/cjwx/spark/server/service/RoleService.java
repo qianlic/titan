@@ -1,24 +1,25 @@
 package com.cjwx.spark.server.service;
 
-import com.cjwx.spark.engine.core.model.PageList;
-import com.cjwx.spark.engine.entity.SysRole;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.server.dto.SysRoleDTO;
 
 import java.util.List;
 
 public interface RoleService {
 
-    int createRole(SysRole role);
+    ResultDTO<Integer> createRole(SysRoleDTO role) throws Exception;
 
-    int deleteRole(List<Long> ids);
+    ResultDTO<Integer> updateRole(SysRoleDTO role) throws Exception;
 
-    int updateRole(SysRole role);
+    ResultDTO<Integer> deleteRole(List<Long> ids);
 
-    int updateStatus(List<Long> ids, boolean status);
+    ResultDTO<Integer> updateStatus(List<Long> ids, boolean status);
 
-    List<SysRole> getRoleList();
+    ResultDTO<List<SysRoleDTO>> getRoleList() throws Exception;
 
-    PageList<SysRole> getRoleList(int start, int size, SysRole role);
+    ResultDTO<PageDTO<SysRoleDTO>> getRoleList(SysRoleDTO role, int start, int size) throws Exception;
 
-    List<SysRole> findRolesByIds(String roleids);
+    ResultDTO<List<SysRoleDTO>> findRolesByIds(List<Long> ids) throws Exception;
 
 }

@@ -2,9 +2,12 @@ package com.cjwx.spark.server.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.entity.SysResource;
 import com.cjwx.spark.engine.repository.ResourceRepository;
-import com.cjwx.spark.engine.util.StringUtils;
+import com.cjwx.spark.engine.util.MapperUtils;
+import com.cjwx.spark.engine.util.ObjectUtils;
+import com.cjwx.spark.server.dto.SysResourceDTO;
 import com.cjwx.spark.server.service.ResourceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,48 +23,41 @@ public class ResourceServiceImpl implements ResourceService {
     private ResourceRepository resourceRepository;
 
     @Override
-    public int createResource(SysResource resource) {
-        return resourceRepository.insert(resource);
+    public ResultDTO<Integer> createResource(SysResourceDTO resource) throws Exception {
+        return MapperUtils.insert(resourceRepository, ObjectUtils.convert(resource, SysResource.class));
     }
 
     @Override
-    public int deleteResource(List<Long> ids) {
-        return resourceRepository.deleteBatchIds(ids);
+    public ResultDTO<Integer> updateResource(SysResourceDTO resource) throws Exception {
+        return MapperUtils.update(resourceRepository, ObjectUtils.convert(resource, SysResource.class));
     }
 
     @Override
-    public int updateResource(SysResource resource) {
-        return resourceRepository.updateById(resource);
+    public ResultDTO<Integer> deleteResource(List<Long> ids) {
+        return MapperUtils.delete(resourceRepository, ids);
     }
 
     @Override
-    public int updateStatus(List<Long> ids, boolean status) {
-        LambdaUpdateWrapper<SysResource> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.in(SysResource::getId, ids);
-        wrapper.set(SysResource::getStatus, status);
-        return resourceRepository.update(null, wrapper);
+    public ResultDTO<List<SysResourceDTO>> getResourceList() throws Exception {
+        return MapperUtils.list(resourceRepository, SysResourceDTO.class);
     }
 
     @Override
-    public List<SysResource> getResourceList() {
-        return resourceRepository.selectList(null);
+    public ResultDTO<List<SysResourceDTO>> getResourceList(Boolean status) throws Exception {
+        return MapperUtils.list(resourceRepository, new LambdaQueryWrapper<SysResource>()
+                .eq(SysResource::getStatus, status), SysResourceDTO.class);
     }
 
     @Override
-    public List<SysResource> getResourceList(Boolean available) {
-        LambdaQueryWrapper<SysResource> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SysResource::getStatus, available);
-        return resourceRepository.selectList(wrapper);
+    public ResultDTO<Integer> updateStatus(List<Long> ids, boolean status) {
+        return MapperUtils.update(resourceRepository, new LambdaUpdateWrapper<SysResource>()
+                .in(SysResource::getId, ids)
+                .set(SysResource::getStatus, status));
     }
 
     @Override
-    public List<SysResource> findResourceByIds(String resourceids) {
-        return findResourceByIds(StringUtils.stringToList(resourceids));
-    }
-
-    @Override
-    public List<SysResource> findResourceByIds(List<String> resourceids) {
-        return resourceRepository.selectBatchIds(resourceids);
+    public ResultDTO<List<SysResourceDTO>> findResourceByIds(List<Long> ids) throws Exception {
+        return MapperUtils.list(resourceRepository, ids, SysResourceDTO.class);
     }
 
 }

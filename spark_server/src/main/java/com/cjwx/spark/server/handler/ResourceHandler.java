@@ -1,12 +1,13 @@
 package com.cjwx.spark.server.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cjwx.spark.engine.core.constant.HttpConstant;
-import com.cjwx.spark.engine.core.model.Model;
+import com.cjwx.spark.engine.core.constant.AppConstant;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.entity.SysResource;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
 import com.cjwx.spark.engine.web.helper.RibbonClientHelper;
+import com.cjwx.spark.server.dto.SysResourceDTO;
 import com.cjwx.spark.server.service.ResourceService;
 import io.swagger.annotations.Api;
 import lombok.Data;
@@ -27,49 +28,49 @@ public class ResourceHandler {
     @Resource
     private ResourceService resourceService;
 
+    @RestMethod("create")
+    public ResultDTO<Integer> create(@RequestBody SysResourceDTO resource) throws Exception {
+        return resourceService.createResource(resource);
+    }
+
+    @RestMethod("edit")
+    public ResultDTO<Integer> edit(@RequestBody SysResourceDTO resource) throws Exception {
+        return resourceService.updateResource(resource);
+    }
+
+    @RestMethod("remove")
+    public ResultDTO<Integer> remove(@RequestBody List<Long> ids) {
+        return resourceService.deleteResource(ids);
+    }
+
     @RestMethod("list")
-    public List<SysResource> list() {
+    public ResultDTO<List<SysResourceDTO>> list() throws Exception {
         return resourceService.getResourceList();
     }
 
     @RestMethod("availableList")
-    public List<SysResource> availableList() {
+    public ResultDTO<List<SysResourceDTO>> availableList() throws Exception {
         return resourceService.getResourceList(true);
     }
 
-    @RestMethod("create")
-    public void create(@RequestBody SysResource resource) {
-        resourceService.createResource(resource);
-    }
-
-    @RestMethod("edit")
-    public void edit(@RequestBody Model<SysResource> model) {
-        resourceService.updateResource(model.getParams());
-    }
-
-    @RestMethod("remove")
-    public int remove(@RequestBody List<Long> ids) {
-        return resourceService.deleteResource(ids);
-    }
-
     @RestMethod("status")
-    public int status(@RequestBody JSONObject param) {
+    public ResultDTO<Integer> status(@RequestBody JSONObject param) {
         List<Long> ids = param.getJSONArray("ids").toJavaList(Long.class);
         boolean status = param.getBoolean("status");
         return resourceService.updateStatus(ids, status);
     }
 
     @RestMethod("sync")
-    public void sync() {
+    public void sync() throws Exception {
         List<String> urls = new ArrayList<>();
         Map<String, Long> allMap = new HashMap<>();
-        resourceService.getResourceList().forEach(r -> {
+        resourceService.getResourceList().getData().forEach(r -> {
             urls.add(r.getUrl());
             allMap.put(r.getResourceCode(), r.getId());
         });
         List<SysResource> add = RibbonClientHelper.doPost("/urlStream", String[].class)
                 .stream().flatMap(s -> Arrays.stream(s))
-                .filter(url -> !HttpConstant.EXCLUSIONS.contains(url) && !urls.contains(url))
+                .filter(url -> !AppConstant.EXCLUSIONS.contains(url) && !urls.contains(url))
                 .map(url -> new UrlParser(allMap, url))
                 .filter(UrlParser::isPass)
                 .map(UrlParser::getResource)

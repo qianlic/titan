@@ -1,6 +1,10 @@
 package com.cjwx.spark.server.service.Impl;
 
-import com.cjwx.spark.engine.core.model.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.MapperUtils;
+import com.cjwx.spark.engine.util.ObjectUtils;
+import com.cjwx.spark.server.dto.ComArticleDTO;
 import com.cjwx.spark.server.entity.ComArticle;
 import com.cjwx.spark.server.repository.ArticleRepository;
 import com.cjwx.spark.server.service.ArticleService;
@@ -23,23 +27,23 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleRepository articleRepository;
 
     @Override
-    public int createArticle(ComArticle article) {
-        return articleRepository.insert(article);
+    public ResultDTO<Integer> createArticle(ComArticleDTO article) throws Exception {
+        return MapperUtils.insert(articleRepository, ObjectUtils.convert(article, ComArticle.class));
     }
 
     @Override
-    public int deleteArticle(List<Long> ids) {
-        return articleRepository.deleteBatchIds(ids);
+    public ResultDTO<Integer> updateArticle(ComArticleDTO article) throws Exception {
+        return MapperUtils.update(articleRepository, ObjectUtils.convert(article, ComArticle.class));
     }
 
     @Override
-    public int updateArticle(ComArticle article) {
-        return articleRepository.updateById(article);
+    public ResultDTO<Integer> deleteArticle(List<Long> ids) {
+        return MapperUtils.delete(articleRepository, ids);
     }
 
     @Override
-    public PageList<ComArticle> getArticleList(int start, int size, ComArticle article) {
-        return PageList.of(articleRepository, article, start, size);
+    public ResultDTO<PageDTO<ComArticleDTO>> getArticleList(ComArticleDTO article, int start, int size) throws Exception {
+        return MapperUtils.pageList(articleRepository, ObjectUtils.convert(article, ComArticle.class), start, size, ComArticleDTO.class);
     }
 
 }

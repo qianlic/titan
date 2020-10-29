@@ -1,9 +1,10 @@
 package com.cjwx.spark.server.handler;
 
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.util.file.FileTool;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.engine.web.http.Result;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,12 +22,12 @@ public class FileHandler {
     @Resource
     private FileTool fileTool;
 
-    @RestMethod(HttpConstant.FTP_UPLOAD)
-    public Result uploadToFtpServer(MultipartFile file) throws Exception {
-        return new Result(fileTool.uploadFileToFtpServer(file));
+    @RestMethod(AppConstant.FTP_UPLOAD)
+    public ResultDTO<String> uploadToFtpServer(MultipartFile file) throws Exception {
+        return ResultUtils.success(fileTool.uploadFileToFtpServer(file));
     }
 
-    @RestMethod(HttpConstant.FTP_DOWNLOAD)
+    @RestMethod(AppConstant.FTP_DOWNLOAD)
     public void downloadToFtpServer(HttpServletResponse response, String url) throws Exception {
         fileTool.downloadFileToFtpServer(url, response.getOutputStream());
     }

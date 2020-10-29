@@ -1,9 +1,9 @@
 package com.cjwx.spark.server.zuul;
 
 import com.alibaba.fastjson.JSON;
-import com.cjwx.spark.engine.core.constant.HttpConstant;
-import com.cjwx.spark.engine.reids.jwt.JwtHelper;
-import com.cjwx.spark.engine.reids.jwt.JwtToken;
+import com.cjwx.spark.engine.core.constant.AppConstant;
+import com.cjwx.spark.engine.util.JwtTokenUtils;
+import com.cjwx.spark.engine.core.dto.TokenDTO;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.http.RequestHelper;
 import com.cjwx.spark.engine.web.http.Result;
@@ -50,12 +50,12 @@ public class AuthorizationFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
         String url = request.getServletPath().replace("//", "/").toLowerCase();
         if (!url.contains(DocumentationProvider.API_DOC)) {
-            String authHeader = request.getHeader(JwtHelper.AUTHORIZATION_KEY);
+            String authHeader = request.getHeader(JwtTokenUtils.AUTHORIZATION_KEY);
             if (StringUtils.isEmpty(authHeader)) {
                 return this.response401(ctx);
             }
             try {
-                JwtToken token = JwtHelper.parseToken(authHeader, RequestHelper.getClientIp());
+                TokenDTO token = JwtTokenUtils.parseToken(authHeader, RequestHelper.getClientIp());
                 if (token == null) {
                     return this.response401(ctx);
                 } else if (!token.checkPromise(url)) {
@@ -87,7 +87,7 @@ public class AuthorizationFilter extends ZuulFilter {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(status);
             HttpServletResponse response = ctx.getResponse();
-            response.setContentType(HttpConstant.DEFAULT_MEDIA_TYPE);
+            response.setContentType(AppConstant.DEFAULT_MEDIA_TYPE);
             String rspString = JSON.toJSONString(new Result(false, message));
             response.getWriter().write(rspString);
         } catch (IOException e) {

@@ -1,6 +1,6 @@
 package com.cjwx.spark.server.capcha;
 
-import com.cjwx.spark.engine.reids.util.RedisUtils;
+import com.cjwx.spark.engine.util.RedisUtils;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
