@@ -69,7 +69,7 @@ public class ResourceHandler {
             allMap.put(r.getResourceCode(), r.getId());
         });
         List<SysResource> add = RibbonClientHelper.doPost("/urlStream", String[].class)
-                .stream().flatMap(s -> Arrays.stream(s))
+                .stream().flatMap(Arrays::stream)
                 .filter(url -> !AppConstant.EXCLUSIONS.contains(url) && !urls.contains(url))
                 .map(url -> new UrlParser(allMap, url))
                 .filter(UrlParser::isPass)
