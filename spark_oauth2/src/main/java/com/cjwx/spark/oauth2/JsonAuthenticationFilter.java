@@ -2,7 +2,7 @@ package com.cjwx.spark.oauth2;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cjwx.spark.engine.core.constant.HttpConstant;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +27,7 @@ public class JsonAuthenticationFilter extends AbstractAuthenticationProcessingFi
     public static final String HTTP_METHOD = "POST";
 
     public JsonAuthenticationFilter() {
-        super(new AntPathRequestMatcher(HttpConstant.LOGIN_URL, HTTP_METHOD));
+        super(new AntPathRequestMatcher(AppConstant.LOGIN_URL, HTTP_METHOD));
     }
 
     @Override
@@ -37,8 +37,8 @@ public class JsonAuthenticationFilter extends AbstractAuthenticationProcessingFi
         }
         try (InputStream is = request.getInputStream()) {
             JSONObject json = JSON.parseObject(is, JSONObject.class);
-            String principal = json.getString(HttpConstant.PARAM_USERNAME);
-            String credentials = json.getString(HttpConstant.PARAM_DIGEST);
+            String principal = json.getString(AppConstant.PARAM_USERNAME);
+            String credentials = json.getString(AppConstant.PARAM_DIGEST);
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(principal, credentials);
             return this.getAuthenticationManager().authenticate(authRequest);
         }

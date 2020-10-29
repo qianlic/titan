@@ -1,6 +1,6 @@
 package com.cjwx.spark.oauth2.entity;
 
-import com.cjwx.spark.engine.reids.jwt.JwtToken;
+import com.cjwx.spark.engine.core.dto.TokenDTO;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @Date: 2020年09月03日} 10:41
  */
 @Data
-public class OAuthUser extends JwtToken implements UserDetails {
+public class OAuthUser extends TokenDTO implements UserDetails {
 
     private String userCode;
 

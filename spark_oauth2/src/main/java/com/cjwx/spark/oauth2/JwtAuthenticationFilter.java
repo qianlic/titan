@@ -1,9 +1,8 @@
 package com.cjwx.spark.oauth2;
 
-import com.cjwx.spark.engine.reids.jwt.JwtHelper;
+import com.cjwx.spark.engine.util.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String token = getJwtToken(request);
             if (StringUtils.isNotBlank(token)) {
-                Claims claims = JwtHelper.parseJWT(token);
+                Claims claims = JwtTokenUtils.parseJWT(token);
                 String tokenId = claims.getId();
 
                 if (tokenId != null) {

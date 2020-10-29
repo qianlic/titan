@@ -1,8 +1,9 @@
 package com.cjwx.spark.oauth2.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cjwx.spark.engine.entity.SysClient;
-import com.cjwx.spark.oauth2.entity.OAuthClient;
 import com.cjwx.spark.engine.repository.ClientRepository;
+import com.cjwx.spark.oauth2.entity.OAuthClient;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -29,7 +30,8 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        SysClient client = clientRepository.findByClientCode(clientId);
+        SysClient client = clientRepository.selectOne(new QueryWrapper<SysClient>()
+                .eq("clientCode", clientId));
         OAuthClient clientDetails = new OAuthClient();
         clientDetails.setClientId(client.getClientCode());
         clientDetails.setClientSecret(passwordEncoder.encode(client.getClientSecret()));

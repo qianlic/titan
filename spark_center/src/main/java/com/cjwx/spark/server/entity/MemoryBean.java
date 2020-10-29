@@ -1,5 +1,6 @@
 package com.cjwx.spark.server.entity;
 
+import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * @Date: 2018年07月30日 20:59
  */
 @Data
-public class MemoryBean {
+public class MemoryBean  extends BaseDTO {
 
     private long maxMemory;//可占用内存
     private long totalMemory;//已占用内存

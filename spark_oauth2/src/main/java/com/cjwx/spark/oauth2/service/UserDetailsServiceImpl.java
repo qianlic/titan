@@ -1,10 +1,11 @@
 package com.cjwx.spark.oauth2.service;
 
-import com.cjwx.spark.oauth2.entity.OAuthAuthority;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cjwx.spark.engine.entity.SysResource;
 import com.cjwx.spark.engine.entity.SysRole;
 import com.cjwx.spark.engine.entity.SysUser;
 import com.cjwx.spark.engine.repository.UserRepository;
+import com.cjwx.spark.oauth2.entity.OAuthAuthority;
 import com.cjwx.spark.oauth2.entity.OAuthUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,7 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public OAuthUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = userRepository.findByUserCode(username);
+        SysUser user = userRepository.selectOne(new QueryWrapper<SysUser>()
+                .eq("username", username));
         OAuthUser userDetails = new OAuthUser();
         userDetails.setUserCode(user.getUserCode());
         userDetails.setUsername(user.getUserName());
