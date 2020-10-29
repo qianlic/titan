@@ -1,14 +1,15 @@
 package com.cjwx.spark.crawler.service.impl;
 
 import com.cjwx.spark.crawler.crawler.schedule.CrawlerScheduler;
-import com.cjwx.spark.crawler.entity.ClrCrawlerEntity;
 import com.cjwx.spark.crawler.crawler.schedule.UrlSeed;
+import com.cjwx.spark.crawler.dto.ClrCrawlerDTO;
+import com.cjwx.spark.crawler.entity.ClrCrawler;
 import com.cjwx.spark.crawler.repository.CrawlerRepository;
 import com.cjwx.spark.crawler.service.CrawlerService;
-import com.cjwx.spark.engine.core.model.PageList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.MapperUtils;
+import com.cjwx.spark.engine.util.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,30 +29,34 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Resource
     private CrawlerRepository crawlerRepository;
-    @Autowired
+    @Resource
     private CrawlerScheduler crawlerScheduler;
 
     @Override
+    public ResultDTO<List<ClrCrawlerDTO>> getCrawlerList() throws Exception {
+        return MapperUtils.list(crawlerRepository, ClrCrawlerDTO.class);
+    }
+
+    @Override
+    public ResultDTO<PageDTO<ClrCrawlerDTO>> getCrawlerList(ClrCrawlerDTO crawler, int start, int size) throws Exception {
+        return MapperUtils.pageList(crawlerRepository,
+                ObjectUtils.convert(crawler, ClrCrawler.class),
+                start, size, ClrCrawlerDTO.class);
+    }
+
+    @Override
     public void execute(List<Long> ids) {
-        crawlerScheduler.schedule(crawlerRepository.findAllById(ids)
-                .stream()
-                .map(c -> new UrlSeed(c.getCode(), c.getUrl()))
-                .collect(Collectors.toList()));
+        List<ClrCrawler> crawlers = crawlerRepository.selectBatchIds(ids);
+        if (crawlers != null && !crawlers.isEmpty()) {
+            crawlerScheduler.schedule(crawlers.stream()
+                    .map(c -> new UrlSeed(c.getCode(), c.getUrl()))
+                    .collect(Collectors.toList()));
+        }
     }
 
     @Override
-    public void batchInsert(List<ClrCrawlerEntity> crawlers) {
-        crawlerRepository.saveAll(crawlers);
-    }
-
-    @Override
-    public List<ClrCrawlerEntity> getCrawlerList() {
-        return crawlerRepository.findAll();
-    }
-
-    @Override
-    public PageList<ClrCrawlerEntity> getCrawlerList(int start, int size, ClrCrawlerEntity crawler) {
-        return PageList.of(crawlerRepository.findAll(Example.of(crawler), PageRequest.of(start, size)));
+    public void batchInsert(List<ClrCrawlerDTO> crawlers) {
+        //TODO
     }
 
 }

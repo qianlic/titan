@@ -1,9 +1,9 @@
 package com.cjwx.spark.crawler.crawler.schedule;
 
-import com.cjwx.spark.engine.reids.util.RedisUtils;
+import com.cjwx.spark.engine.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +50,7 @@ public class Frontier {
     public List<UrlSeed> getNextURLs(int max) {
         while (true) {
             synchronized (mutex) {
-                if (isFinished) return Arrays.asList();
+                if (isFinished) return Collections.emptyList();
                 if (RedisUtils.exists(WORK_QUEUES) && max > 0) {
                     try {
                         List<Object> result = RedisUtils.getList(WORK_QUEUES, 0, max - 1);
@@ -72,13 +72,13 @@ public class Frontier {
                 }
             } catch (InterruptedException ignored) {
             }
-            if (isFinished) return Arrays.asList();
+            if (isFinished) return Collections.emptyList();
         }
     }
 
     public void scheduleAll(List<UrlSeed> urls) {
         synchronized (mutex) {
-            urls.stream().forEach(this::saveUrl);
+            urls.forEach(this::saveUrl);
             synchronized (waitingList) {
                 waitingList.notifyAll();
             }

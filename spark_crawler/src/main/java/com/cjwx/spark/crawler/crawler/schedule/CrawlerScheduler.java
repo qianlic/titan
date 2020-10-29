@@ -1,8 +1,9 @@
 package com.cjwx.spark.crawler.crawler.schedule;
 
-import com.cjwx.spark.crawler.entity.ClrCrawlerEntity;
+import com.cjwx.spark.crawler.dto.ClrCrawlerDTO;
 import com.cjwx.spark.crawler.service.CrawlerService;
 import com.cjwx.spark.crawler.util.JsoupUtils;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.util.ObjectUtils;
 import com.cjwx.spark.engine.util.ProcessUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -62,27 +63,30 @@ public class CrawlerScheduler {
         log.info("Crawler {} started", i);
     }
 
-    public void register() {
-        Map<String, ClrCrawlerEntity> crawlers = crawlerService.getCrawlerList().stream()
-                .collect(Collectors.toMap(ClrCrawlerEntity::getCode, c -> {
-                    c.setStatus(false);
-                    return c;
-                }));
-        this.crawlerFunctions.values().stream()
-                .map(c -> c.getClass().getAnnotation(HtmlCrawler.class))
-                .filter(ObjectUtils::isNotEmpty)
-                .forEach(c -> {
-                    ClrCrawlerEntity crawler = crawlers.get(c.value());
-                    if (crawler == null) {
-                        crawler = new ClrCrawlerEntity();
-                        crawler.setCode(c.value());
-                    }
-                    crawler.setName(c.tag());
-                    crawler.setUrl(c.url());
-                    crawler.setStatus(true);
-                    crawlers.put(c.value(), crawler);
-                });
-        crawlerService.batchInsert(new ArrayList<>(crawlers.values()));
+    public void register() throws Exception {
+        ResultDTO<List<ClrCrawlerDTO>> result = crawlerService.getCrawlerList();
+        if (result.isSuccess()) {
+            Map<String, ClrCrawlerDTO> crawlers = result.getData().stream()
+                    .collect(Collectors.toMap(ClrCrawlerDTO::getCode, c -> {
+                        c.setStatus(false);
+                        return c;
+                    }));
+            this.crawlerFunctions.values().stream()
+                    .map(c -> c.getClass().getAnnotation(HtmlCrawler.class))
+                    .filter(ObjectUtils::isNotEmpty)
+                    .forEach(c -> {
+                        ClrCrawlerDTO crawler = crawlers.get(c.value());
+                        if (crawler == null) {
+                            crawler = new ClrCrawlerDTO();
+                            crawler.setCode(c.value());
+                        }
+                        crawler.setName(c.tag());
+                        crawler.setUrl(c.url());
+                        crawler.setStatus(true);
+                        crawlers.put(c.value(), crawler);
+                    });
+            crawlerService.batchInsert(new ArrayList<>(crawlers.values()));
+        }
     }
 
 }

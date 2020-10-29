@@ -1,10 +1,10 @@
 package com.cjwx.spark.crawler.crawler;
 
-import com.cjwx.spark.crawler.entity.ClrWebUrlEntity;
 import com.cjwx.spark.crawler.crawler.schedule.CrawlerFunction;
 import com.cjwx.spark.crawler.crawler.schedule.CrawlerScheduler;
 import com.cjwx.spark.crawler.crawler.schedule.HtmlCrawler;
 import com.cjwx.spark.crawler.crawler.schedule.UrlSeed;
+import com.cjwx.spark.crawler.entity.ClrWebUrl;
 import com.cjwx.spark.crawler.repository.WebUrlRepository;
 import com.cjwx.spark.engine.util.StringUtils;
 import org.jsoup.nodes.Document;
@@ -80,12 +80,12 @@ public class Dytt8Crawler implements CrawlerFunction {
      */
     public void getMovieLink(Document document) {
         document.select("#Zoom table a").stream().forEach(e -> {
-            ClrWebUrlEntity weburl = new ClrWebUrlEntity();
+            ClrWebUrl weburl = new ClrWebUrl();
             weburl.setDomain(document.baseUri());
             weburl.setAnchor(document.title());
             weburl.setTag(e.text());
             weburl.setUrl(e.absUrl("href"));
-            webUrlRepository.save(weburl);
+            webUrlRepository.insert(weburl);
         });
     }
 
