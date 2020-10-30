@@ -1,9 +1,9 @@
 package com.cjwx.spark.crawler.handler;
 
-import com.cjwx.spark.crawler.entity.ClrCrawler;
+import com.cjwx.spark.crawler.dto.ClrCrawlerDTO;
 import com.cjwx.spark.crawler.service.CrawlerService;
-import com.cjwx.spark.engine.util.Model;
-import com.cjwx.spark.engine.util.PageList;
+import com.cjwx.spark.engine.core.dto.PageDTO;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
 import io.swagger.annotations.Api;
@@ -24,8 +24,8 @@ public class CrawlerHandler {
     private CrawlerService crawlerService;
 
     @RestMethod("list")
-    public PageList<ClrCrawler> list(@RequestBody Model<ClrCrawler> model) {
-        return crawlerService.getCrawlerList(model.getStart(), model.getSize(), model.getParams());
+    public ResultDTO<PageDTO<ClrCrawlerDTO>> list(@RequestBody ClrCrawlerDTO crawler) throws Exception {
+        return crawlerService.getCrawlerList(crawler, crawler.getStart(), crawler.getSize());
     }
 
     @RestMethod("run")
