@@ -1,5 +1,6 @@
 package com.cjwx.spark.server.helper;
 
+import com.cjwx.spark.engine.core.dto.PageDTO;
 import com.cjwx.spark.engine.util.ObjectUtils;
 import com.cjwx.spark.server.MBeans;
 import com.cjwx.spark.server.entity.ThreadBean;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Data
 public class ThreadHelper implements Serializable {
 
-    public static PageList<ThreadBean> findThreadList(int start, int size, Map<String, Object> wheres) {
+    public static PageDTO<ThreadBean> findThreadList(int start, int size, Map<String, Object> wheres) {
         ThreadMXBean threadMXBean = MBeans.THREAD_MXBEAN;
         boolean cpuTimeEnabled = threadMXBean.isThreadCpuTimeSupported()
                 && threadMXBean.isThreadCpuTimeEnabled();
@@ -57,7 +58,9 @@ public class ThreadHelper implements Serializable {
             thread.setDeadlocked(deadlocked);
             threadList.add(thread);
         });
-        PageList<ThreadBean> pageList = new PageList<>(start, size);
+        PageDTO<ThreadBean> pageList = new PageDTO<>();
+        pageList.setStart(start);
+        pageList.setLimit(size);
         pageList.setTotal(idx[0]);
         pageList.setList(threadList);
         return pageList;

@@ -1,5 +1,6 @@
 package com.cjwx.spark.server.handler;
 
+import com.cjwx.spark.engine.core.dto.PageDTO;
 import com.cjwx.spark.engine.util.file.ExcelUtils;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ThreadHandler {
 
     @RestMethod("list")
-    public PageList<ThreadBean> list(@RequestBody ThreadBean model) {
+    public PageDTO<ThreadBean> list(@RequestBody ThreadBean model) {
         return ThreadHelper.findThreadList(model.getStart(), model.getSize(),
                 null
                 //model.getParams()
