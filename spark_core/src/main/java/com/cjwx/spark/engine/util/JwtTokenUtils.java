@@ -1,8 +1,10 @@
 package com.cjwx.spark.engine.util;
 
+import com.alibaba.fastjson.JSON;
 import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.core.exception.ServiceException;
 import com.cjwx.spark.engine.core.dto.TokenDTO;
+import com.cjwx.spark.engine.web.http.RequestHelper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -30,18 +32,18 @@ public class JwtTokenUtils {
     /**
      * 生成JWT TOKEN
      */
-    public static String createJWT(TokenDTO token) {
-        String tokenId = token.getTokenId();
-        JwtBuilder jwtBuilder = createJWT(tokenId, token.getHost());
-        RedisUtils.set(AUTHORIZATION_KEY + "." + AppConstant.VERSION + "." + tokenId, token, EXPIRE_TIME);
-        return jwtBuilder.compact();
+    public static String createJWT(Object subject) {
+        return createJWT(StringUtils.randomUUID(), RequestHelper.getClientIp(), JSON.toJSONString(subject));
     }
 
     /**
-     * 生成JWT
+     * 生成JWT TOKEN
      */
-    public static JwtBuilder createJWT(String tokenId, String host) {
-        return createJWT().setId(tokenId).setIssuer(StringUtils.trim(host));
+    public static String createJWT(String tokenId, String host, String subject) {
+        return createJWT().setId(tokenId)
+                .setIssuer(StringUtils.trim(host))
+                .setSubject(subject)
+                .compact();
     }
 
     /**

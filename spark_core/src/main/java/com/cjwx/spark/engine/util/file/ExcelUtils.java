@@ -21,23 +21,13 @@ public class ExcelUtils {
     public static final int DEFAULT_WIDTH = 2048;
 
     public static void download(String[] title, String[][] data) {
-        OutputStream out = null;
-        try {
-            HttpServletResponse response = ResponseHelper.getResponse();
-            out = response.getOutputStream();
+        HttpServletResponse response = ResponseHelper.getResponse();
+        try (OutputStream out = response.getOutputStream()) {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment;filename=download.xls");
             buildWorkbook("Sheet1", title, data).write(out);
         } catch (IOException e) {
             ExceptionUtils.throwError("Excel创建失败", e);
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    ExceptionUtils.throwError("Excel创建失败", e);
-                }
-            }
         }
     }
 

@@ -1,10 +1,8 @@
 package com.cjwx.spark.crawler.service;
 
 import com.cjwx.spark.crawler.dto.ClrCrawlerDTO;
-import com.cjwx.spark.crawler.entity.ClrCrawler;
 import com.cjwx.spark.engine.core.dto.PageDTO;
 import com.cjwx.spark.engine.core.dto.ResultDTO;
-import com.cjwx.spark.engine.util.PageList;
 
 import java.util.List;
 

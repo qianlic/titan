@@ -1,16 +1,17 @@
 package com.cjwx.spark.server.zuul;
 
 import com.alibaba.fastjson.JSON;
+import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.core.dto.TokenDTO;
 import com.cjwx.spark.engine.util.JwtTokenUtils;
 import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.http.RequestHelper;
-import com.cjwx.spark.engine.web.http.ResponseHelper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AuthorizationFilter extends ZuulFilter {
 
-    //定义filter的类型，有pre、route、post、error四种
-    private static final String FILTER_TYPE = "pre";
-
     @Override
     public String filterType() {
-        return FILTER_TYPE;
+        return FilterConstants.PRE_TYPE;
     }
 
     @Override
@@ -80,8 +78,8 @@ public class AuthorizationFilter extends ZuulFilter {
     private Object writeJson(RequestContext ctx, int status, String message) {
         ctx.setSendZuulResponse(false);
         ctx.setResponseStatusCode(status);
-
-        ResponseHelper.writeJson(ctx.getResponse(), status, ResultUtils.fail(message));
+        ctx.getResponse().setContentType(AppConstant.DEFAULT_MEDIA_TYPE);
+        ctx.setResponseBody(JSON.toJSONString(ResultUtils.fail(message)));
         return null;
     }
 

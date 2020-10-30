@@ -40,7 +40,6 @@ public class HttpClientUtils {
         String result = StringUtils.NULL_STRING;
         HttpClient client = new HttpClient();
         PostMethod post = new PostMethod(url);
-        FilePart fp;
         try {
             List<Part> parts = new ArrayList<>();
             for (String k : param.keySet()) {

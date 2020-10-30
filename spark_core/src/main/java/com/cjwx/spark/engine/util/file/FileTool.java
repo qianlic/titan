@@ -90,13 +90,9 @@ public class FileTool {
 
     private void connectFtpServer(Consumer<FTPClient> opt) throws Exception {
         FTPClient ftp = new FTPClient();
-        try {
-            ftp.connect(ftpURL, ftpPort);
-            if (!ftp.login(ftpAdmin, ftpPassword)) {
-                ExceptionUtils.throwError("FTP连接异常");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        ftp.connect(ftpURL, ftpPort);
+        if (!ftp.login(ftpAdmin, ftpPassword)) {
+            ExceptionUtils.throwError("FTP连接异常");
         }
         int reply = ftp.getReplyCode();
         if (!FTPReply.isPositiveCompletion(reply))
@@ -113,8 +109,6 @@ public class FileTool {
         opt.accept(ftp);
         try {
             ftp.logout();
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             try {
                 if (ftp.isConnected()) {

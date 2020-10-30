@@ -3,7 +3,7 @@
 ## 前端
 > mpvue + iview + vue-router + vuex + echarts
 ## 后端
-> spring + springmvc + hibernate + mysql + redis
+> spring + springmvc + mybatis + mysql + redis
 
 ## 项目结构
 ```

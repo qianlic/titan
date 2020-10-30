@@ -1,12 +1,10 @@
 package com.cjwx.spark.engine.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.cjwx.spark.engine.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Description: 用户
@@ -38,8 +36,5 @@ public class SysUser extends BaseEntity {
     private String imgUrl;
 
     private Date lastLoginTime;
-
-    @TableField(exist = false)
-    private List<SysRole> roles;
 
 }

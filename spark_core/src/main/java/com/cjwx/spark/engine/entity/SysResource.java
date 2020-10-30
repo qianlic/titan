@@ -1,12 +1,8 @@
 package com.cjwx.spark.engine.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.cjwx.spark.engine.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Description: 资源
@@ -32,8 +28,5 @@ public class SysResource extends BaseEntity {
     private Integer level;
 
     private Integer parentId;
-
-    @TableField(exist = false)
-    private List<SysResource> children = new ArrayList<>();
 
 }

@@ -1,11 +1,8 @@
 package com.cjwx.spark.engine.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.cjwx.spark.engine.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * @Description: 角色
@@ -21,8 +18,5 @@ public class SysRole extends BaseEntity {
     private String roleName;
 
     private String description;
-
-    @TableField(exist = false)
-    private List<SysResource> resources;
 
 }

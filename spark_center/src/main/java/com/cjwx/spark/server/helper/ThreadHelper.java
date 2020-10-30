@@ -1,6 +1,5 @@
 package com.cjwx.spark.server.helper;
 
-import com.cjwx.spark.engine.util.PageList;
 import com.cjwx.spark.engine.util.ObjectUtils;
 import com.cjwx.spark.server.MBeans;
 import com.cjwx.spark.server.entity.ThreadBean;

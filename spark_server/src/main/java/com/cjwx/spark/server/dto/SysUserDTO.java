@@ -38,6 +38,4 @@ public class SysUserDTO extends BaseDTO {
 
     private List<SysRoleDTO> roles;
 
-    private List<SysResourceDTO> resources;
-
 }

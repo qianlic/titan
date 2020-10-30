@@ -8,6 +8,7 @@ import com.cjwx.spark.engine.entity.SysRole;
 import com.cjwx.spark.engine.repository.RoleRepository;
 import com.cjwx.spark.engine.util.MapperUtils;
 import com.cjwx.spark.engine.util.ObjectUtils;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.server.dto.SysRoleDTO;
 import com.cjwx.spark.server.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -62,8 +63,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public ResultDTO<List<SysRoleDTO>> findRolesByIds(List<Long> ids) throws Exception {
-        return MapperUtils.list(roleRepository, ids, SysRoleDTO.class);
+    public ResultDTO<List<SysRoleDTO>> findByUserId(Long userId) throws Exception {
+        return ResultUtils.success(ObjectUtils.convert(roleRepository.findByUserId(userId), SysRoleDTO.class));
     }
 
 }

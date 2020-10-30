@@ -20,6 +20,6 @@ public interface RoleService {
 
     ResultDTO<PageDTO<SysRoleDTO>> getRoleList(SysRoleDTO role, int start, int size) throws Exception;
 
-    ResultDTO<List<SysRoleDTO>> findRolesByIds(List<Long> ids) throws Exception;
+    ResultDTO<List<SysRoleDTO>> findByUserId(Long userId) throws Exception;
 
 }
