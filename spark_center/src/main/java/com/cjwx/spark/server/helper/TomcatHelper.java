@@ -1,14 +1,15 @@
 package com.cjwx.spark.server.helper;
 
-import com.cjwx.spark.server.MBeans;
-import com.cjwx.spark.server.entity.TomcatBean;
+import com.cjwx.spark.server.dto.TomcatDTO;
+import com.cjwx.spark.server.util.MXBeanUtils;
 
-import javax.management.*;
+import javax.management.ObjectName;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -17,49 +18,37 @@ import java.util.stream.Collectors;
 public class TomcatHelper implements Serializable {
 
     private static boolean TOMCAT_USED = System.getProperty("catalina.home") != null;
-    private static List<ObjectName> THREAD_POOLS = new ArrayList<>();
-    private static Map<String, ObjectName> GLOBAL_REQUEST_PROCESSORS = new HashMap<>();
 
-    public static List<TomcatBean> findTomcatList() {
+    public static List<TomcatDTO> findTomcatList() throws Exception {
+        List<TomcatDTO> tomcatList = new ArrayList<>();
         if (TOMCAT_USED) {
-            synchronized (THREAD_POOLS) {
-                if (THREAD_POOLS.isEmpty() || GLOBAL_REQUEST_PROCESSORS.isEmpty()) {
-                    initMBeans();
-                }
-            }
-            List<TomcatBean> tomcatList = new ArrayList<>();
+            Set<ObjectName> tomcatThreadPools = MXBeanUtils.queryName("*:type=ThreadPool,*");
+            Set<ObjectName> tomcatProcessors = MXBeanUtils.queryName("*:type=GlobalRequestProcessor,*");
+            Map<String, ObjectName> tomcatProcessorsMap = tomcatProcessors.stream()
+                    .collect(Collectors.toMap(ObjectName
+                            -> ObjectName.getKeyProperty("name"), Function.identity()));
 
-            for (ObjectName threadPool : THREAD_POOLS) {
+            for (ObjectName threadPool : tomcatThreadPools) {
                 String name = threadPool.getKeyProperty("name");
-                TomcatBean tomcat = new TomcatBean();
+                TomcatDTO tomcat = new TomcatDTO();
                 tomcat.setName(name);
-                tomcat.setMaxThreads((Integer) MBeans.getAttribute(threadPool, "maxThreads"));
-                tomcat.setCurrentThreadCount((Integer) MBeans.getAttribute(threadPool, "currentThreadCount"));
-                tomcat.setCurrentThreadsBusy((Integer) MBeans.getAttribute(threadPool, "currentThreadsBusy"));
+                tomcat.setMaxThreads((Integer) MXBeanUtils.getAttribute(threadPool, "maxThreads"));
+                tomcat.setCurrentThreadCount((Integer) MXBeanUtils.getAttribute(threadPool, "currentThreadCount"));
+                tomcat.setCurrentThreadsBusy((Integer) MXBeanUtils.getAttribute(threadPool, "currentThreadsBusy"));
 
-                ObjectName grp = GLOBAL_REQUEST_PROCESSORS.get(name);
+                ObjectName grp = tomcatProcessorsMap.get(name);
                 if (grp != null) {
-                    tomcat.setBytesReceived((Long) MBeans.getAttribute(grp, "bytesReceived"));
-                    tomcat.setBytesSent((Long) MBeans.getAttribute(grp, "bytesSent"));
-                    tomcat.setRequestCount((Integer) MBeans.getAttribute(grp, "requestCount"));
-                    tomcat.setErrorCount((Integer) MBeans.getAttribute(grp, "errorCount"));
-                    tomcat.setProcessingTime((Long) MBeans.getAttribute(grp, "processingTime"));
-                    tomcat.setMaxTime((Long) MBeans.getAttribute(grp, "maxTime"));
+                    tomcat.setBytesReceived((Long) MXBeanUtils.getAttribute(grp, "bytesReceived"));
+                    tomcat.setBytesSent((Long) MXBeanUtils.getAttribute(grp, "bytesSent"));
+                    tomcat.setRequestCount((Integer) MXBeanUtils.getAttribute(grp, "requestCount"));
+                    tomcat.setErrorCount((Integer) MXBeanUtils.getAttribute(grp, "errorCount"));
+                    tomcat.setProcessingTime((Long) MXBeanUtils.getAttribute(grp, "processingTime"));
+                    tomcat.setMaxTime((Long) MXBeanUtils.getAttribute(grp, "maxTime"));
                 }
                 tomcatList.add(tomcat);
             }
-            return tomcatList;
         }
-        return null;
-    }
-
-    public static void initMBeans() {
-        THREAD_POOLS.clear();
-        THREAD_POOLS.addAll(MBeans.getTomcatThreadPools());
-
-        GLOBAL_REQUEST_PROCESSORS.clear();
-        GLOBAL_REQUEST_PROCESSORS.putAll(MBeans.getTomcatGlobalRequestProcessors().stream()
-                .collect(Collectors.toMap(ObjectName -> ObjectName.getKeyProperty("name"), ObjectName -> ObjectName)));
+        return tomcatList;
     }
 
 }

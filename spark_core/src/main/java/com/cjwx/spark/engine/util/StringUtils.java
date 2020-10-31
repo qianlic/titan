@@ -6,10 +6,7 @@ import com.cjwx.spark.engine.core.exception.ServiceException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -235,7 +232,7 @@ public class StringUtils {
         if (isNotEmpty(source)) {
             return Arrays.asList(source.split(split));
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**

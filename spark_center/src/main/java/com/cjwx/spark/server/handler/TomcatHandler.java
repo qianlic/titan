@@ -1,9 +1,11 @@
 package com.cjwx.spark.server.handler;
 
-import com.cjwx.spark.server.entity.TomcatBean;
-import com.cjwx.spark.server.helper.TomcatHelper;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
+import com.cjwx.spark.server.dto.TomcatDTO;
+import com.cjwx.spark.server.helper.TomcatHelper;
 import io.swagger.annotations.Api;
 
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.List;
 public class TomcatHandler {
 
     @RestMethod("list")
-    public List<TomcatBean> list() {
-        return TomcatHelper.findTomcatList();
+    public ResultDTO<List<TomcatDTO>> list() throws Exception {
+        return ResultUtils.success(TomcatHelper.findTomcatList());
     }
 
 }

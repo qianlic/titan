@@ -21,7 +21,7 @@ public class RedisHelper {
 
     // 获取redis 服务器信息
     public static Map<String, Object> getRedisInfo() {
-        Client client = getJedis().getClient();
+        Client client = getRedis().getClient();
         client.info();
         Map<String, Object> info = new HashMap<>();
         StringUtils.stringToList(client.getBulkReply(), "# ").stream()
@@ -46,27 +46,27 @@ public class RedisHelper {
 
     // 获取日志列表
     public static List<Slowlog> getLogs(long entries) {
-        return getJedis().slowlogGet(entries);
+        return getRedis().slowlogGet(entries);
     }
 
     // 获取日志条数
     public static Long getLogsLen() {
-        return getJedis().slowlogLen();
+        return getRedis().slowlogLen();
     }
 
     // 清空日志
     public static String logEmpty() {
-        return getJedis().slowlogReset();
+        return getRedis().slowlogReset();
     }
 
     // 获取占用内存大小
     public static Long dbSize() {
-        Client client = getJedis().getClient();
+        Client client = getRedis().getClient();
         client.dbSize();
         return client.getIntegerReply();
     }
 
-    private static Jedis getJedis() {
+    private static Jedis getRedis() {
         if (jedis == null) {
             jedis = (Jedis) RedisUtils.getRedisConnection().getNativeConnection();
         }

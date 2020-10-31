@@ -1,10 +1,11 @@
 package com.cjwx.spark.server.handler;
 
 import com.cjwx.spark.engine.core.dto.PageDTO;
-import com.cjwx.spark.engine.util.file.ExcelUtils;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.server.entity.ThreadBean;
+import com.cjwx.spark.server.dto.ThreadDTO;
 import com.cjwx.spark.server.helper.ThreadHelper;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,23 +21,13 @@ import java.util.List;
 public class ThreadHandler {
 
     @RestMethod("list")
-    public PageDTO<ThreadBean> list(@RequestBody ThreadBean model) {
-        return ThreadHelper.findThreadList(model.getStart(), model.getSize(),
-                null
-                //model.getParams()
-        );
-    }
-
-    @RestMethod("download")
-    public void download(@RequestBody ThreadBean model) {
-        String[] title = {"线程编号", "线程名"};
-        String[][] data = null;//ThreadHelper.findThreadList(model.getParams());
-        ExcelUtils.download(title, data);
+    public ResultDTO<PageDTO<ThreadDTO>> list(@RequestBody ThreadDTO thread) {
+        return ResultUtils.success(ThreadHelper.findThreadList(thread, thread.getStart(), thread.getSize()));
     }
 
     @RestMethod("interrupt")
-    public int interrupt(@RequestBody List<Long> ids) {
-        return ThreadHelper.interruptThread(ids);
+    public ResultDTO<Integer> interrupt(@RequestBody List<Long> ids) {
+        return ResultUtils.success(ThreadHelper.interruptThread(ids));
     }
 
 }

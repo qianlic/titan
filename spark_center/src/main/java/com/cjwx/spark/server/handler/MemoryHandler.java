@@ -1,6 +1,8 @@
 package com.cjwx.spark.server.handler;
 
-import com.cjwx.spark.server.entity.MemoryBean;
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
+import com.cjwx.spark.server.dto.MemoryDTO;
 import com.cjwx.spark.server.helper.MemoryHelper;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
@@ -15,8 +17,8 @@ import io.swagger.annotations.Api;
 public class MemoryHandler {
 
     @RestMethod("info")
-    public MemoryBean info() {
-        return MemoryHelper.getMemoryInformations();
+    public ResultDTO<MemoryDTO> info() throws Exception {
+        return ResultUtils.success(MemoryHelper.getMemoryInformation());
     }
 
 }

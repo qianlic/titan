@@ -1,9 +1,9 @@
 package com.cjwx.spark.server.helper;
 
 import com.cjwx.spark.engine.core.dto.PageDTO;
-import com.cjwx.spark.engine.util.ObjectUtils;
-import com.cjwx.spark.server.MBeans;
-import com.cjwx.spark.server.entity.ThreadBean;
+import com.cjwx.spark.engine.util.ProcessUtils;
+import com.cjwx.spark.server.dto.ThreadDTO;
+import com.cjwx.spark.server.util.MXBeanUtils;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,94 +20,61 @@ import java.util.stream.Collectors;
 @Data
 public class ThreadHelper implements Serializable {
 
-    public static PageDTO<ThreadBean> findThreadList(int start, int size, Map<String, Object> wheres) {
-        ThreadMXBean threadMXBean = MBeans.THREAD_MXBEAN;
-        boolean cpuTimeEnabled = threadMXBean.isThreadCpuTimeSupported()
-                && threadMXBean.isThreadCpuTimeEnabled();
-
+    public static PageDTO<ThreadDTO> findThreadList(ThreadDTO thread, int start, int size) {
+        ThreadMXBean threadMXBean = MXBeanUtils.getThreadMXBean();
+        boolean cpuTimeEnabled = cpuTimeEnabled(threadMXBean);
+        long[] deadlockedThreads = deadlockedThreads(threadMXBean);
         Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
-        long[] deadlockedThreads;
-        if (threadMXBean.isSynchronizerUsageSupported()) {
-            deadlockedThreads = threadMXBean.findDeadlockedThreads();
-        } else {
-            deadlockedThreads = threadMXBean.findMonitorDeadlockedThreads();
-        }
-        List<ThreadBean> threadList = new ArrayList<>();
+
+        List<ThreadDTO> threadList = new ArrayList<>();
         int[] idx = {0};
         stackTraces.forEach((k, v) -> {
-            Long id = k.getId();
+            long id = k.getId();
             boolean deadlocked = false;
-            if (deadlockedThreads != null && Arrays.binarySearch(deadlockedThreads, id) >= 0) {
+            if (Arrays.binarySearch(deadlockedThreads, id) >= 0) {
                 deadlocked = true;
             }
-            if (wheres.containsKey("state") && !k.getState().name().equals(wheres.get("state"))) {
+            if (thread.getState() != null && !k.getState().name().equals(thread.getState())) {
                 return;
-            } else if (wheres.containsKey("daemon") && k.isDaemon() != ObjectUtils.objectToBoolean(wheres.get("daemon"))) {
+            } else if (thread.getDaemon() != null && k.isDaemon() != thread.getDaemon()) {
                 return;
-            } else if (wheres.containsKey("deadlocked") && deadlocked != ObjectUtils.objectToBoolean(wheres.get("deadlocked"))) {
+            } else if (thread.getDeadlocked() != null && deadlocked != thread.getDeadlocked()) {
                 return;
             } else if (idx[0]++ < start || idx[0] > start + size) {
                 return;
             }
-            ThreadBean thread = new ThreadBean(k);
-            thread.setStackTrace(Arrays.asList(v).stream().map(StackTraceElement::toString).collect(Collectors.toList()));
+            ThreadDTO dto = new ThreadDTO();
+            dto.setId(k.getId());
+            dto.setGlobalThreadId(ProcessUtils.getPID() + '_' + k.getId());
+            dto.setName(k.getName());
+            dto.setPriority(k.getPriority());
+            dto.setDaemon(k.isDaemon());
+            dto.setState(k.getState().name());
+            dto.setStackTrace(Arrays.stream(v).map(StackTraceElement::toString).collect(Collectors.toList()));
             if (cpuTimeEnabled) {
-                thread.setCpuTimeMillis(threadMXBean.getThreadCpuTime(id) / 1000000);
-                thread.setUserTimeMillis(threadMXBean.getThreadUserTime(id) / 1000000);
+                dto.setCpuTimeMillis(threadMXBean.getThreadCpuTime(id) / 1000000);
+                dto.setUserTimeMillis(threadMXBean.getThreadUserTime(id) / 1000000);
             }
-            thread.setDeadlocked(deadlocked);
-            threadList.add(thread);
+            dto.setDeadlocked(deadlocked);
+            threadList.add(dto);
         });
-        PageDTO<ThreadBean> pageList = new PageDTO<>();
-        pageList.setStart(start);
-        pageList.setLimit(size);
-        pageList.setTotal(idx[0]);
-        pageList.setList(threadList);
-        return pageList;
+        PageDTO<ThreadDTO> page = new PageDTO<>();
+        page.setStart(start);
+        page.setLimit(size);
+        page.setTotal(idx[0]);
+        page.setList(threadList);
+        return page;
     }
 
-    public static String[][] findThreadList(ThreadBean wheres) {
-        ThreadMXBean threadMXBean = MBeans.THREAD_MXBEAN;
-        boolean cpuTimeEnabled = threadMXBean.isThreadCpuTimeSupported()
-                && threadMXBean.isThreadCpuTimeEnabled();
-
-        Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
-        long[] deadlockedThreads;
+    private static long[] deadlockedThreads(ThreadMXBean threadMXBean) {
         if (threadMXBean.isSynchronizerUsageSupported()) {
-            deadlockedThreads = threadMXBean.findDeadlockedThreads();
-        } else {
-            deadlockedThreads = threadMXBean.findMonitorDeadlockedThreads();
+            return threadMXBean.findDeadlockedThreads();
         }
-        List<ThreadBean> threadList = new ArrayList<>();
-        stackTraces.forEach((k, v) -> {
-            long id = k.getId();
-            boolean deadlocked = false;
-            if (deadlockedThreads != null && Arrays.binarySearch(deadlockedThreads, id) >= 0) {
-                deadlocked = true;
-            }
-            /*if (wheres.getState() != null && !k.getState().equals(wheres.getState())) {
-                return;
-            } else if (wheres.isDaemon() && k.isDaemon() != ObjectUtils.objectToBoolean(wheres.get("daemon"))) {
-                return;
-            } else if (wheres.containsKey("deadlocked") && deadlocked != ObjectUtils.objectToBoolean(wheres.get("deadlocked"))) {
-                return;
-            }*/
-            ThreadBean thread = new ThreadBean(k);
-            thread.setStackTrace(Arrays.asList(v).stream().map(StackTraceElement::toString).collect(Collectors.toList()));
-            if (cpuTimeEnabled) {
-                thread.setCpuTimeMillis(threadMXBean.getThreadCpuTime(id) / 1000000);
-                thread.setUserTimeMillis(threadMXBean.getThreadUserTime(id) / 1000000);
-            }
-            thread.setDeadlocked(deadlocked);
-            threadList.add(thread);
-        });
-        String[][] data = new String[threadList.size()][];
-        for (int i = 0; i < threadList.size(); i++) {
-            data[i] = new String[2];
-            data[i][0] = String.valueOf(threadList.get(i).getId());
-            data[i][1] = threadList.get(i).getName();
-        }
-        return data;
+        return threadMXBean.findMonitorDeadlockedThreads();
+    }
+
+    private static boolean cpuTimeEnabled(ThreadMXBean threadMXBean) {
+        return threadMXBean.isThreadCpuTimeSupported() && threadMXBean.isThreadCpuTimeEnabled();
     }
 
     public static int interruptThread(List<Long> ids) {

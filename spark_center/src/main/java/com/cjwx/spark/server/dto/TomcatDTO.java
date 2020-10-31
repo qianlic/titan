@@ -1,4 +1,4 @@
-package com.cjwx.spark.server.entity;
+package com.cjwx.spark.server.dto;
 
 import com.cjwx.spark.engine.core.dto.BaseDTO;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @Date: 2018年08月01日 13:12
  */
 @Data
-public class TomcatBean extends BaseDTO {
+public class TomcatDTO extends BaseDTO {
 
     private String name;
     private int maxThreads;

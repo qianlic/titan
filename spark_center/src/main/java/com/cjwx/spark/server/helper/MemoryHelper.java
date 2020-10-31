@@ -1,7 +1,7 @@
 package com.cjwx.spark.server.helper;
 
-import com.cjwx.spark.server.MBeans;
-import com.cjwx.spark.server.entity.MemoryBean;
+import com.cjwx.spark.server.dto.MemoryDTO;
+import com.cjwx.spark.server.util.MXBeanUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.management.ObjectName;
@@ -9,8 +9,7 @@ import java.io.Serializable;
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.MemoryUsage;
-import java.lang.management.OperatingSystemMXBean;
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,88 +21,133 @@ public class MemoryHelper implements Serializable {
     private static final String NEXT = ",\n";
     private static final String MO = " Mo";
 
-    public static MemoryBean getMemoryInformations() {
-        MemoryBean memory = new MemoryBean(Runtime.getRuntime());
-        MemoryUsage usage = getPermGenMemoryUsage();
+    public static MemoryDTO getMemoryInformation() throws Exception {
+        MemoryDTO memory = new MemoryDTO();
+        Runtime runtime = Runtime.getRuntime();
+        memory.setMaxMemory(runtime.maxMemory() / 1024 / 1024);
+        memory.setTotalMemory(runtime.totalMemory() / 1024 / 1024);
+        memory.setFreeMemory(runtime.freeMemory() / 1024 / 1024);
+        memory.setUsedMemory(memory.getTotalMemory() - memory.getFreeMemory());
+        MemoryUsage usage = permGenMemoryUsage();
         if (usage != null) {
             memory.setUsedPermGen(usage.getUsed());
             memory.setMaxPermGen(usage.getMax());
         }
-        memory.setUsedNonHeapMemory(getNonHeapMemoryUsage().getUsed() / 1024 / 1024);
-        memory.setUsedBufferedMemory(getUsedBufferMemory() / 1024 / 1024);
-        memory.setLoadedClassesCount(MBeans.CLASSLOADING_MXBEAN.getLoadedClassCount());
-        memory.setGarbageCollectionTimeMillis(buildGarbageCollectionTimeMillis());
+        memory.setUsedNonHeapMemory(usedNonHeapMemory());
+        memory.setUsedBufferedMemory(usedBufferMemory());
+        memory.setLoadedClassesCount(loadedClassesCount());
+        memory.setGarbageCollectionTimeMillis(garbageCollectionTimeMillis());
 
-        OperatingSystemMXBean operatingSystem = MBeans.OPERATING_SYSTEM_MXBEAN;
-        if (isSunOsMBean(operatingSystem)) {
-            memory.setTotalPhysicalMemorySize(MBeans.getFromOperatingSystem("getTotalPhysicalMemorySize") / 1024 / 1024);
-            memory.setFreePhysicalMemorySize(MBeans.getFromOperatingSystem("getFreePhysicalMemorySize") / 1024 / 1024);
-            memory.setTotalSwapSpaceSize(MBeans.getFromOperatingSystem("getTotalSwapSpaceSize") / 1024 / 1024);
-            memory.setFreeSwapSpaceSize(MBeans.getFromOperatingSystem("getFreeSwapSpaceSize") / 1024 / 1024);
+        if (MXBeanUtils.isSunOsMBean()) {
+            memory.setTotalPhysicalMemorySize(totalPhysicalMemorySize());
+            memory.setFreePhysicalMemorySize(freePhysicalMemorySize());
+            memory.setTotalSwapSpaceSize(totalSwapSpaceSize());
+            memory.setFreeSwapSpaceSize(freeSwapSpaceSize());
         }
         memory.setMemoryDetails(buildMemoryDetails(memory));
         return memory;
     }
 
-    private static String buildMemoryDetails(MemoryBean memory) {
-        String nonHeapMemory = "Non heap memory = " + memory.getUsedNonHeapMemory() + MO + " (Perm Gen, Code Cache)";
-        String osInfo = nonHeapMemory;
-        String classLoading = "Loaded classes = " + memory.getLoadedClassesCount();
-        String gc = "Garbage collection time = " + memory.getGarbageCollectionTimeMillis() + " ms";
+    private static String buildMemoryDetails(MemoryDTO memory) throws Exception {
+        StringBuilder osInfo = new StringBuilder();
+        osInfo.append("Non heap memory = ")
+                .append(memory.getUsedNonHeapMemory())
+                .append(MO)
+                .append(" (Perm Gen, Code Cache)");
         if (memory.getUsedBufferedMemory() >= 0) {
-            String bufferedMemory = "Buffered memory = " + memory.getUsedBufferedMemory();
-            osInfo += NEXT + bufferedMemory + MO;
+            osInfo.append(NEXT)
+                    .append("Buffered memory = ")
+                    .append(memory.getUsedBufferedMemory())
+                    .append(MO);
         }
-        osInfo += NEXT + classLoading + NEXT + gc;
-        if (isSunOsMBean(MBeans.OPERATING_SYSTEM_MXBEAN)) {
-            osInfo += NEXT + "Process cpu time = "
-                    + MBeans.getFromOperatingSystem("getProcessCpuTime") / 1000000
-                    + " ms,\nCommitted virtual memory = "
-                    + MBeans.getFromOperatingSystem("getCommittedVirtualMemorySize") / 1024 / 1024 + MO
-                    + ",\nFree physical memory = " + memory.getFreePhysicalMemorySize() + MO
-                    + ",\nTotal physical memory = " + memory.getTotalPhysicalMemorySize() + MO
-                    + ",\nFree swap space = " + memory.getFreeSwapSpaceSize() + MO
-                    + ",\nTotal swap space = " + memory.getTotalSwapSpaceSize() + MO;
+        osInfo.append(NEXT)
+                .append("Loaded classes = ")
+                .append(memory.getLoadedClassesCount())
+                .append(NEXT)
+                .append("Garbage collection time = ")
+                .append(memory.getGarbageCollectionTimeMillis())
+                .append(" ms");
+        if (MXBeanUtils.isSunOsMBean()) {
+            osInfo.append(NEXT + "Process cpu time = ")
+                    .append(processCpuTime())
+                    .append(" ms,\nCommitted virtual memory = ")
+                    .append(committedVirtualMemorySize())
+                    .append(MO)
+                    .append(",\nFree physical memory = ")
+                    .append(memory.getFreePhysicalMemorySize())
+                    .append(MO)
+                    .append(",\nTotal physical memory = ")
+                    .append(memory.getTotalPhysicalMemorySize())
+                    .append(MO)
+                    .append(",\nFree swap space = ")
+                    .append(memory.getFreeSwapSpaceSize())
+                    .append(MO)
+                    .append(",\nTotal swap space = ")
+                    .append(memory.getTotalSwapSpaceSize())
+                    .append(MO);
         }
-        return osInfo;
+        return osInfo.toString();
     }
 
-    private static boolean isSunOsMBean(OperatingSystemMXBean operatingSystem) {
-        String className = operatingSystem.getClass().getName();
-        return "com.sun.management.OperatingSystem".equals(className)
-                || "com.sun.management.UnixOperatingSystem".equals(className)
-                || "sun.management.OperatingSystemImpl".equals(className);
+    private static long totalPhysicalMemorySize() throws Exception {
+        return MXBeanUtils.getFromOperatingSystem("getTotalPhysicalMemorySize") / 1024 / 1024;
     }
 
-    private static long buildGarbageCollectionTimeMillis() {
+    private static long freePhysicalMemorySize() throws Exception {
+        return MXBeanUtils.getFromOperatingSystem("getFreePhysicalMemorySize") / 1024 / 1024;
+    }
+
+    private static long totalSwapSpaceSize() throws Exception {
+        return MXBeanUtils.getFromOperatingSystem("getTotalSwapSpaceSize") / 1024 / 1024;
+    }
+
+    private static long freeSwapSpaceSize() throws Exception {
+        return MXBeanUtils.getFromOperatingSystem("getFreeSwapSpaceSize") / 1024 / 1024;
+    }
+
+    private static long processCpuTime() throws Exception {
+        return MXBeanUtils.getFromOperatingSystem("getProcessCpuTime") / 1000000;
+    }
+
+    private static long committedVirtualMemorySize() throws Exception {
+        return MXBeanUtils.getFromOperatingSystem("getCommittedVirtualMemorySize") / 1024 / 1024;
+    }
+
+    private static long garbageCollectionTimeMillis() {
         long garbageCollectionTime = 0;
-        for (GarbageCollectorMXBean garbageCollector : MBeans.CARBAGE_COLLECTOR_MXBEANS) {
+        List<GarbageCollectorMXBean> garbageCollectors = MXBeanUtils.getGarbageCollectorMXBeans();
+        for (GarbageCollectorMXBean garbageCollector : garbageCollectors) {
             garbageCollectionTime += garbageCollector.getCollectionTime();
         }
         return garbageCollectionTime;
     }
 
-    private static long getUsedBufferMemory() {
-        Set<ObjectName> nioBufferPools = MBeans.getNioBufferPools();
+    private static int loadedClassesCount() {
+        return MXBeanUtils.getClassLoadingMXBean().getLoadedClassCount();
+    }
+
+    private static long usedBufferMemory() throws Exception {
+        Set<ObjectName> nioBufferPools = MXBeanUtils.queryName("java.nio:type=BufferPool,*");
         if (nioBufferPools.isEmpty()) {
             return -1;
         }
         long result = 0;
         for (ObjectName objectName : nioBufferPools) {
-            result += (Long) MBeans.getAttribute(objectName, "MemoryUsed");
+            result += (Long) MXBeanUtils.getAttribute(objectName, "MemoryUsed");
         }
-        return result;
+        return result / 1024 / 1024;
     }
 
-    public static MemoryUsage getNonHeapMemoryUsage() {
-        return MBeans.MEMORY_MXBEAN.getNonHeapMemoryUsage();
+    private static Long usedNonHeapMemory() {
+        return MXBeanUtils.getMemoryMXBean().getNonHeapMemoryUsage().getUsed() / 1024 / 1024;
     }
 
-    public static MemoryUsage getPermGenMemoryUsage() {
-        Optional<MemoryPoolMXBean> optional = MBeans.MEMORY_POOL_MXBEANS.stream()
+    private static MemoryUsage permGenMemoryUsage() {
+        return MXBeanUtils.getMemoryPoolMXBeans().stream()
                 .filter(memoryPool -> memoryPool.getName().endsWith("Perm Gen"))
-                .findFirst();
-        return optional.map(MemoryPoolMXBean::getUsage).orElse(null);
+                .findFirst()
+                .map(MemoryPoolMXBean::getUsage)
+                .orElse(null);
     }
 
 }

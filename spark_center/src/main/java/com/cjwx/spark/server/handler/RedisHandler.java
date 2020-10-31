@@ -1,5 +1,7 @@
 package com.cjwx.spark.server.handler;
 
+import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.server.helper.RedisHelper;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
@@ -16,8 +18,8 @@ import java.util.Map;
 public class RedisHandler {
 
     @RestMethod("info")
-    public Map<String, Object> info() {
-        return RedisHelper.getRedisInfo();
+    public ResultDTO<Map<String, Object>> info() {
+        return ResultUtils.success(RedisHelper.getRedisInfo());
     }
 
 }
