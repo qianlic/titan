@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @EnableAspectJAutoProxy
 @ComponentScan("com.cjwx.spark.engine.web")
-@Import(SwaggerConfig.class)
+@Import({SwaggerConfig.class, RedisCacheConfig.class})
 public class WebMvcConfig implements WebMvcConfigurer {
 
     /**

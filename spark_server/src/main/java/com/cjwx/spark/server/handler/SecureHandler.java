@@ -3,16 +3,17 @@ package com.cjwx.spark.server.handler;
 import com.alibaba.fastjson.JSONObject;
 import com.cjwx.spark.engine.core.constant.AppConstant;
 import com.cjwx.spark.engine.core.dto.ResultDTO;
+import com.cjwx.spark.engine.core.dto.TokenDTO;
 import com.cjwx.spark.engine.util.EndecryptUtils;
 import com.cjwx.spark.engine.util.JwtTokenUtils;
 import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.util.StringUtils;
 import com.cjwx.spark.engine.web.annotation.RestHandler;
 import com.cjwx.spark.engine.web.annotation.RestMethod;
-import com.cjwx.spark.engine.web.http.RequestHelper;
 import com.cjwx.spark.server.capcha.CaptchaHepler;
+import com.cjwx.spark.server.dto.SysRoleDTO;
 import com.cjwx.spark.server.dto.SysUserDTO;
-import com.cjwx.spark.server.dto.UserLoginDTO;
+import com.cjwx.spark.server.service.RoleService;
 import com.cjwx.spark.server.service.UserService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: qian li
@@ -40,8 +41,11 @@ public class SecureHandler {
     @Resource
     private UserService userService;
 
+    @Resource
+    private RoleService roleService;
+
     @RestMethod("login")
-    public ResultDTO<UserLoginDTO> login(@RequestBody JSONObject object) throws Exception {
+    public ResultDTO<TokenDTO> login(@RequestBody JSONObject object) throws Exception {
         String s = object.getString("s");
         String verifyCode = object.getString(AppConstant.PARAM_VERIFYCODE);
         if (!CaptchaHepler.checkVerifyCode(s, verifyCode)) {
@@ -61,15 +65,20 @@ public class SecureHandler {
         if (!password.equals(user.getPassword())) {
             return ResultUtils.fail("用户名密码错误！");
         }
-        UserLoginDTO logInfo = new UserLoginDTO();
-        BeanUtils.copyProperties(user, logInfo);
-        logInfo.setToken(JwtTokenUtils.createJWT(logInfo));
-        return ResultUtils.success(logInfo);
+
+        TokenDTO token = new TokenDTO();
+        BeanUtils.copyProperties(user, token);
+        List<SysRoleDTO> roles = roleService.findByUserId(user.getId()).getData();
+        if (roles != null && !roles.isEmpty()) {
+            roles.forEach(role -> token.addPromise(role.getRoleCode()));
+        }
+        token.setToken(JwtTokenUtils.createJWT(token));
+        return ResultUtils.success(token);
     }
 
     @RestMethod("logout")
-    public ResultDTO<String> logout(@RequestHeader(JwtTokenUtils.AUTHORIZATION_KEY) String authHeader) {
-        JwtTokenUtils.removeToken(authHeader, RequestHelper.getClientIp());
+    public ResultDTO<String> logout(@RequestHeader(AppConstant.AUTHORIZATION_KEY) String token) {
+        JwtTokenUtils.addBlackList(token);
         return ResultUtils.success("登录退出成功！");
     }
 

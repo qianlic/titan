@@ -6,7 +6,6 @@ import com.cjwx.spark.engine.core.dto.TokenDTO;
 import com.cjwx.spark.engine.util.JwtTokenUtils;
 import com.cjwx.spark.engine.util.ResultUtils;
 import com.cjwx.spark.engine.util.StringUtils;
-import com.cjwx.spark.engine.web.http.RequestHelper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -52,14 +51,13 @@ public class AuthorizationFilter extends ZuulFilter {
                 return this.response401(ctx, "登录认证失败，请重新登录！");
             }
             try {
-                TokenDTO token = JwtTokenUtils.parseToken(authHeader, RequestHelper.getClientIp());
+                TokenDTO token = JwtTokenUtils.parseToken(authHeader);
                 if (token == null) {
                     return this.response401(ctx, "登录认证失败，请重新登录！");
-                } else if (!token.checkPromise(url)) {
+                } else if (!AppConstant.EXCLUSIONS.contains(url)) {
                     return this.response403(ctx, "无法访问资源，权限不足！");
                 }
-                String user = StringUtils.encodeURLEncoder(JSON.toJSONString(token));
-                ctx.addZuulRequestHeader("CURRENT_USER", user);
+                ctx.addZuulRequestHeader("CURRENT_USER", token.getUserCode());
             } catch (ExpiredJwtException e) {
                 return this.response401(ctx, "凭据已过期，请重新认证！");
             }

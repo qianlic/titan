@@ -1,12 +1,10 @@
 package com.cjwx.spark.engine.core.dto;
 
-import com.cjwx.spark.engine.core.constant.AppConstant;
-import com.cjwx.spark.engine.util.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @Description: JWT TOKEN
@@ -18,18 +16,23 @@ public class TokenDTO implements Serializable {
 
     private static final long serialVersionUID = -9017410322938026917L;
 
-    private String tokenId;
-    private String host;
+    private String userCode;
 
-    private List<Pattern> promise;
+    private String userName;
 
-    public boolean checkPromise(String url) {
-        if (AppConstant.EXCLUSIONS.contains(url)) {
-            return true;
-        } else if (this.promise == null || StringUtils.isEmpty(url)) {
-            return false;
+    private String sex;
+
+    private String imgUrl;
+
+    private String token;
+
+    private List<String> promises;
+
+    public void addPromise(String promise) {
+        if (promises == null) {
+            promises = new ArrayList<>();
         }
-        return this.getPromise().stream().anyMatch(s -> s.matcher(url).matches());
+        promises.add(promise);
     }
 
 }
