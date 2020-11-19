@@ -37,6 +37,9 @@ public class SysResourceEntity extends AbstractEntity {
     @Column(name = "level")
     private int level;
 
+    @Column(name = "parent_id")
+    private int parentId;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     @OrderBy("resourceCode asc")

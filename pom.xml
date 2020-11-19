@@ -20,13 +20,10 @@
     </properties>
 
     <modules>
-        <module>spark_crawler</module>
         <module>spark_quartz</module>
         <module>spark_monitor</module>
         <module>spark_server</module>
         <module>spark_core</module>
-        <module>spark_activiti</module>
-        <module>spark_oauth2</module>
     </modules>
 
     <dependencyManagement>

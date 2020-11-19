@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public interface ResourceRepository extends JpaRepository<SysResourceEntity, Long> {
 
-    List<SysResourceEntity> findByStatus(boolean status);
+    List<SysResourceEntity> findByParentIdAndStatus(int parentId, boolean status);
 
     int deleteByIdIn(List<Long> ids);
 

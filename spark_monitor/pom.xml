@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.cjwx.spark</groupId>
-            <artifactId>oauth2</artifactId>
+            <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

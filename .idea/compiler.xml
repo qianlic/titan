@@ -7,14 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="crawler" />
         <module name="quartz" />
         <module name="auth" />
         <module name="core" />
-        <module name="activiti" />
         <module name="server" />
         <module name="monitor" />
-        <module name="oauth2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

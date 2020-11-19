@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/spark_activiti/activiti.iml" filepath="$PROJECT_DIR$/spark_activiti/activiti.iml" />
       <module fileurl="file://$PROJECT_DIR$/spark_core/core.iml" filepath="$PROJECT_DIR$/spark_core/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spark_crawler/crawler.iml" filepath="$PROJECT_DIR$/spark_crawler/crawler.iml" />
       <module fileurl="file://$PROJECT_DIR$/spark_monitor/monitor.iml" filepath="$PROJECT_DIR$/spark_monitor/monitor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spark_oauth2/oauth2.iml" filepath="$PROJECT_DIR$/spark_oauth2/oauth2.iml" />
       <module fileurl="file://$PROJECT_DIR$/spark_quartz/quartz.iml" filepath="$PROJECT_DIR$/spark_quartz/quartz.iml" />
       <module fileurl="file://$PROJECT_DIR$/spark_server/server.iml" filepath="$PROJECT_DIR$/spark_server/server.iml" />
       <module fileurl="file://$PROJECT_DIR$/shark.iml" filepath="$PROJECT_DIR$/shark.iml" />
