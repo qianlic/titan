@@ -1,0 +1,38 @@
+server:
+  port: 8081
+  servlet:
+    contextPath: /
+  maxHttpHeaderSize: 4048576
+spring:
+  application:
+    name: center
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/titan?useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: 123456
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        maxActive: 600
+        maxWait: 1000s
+        maxIdle: 300
+    timeout: 10000s
+eureka:
+  # 服务实例主机名
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    instanceId: ${eureka.instance.hostname}:${server.port}
+  server:
+    enableSelfPreservation: false
+    evictionIntervalTimerInMs: 4000
+  # 服务提供者配置
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/

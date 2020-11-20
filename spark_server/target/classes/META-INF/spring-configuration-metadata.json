@@ -1,0 +1,107 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp",
+      "type": "com.cjwx.spark.server.config.ServerConfig"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha",
+      "type": "com.cjwx.spark.server.config.CaptchaConfig"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.WxmpConfig",
+      "name": "common.wxmp",
+      "type": "com.cjwx.spark.server.config.WxmpConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.file-format",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.ftp-admin",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.ftp-password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.ftp-port",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.ftp-root-path",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.ftp-u-r-l",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.ServerConfig",
+      "name": "common.ftp.max-file-size",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha.border",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha.chars",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha.font",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha.height",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha.noise",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.CaptchaConfig",
+      "name": "common.kaptcha.width",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.WxmpConfig",
+      "name": "common.wxmp.aes-key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.WxmpConfig",
+      "name": "common.wxmp.app-id",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.WxmpConfig",
+      "name": "common.wxmp.secret",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cjwx.spark.server.config.WxmpConfig",
+      "name": "common.wxmp.token",
+      "type": "java.lang.String"
+    }
+  ]
+}

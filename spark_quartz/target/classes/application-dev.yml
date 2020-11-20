@@ -1,0 +1,58 @@
+server:
+  port: 8082
+  servlet:
+    contextPath: /
+  maxHttpHeaderSize: 4048576
+spring:
+  application:
+    name: quartz
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/titan?useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: 123456
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        maxActive: 600
+        maxWait: 1000s
+        maxIdle: 300
+    timeout: 10000s
+  quartz:
+    jobStoreType: jdbc
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: iQuartz
+            instanceId: AUTO
+            wrapJobExecutionInUserTransaction: false
+            dbFailureRetryInterval: 1500
+            rmi:
+              proxy: false
+            skipUpdateCheck: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 5
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            dontSetAutoCommitFalse: false
+            tablePrefix: QTZ_
+            maxMisfiresToHandleAtATime: 20
+            misfireThreshold: 60000
+            isClustered: true
+            clusterCheckinInterval: 20000
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
