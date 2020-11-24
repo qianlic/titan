@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResultDTO<Integer> createUser(SysUserDTO user) throws Exception {
+
         return MapperUtils.insert(userRepository, ObjectUtils.convert(user, SysUser.class));
     }
 
